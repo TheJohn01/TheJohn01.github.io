@@ -202,13 +202,13 @@ html{scroll-behavior:smooth}
 <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 32px">
 <article class="rv lift" style="padding: 32px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
-<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">CASO DE ESTUDO · PYTHON · PYBAMM · TEA · LCA</div>
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">CASO DE ESTUDO · PYTHON · SIMULAÇÃO DE BATERIAS</div>
 <span style="padding: 4px 12px; border-radius: 8px; background: var(--sky-200); font-size: 14px; color: var(--ink)">Publicado</span>
 </div>
 <h3 style="margin: 12px 0 0; font-size: 28px; line-height: 1.2; font-weight: 600">Gémeo digital de baterias</h3>
-<p style="margin: 12px 0 0; max-width: 44em">Um modelo eletroquímico resolve uma carga em segundos, mas a vida útil de uma bateria, e com ela o seu custo e a sua pegada de carbono, decide-se ao longo de milhares de ciclos. O gémeo digital divide o problema nessa fronteira e segue uma bateria de um carro elétrico até uma segunda vida como armazenamento estacionário.</p>
+<p style="margin: 12px 0 0; max-width: 44em">Quanto tempo dura a bateria de um carro elétrico? Compensa reaproveitá-la depois para guardar energia? E qual é a sua pegada de carbono? Construí um simulador que responde a estas perguntas para quatro tipos de baterias, a partir da forma como são usadas.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; margin-top: 24px">
-<div class="art-hover" style="flex: 999 1 560px; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box"><pre role="img" data-ascii="battery" aria-label="Arte ASCII de duas células de bateria cilíndricas sobre uma base, à frente de um ecrã com duas curvas de envelhecimento e um limite de fim de vida a tracejado" style="font-family: 'JetBrains Mono', monospace; font-size: 7px; line-height: 1.09; color: var(--azure)">
+<div class="art-hover" style="flex: 999 1 560px; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="battery" aria-label="Arte ASCII de duas células de bateria cilíndricas sobre uma base, à frente de um ecrã com duas curvas de envelhecimento e um limite de fim de vida a tracejado" style="font-family: 'JetBrains Mono', monospace; font-size: 6.2px; line-height: 1.09; color: var(--azure)">
                                                                                ............................  ....
                             ............................................'''''''''''''''''''''''''''''''''''''''''.
                             .................................................''''''''''''''''''''''''''''''''''''.
@@ -260,37 +260,46 @@ html{scroll-behavior:smooth}
 <div style="flex: 1 1 300px; min-width: 0">
 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">COMO FUNCIONA</div>
 <ol style="margin: 8px 0 0; padding-left: 20px">
-<li style="margin-top: 8px">Um modelo físico (SPMe ou DFN, em PyBaMM) simula os primeiros dez ciclos: tensão, corrente e calor.</li>
-<li style="margin-top: 8px">Desses ciclos saem as condições que envelhecem a célula: profundidade de descarga, taxas de carga e temperatura.</li>
-<li style="margin-top: 8px">Modelos empíricos de envelhecimento, ajustados a medições publicadas, projetam a capacidade até 20 000 ciclos.</li>
-<li style="margin-top: 8px">A curva de capacidade alimenta uma análise tecnoeconómica (VAL, TIR, LCOS) e uma avaliação de ciclo de vida de triagem.</li>
+<li style="margin-top: 8px">Simulo em detalhe alguns ciclos de carga e descarga, com um modelo físico da bateria.</li>
+<li style="margin-top: 8px">A partir deles, estimo como a bateria perde capacidade ao longo dos anos, com modelos ajustados a ensaios publicados.</li>
+<li style="margin-top: 8px">Com essa curva, calculo se o investimento compensa e qual é o impacto ambiental de cada kWh que a bateria entrega.</li>
 </ol>
 </div>
 </div>
-<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted); margin-top: 32px">RESULTADOS NAS CONDIÇÕES DE REFERÊNCIA</div>
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted); margin-top: 32px">O QUE DESCOBRI</div>
 <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px">
-<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">1227 ciclos</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">até 80 % de capacidade numa célula LFP, cerca do triplo de uma NMC (398), em linha com o medido em laboratório</div></div>
-<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">89–90 %</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">da capacidade inicial quando a bateria sai do carro, ao fim de 8 anos e 146 000 km</div></div>
-<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">+355 € / −262 €</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">da segunda vida face a um sistema LFP novo, com uma bateria NMC / LFP: decide o preço da bateria usada</div></div>
-<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">21–22 g</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">de CO2eq por kWh entregue nas duas vidas, contra 25 g de um sistema LFP novo</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">3×</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">mais ciclos numa bateria LFP do que numa NMC antes de perder 20 % da capacidade (1227 contra 398)</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">≈ 90 %</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">da capacidade ainda disponível quando a bateria sai do carro, ao fim de 8 anos e 146 000 km</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">Depende</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">se a segunda vida compensa face a um sistema novo: entre +355 € e −262 €, conforme o preço da bateria usada</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">≈ −14 %</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">de CO2 por kWh entregue face a um sistema novo, quando a pegada da bateria é repartida pelas duas vidas</div></div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px">
 <div style="flex: 1 1 380px; min-width: 0">
 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">COMO O VALIDEI</div>
 <ul style="margin: 8px 0 0; padding-left: 20px">
-<li style="margin-top: 8px">Calibrei o modelo NMC com medições de células LG M50T: a perda de lítio fica a 0,40 pontos percentuais (RMSE) nas células de treino e a 2,56 em células de teste a 10 °C.</li>
-<li style="margin-top: 8px">Sem reajustar, reproduz um VW ID.3 de ensaio (94,4 % previsto, 98,0 % medido) e um Tesla Model 3 após 79 100 km (91,4–94,4 % previsto, 91,9 % medido).</li>
-<li style="margin-top: 8px">O modelo de armazenamento acompanha a perda anual de capacidade de 21 sistemas domésticos reais.</li>
+<li style="margin-top: 8px">Comparei o modelo com medições de baterias comerciais reais: o erro na perda de capacidade fica abaixo de meio ponto percentual nas células usadas para o ajustar e perto de 2,6 pontos em células que nunca tinha visto.</li>
+<li style="margin-top: 8px">Sem o reajustar, previ o estado de baterias de carros reais: um VW ID.3 (94 % previsto, 98 % medido) e um Tesla Model 3 com 79 000 km (91–94 % previsto, 92 % medido).</li>
+<li style="margin-top: 8px">Acompanha também a perda de capacidade de 21 baterias domésticas reais.</li>
 </ul>
 </div>
 <div style="flex: 1 1 380px; min-width: 0">
 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">O QUE AINDA NÃO ESTÁ BEM</div>
 <ul style="margin: 8px 0 0; padding-left: 20px">
-<li style="margin-top: 8px">A frio, o modelo é otimista: a 5 °C entrega 0,3–0,6 Ah a mais do que as células reais.</li>
-<li style="margin-top: 8px">O modelo laboratorial de NMC perdia cerca do triplo do que perderam carros reais; corrigi-o com fatores ajustados a uma frota de seis Smart e confirmei-o noutros veículos.</li>
+<li style="margin-top: 8px">Com frio, o modelo é otimista: a 5 °C prevê mais energia do que as baterias reais entregam.</li>
+<li style="margin-top: 8px">O modelo de laboratório envelhecia as baterias NMC cerca de três vezes mais depressa do que em carros reais; corrigi-o com dados de uma frota.</li>
 </ul>
 </div>
 </div>
+<details style="margin-top: 24px; padding: 16px 24px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)">
+<summary style="cursor: pointer; font-weight: 600; color: var(--azure)">Detalhes técnicos</summary>
+<ul style="margin: 8px 0 0; padding-left: 20px">
+<li style="margin-top: 8px">Física: modelos SPMe e DFN em PyBaMM, com modelo térmico concentrado e deposição de lítio no modelo NMC detalhado.</li>
+<li style="margin-top: 8px">Envelhecimento: modelos empíricos do BLAST-Lite (NREL) reajustados a 46 pontos de estudos publicados, a 81 células de Severson et al. (2019) e a duas células Samsung 50E; projeção até 20 000 ciclos.</li>
+<li style="margin-top: 8px">Calibração NMC com células LG M50T (Kirkaldy et al. 2024): perda de inventário de lítio com RMSE de 0,40 p.p. no treino e 2,56 p.p. em validação a 10 °C.</li>
+<li style="margin-top: 8px">Economia: VAL, TIR, payback descontado e LCOS com preços horários do OMIE e tarifas da ERSE. Ambiente: ACV de triagem segundo a ISO 14040/14044, com a unidade funcional do Regulamento (UE) 2023/1542.</li>
+<li style="margin-top: 8px">Estimação de estado: filtro de Kalman estendido para SOC e SOH, como um sistema de gestão de bateria.</li>
+</ul>
+</details>
 <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 24px">
 <a href="https://github.com/TheJohn01/DigitalTwinBattery" style="font-weight: 600">Ver no GitHub →</a>
 <a href="https://battery-twin.streamlit.app/" style="font-weight: 600">Experimentar o dashboard →</a>
@@ -327,7 +336,7 @@ html{scroll-behavior:smooth}
 <span style="padding: 4px 12px; border-radius: 8px; background: var(--sky-200); font-size: 14px; color: var(--ink)">Publicado</span>
 </div>
 <h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Heatpump-Pinch</h3>
-<p style="margin: 0; color: var(--ink)">Ferramenta em Python para análise pinch e integração de bombas de calor de alta temperatura em processos industriais (CoolProp, Streamlit), validada com casos de referência da literatura.</p>
+<p style="margin: 0; color: var(--ink)">Uma ferramenta em Python que mostra onde uma bomba de calor de alta temperatura pode reaproveitar calor num processo industrial, e quanta energia isso poupa. Validei-a com casos de referência da literatura.</p>
 <a href="https://github.com/TheJohn01/Heatpump-Pinch" style="font-weight: 600">Ver no GitHub →</a>
 </article>
 <article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
@@ -386,7 +395,7 @@ html{scroll-behavior:smooth}
 <span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px; color: var(--leaf-ink)">Em curso</span>
 </div>
 <h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Reator de metanação de Sabatier</h3>
-<p style="margin: 0; color: var(--ink)">Projeto de grupo, acompanhado por um professor: um reator de metanação de CO2 com catalisador de Ni/SiO2, modelado em Aspen Plus como reator de escoamento pistão (RPlug), com cinética de Langmuir–Hinshelwood–Hougen–Watson. Seguem-se a análise de sensibilidade e a otimização.</p>
+<p style="margin: 0; color: var(--ink)">Projeto de grupo, acompanhado por um professor: simulação em Aspen Plus de um reator que transforma CO2 e hidrogénio em metano, com um catalisador de níquel. Segue-se o estudo de como as condições de operação afetam o resultado e, depois, a otimização.</p>
 
 </article>
 </div>
