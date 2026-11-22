@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tomás Caldas — Portefólio</title>
+<meta name="description" content="Portefólio de João Tomás Lima Caldas, estudante de Mestrado em Engenharia Química na FEUP: estágios na indústria química, projetos de simulação e modelação, e investigação.">
+<meta property="og:title" content="Tomás Caldas — Portefólio">
+<meta property="og:description" content="Portefólio de João Tomás Lima Caldas, estudante de Mestrado em Engenharia Química na FEUP: estágios na indústria química, projetos de simulação e modelação, e investigação.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='34' r='24' fill='%230a6fc2'/><circle cx='24' cy='26' r='6' fill='white' fill-opacity='.85'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap">
+<style>
+
+.dp{--ground:#f1f9fe;--surface:#ffffff;--glass:rgba(255,255,255,0.66);--glass-rim:rgba(255,255,255,0.9);--sky-200:#c2e7fb;--aqua:#2bb8e6;--azure:#0a6fc2;--on-azure:#ffffff;--deep:#06284d;--on-deep:#eaf6ff;--leaf:#62c13c;--on-leaf:#0b2540;--leaf-ink:#2a7319;--sun:#ffc533;--ink:#0b2540;--ink-muted:#456079;--line:#4f86ad;--hairline:#cfe5f3;--focus:#06284d;
+--shadow-dew:0 1px 2px rgba(6,40,77,0.08),0 8px 24px rgba(10,111,194,0.14);--shadow-float:0 2px 4px rgba(6,40,77,0.1),0 20px 48px rgba(10,111,194,0.22);--shadow-gloss:inset 0 1px 0 rgba(255,255,255,0.7),inset 0 -8px 14px rgba(6,40,77,0.14)}
+.dp.dusk{--ground:#051a30;--surface:#0c2a4a;--glass:rgba(12,42,74,0.74);--glass-rim:rgba(160,215,255,0.36);--sky-200:#1b5687;--aqua:#2bb8e6;--azure:#62c6f7;--on-azure:#04213b;--deep:#0e3358;--on-deep:#eaf6ff;--leaf:#7ed957;--on-leaf:#04213b;--leaf-ink:#9be37a;--sun:#ffd257;--ink:#eaf6ff;--ink-muted:#a6c2d9;--line:#6f9fc4;--hairline:#17406a;--focus:#ffd257;
+--shadow-dew:0 1px 2px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.45);--shadow-float:0 2px 4px rgba(0,0,0,0.45),0 20px 48px rgba(0,0,0,0.55);--shadow-gloss:inset 0 1px 0 rgba(255,255,255,0.45),inset 0 -8px 14px rgba(4,33,59,0.2)}
+body:has(.dp.dusk){background:#051a30}
+.dp.theming,.dp.theming *{transition:background-color .5s ease,color .5s ease,border-color .5s ease,box-shadow .5s ease,fill .5s ease !important}
+.nl{text-decoration:underline 2px transparent !important;text-underline-offset:6px;transition:text-decoration-color .25s ease}
+.nl:hover{text-decoration-color:var(--azure) !important}
+.totop{display:none !important}
+body{margin:0;background:#f1f9fe;color:#0b2540;font-family:Figtree,"Segoe UI","Helvetica Neue",Arial,sans-serif}
+a{color:var(--azure)}a:hover{color:var(--focus)}
+a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+pre{margin:0}
+html{scroll-behavior:smooth}
+.progress{display:none}
+.btn{transition:transform .2s ease,filter .2s ease}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.07)}
+.btn2{transition:background-color .2s ease}
+.btn2:hover{background-color:var(--sky-200) !important}
+.lift{transition:transform .3s ease,box-shadow .3s ease}
+.lift:hover{transform:translateY(-4px);box-shadow:var(--shadow-float) !important}
+@media (prefers-reduced-motion: no-preference){
+@keyframes enter{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+.enter{animation:enter .9s cubic-bezier(.2,.7,.2,1) both}
+.enter2{animation-delay:.18s}
+.wash{animation:wash 22s ease-in-out infinite alternate}
+@keyframes wash{from{background-size:150% 150%;background-position:0% 0%}to{background-size:150% 150%;background-position:100% 100%}}
+.sun{animation:sun 3.2s ease-in-out infinite}
+@keyframes sun{0%,100%{box-shadow:0 0 0 0 rgba(255,197,51,.55)}50%{box-shadow:0 0 0 6px rgba(255,197,51,0)}}
+.art-hover{cursor:default}
+@supports (animation-timeline: view()){
+.totop{display:inline-flex !important;animation:totop linear both;animation-timeline:scroll(root);animation-range:0% 12%}
+@keyframes totop{from{opacity:0;visibility:hidden;translate:0 16px}to{opacity:1;visibility:visible;translate:0 0}}
+}
+.bob{animation:bob 7s ease-in-out infinite}
+.bob2{animation-duration:9s;animation-delay:-3s}
+.bob3{animation-duration:6s;animation-delay:-1.5s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@supports (animation-timeline: view()){
+.progress{display:block;transform-origin:left;animation:grow-x linear both;animation-timeline:scroll(root)}
+@keyframes grow-x{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.rv{animation:rise linear both;animation-timeline:view();animation-range:entry 5% cover 30%}
+@keyframes rise{from{opacity:0;translate:0 40px}to{opacity:1;translate:0 0}}
+.tl-line{transform-origin:top;animation:grow-y linear both;animation-timeline:view();animation-range:entry 10% cover 50%}
+@keyframes grow-y{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.par{animation:drift linear both;animation-timeline:scroll(root)}
+.par-1{--d:-160px}.par-2{--d:-90px}.par-3{--d:-220px}
+@keyframes drift{to{translate:0 var(--d)}}
+.type{animation:type steps(10,end) both;animation-timeline:view();animation-range:entry 30% cover 45%}
+@keyframes type{from{width:0}}
+}
+}
+</style>
+</head>
+<body>
+<div class="dp" id="dp" style="background: var(--ground); color: var(--ink); font-family: Figtree, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; line-height: 1.55; min-height: 100vh">
+
+<div style="max-width: 1120px; margin: 0 auto; padding: 8px 48px 0; box-sizing: border-box">
+
+<header style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0 24px; background: var(--ground)">
+<a href="#top" style="font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 8px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--azure)">o.</span>Tomás Caldas</a>
+<nav aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 16px; font-weight: 600">
+<a href="#industria" class="nl" style="color: var(--ink); text-decoration: none">Indústria</a>
+<a href="#work" class="nl" style="color: var(--ink); text-decoration: none">Projetos</a>
+<a href="#research" class="nl" style="color: var(--ink); text-decoration: none">Investigação</a>
+<a href="#experience" class="nl" style="color: var(--ink); text-decoration: none">Percurso</a>
+<button type="button" class="btn2" id="theme-toggle" aria-pressed="false" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--surface); color: var(--azure); border: 1px solid var(--line); font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer"><span class="ic-moon" style="display: inline-flex"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span><span class="ic-sun" style="display: none"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span><span id="theme-text">Modo escuro</span></button>
+<a href="#contact" class="btn" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 24px; border-radius: 999px; background: var(--azure); color: var(--on-azure); text-decoration: none; box-shadow: var(--shadow-gloss), var(--shadow-dew)">Entrar em contacto</a>
+</nav>
+<div aria-hidden="true" class="progress" style="position: absolute; left: 0; right: 0; bottom: 10px; height: 2px; border-radius: 999px; background: var(--azure)"></div>
+</header>
+
+<section id="top" class="wash" style="position: relative; overflow: hidden; border-radius: 40px; padding: 48px; background: linear-gradient(160deg, var(--azure) 0%, var(--aqua) 38%, var(--sky-200) 72%, var(--ground) 100%); box-shadow: var(--shadow-float); display: flex; flex-wrap: wrap; gap: 32px; align-items: stretch">
+<div aria-hidden="true" class="par par-1" style="position: absolute; inset: 0; pointer-events: none">
+<div class="bob" style="position: absolute; left: 46%; top: 28px; width: 72px; height: 72px; border-radius: 999px; background: var(--glass); box-shadow: var(--shadow-gloss)"><div style="position: absolute; left: 14px; top: 12px; width: 14px; height: 9px; border-radius: 999px; background: var(--glass-rim)"></div></div></div>
+<div aria-hidden="true" class="par par-2" style="position: absolute; inset: 0; pointer-events: none">
+<div class="bob bob2" style="position: absolute; right: 40px; bottom: 34px; width: 28px; height: 28px; border-radius: 999px; background: var(--glass); box-shadow: var(--shadow-gloss)"><div style="position: absolute; left: 6px; top: 5px; width: 6px; height: 4px; border-radius: 999px; background: var(--glass-rim)"></div></div></div>
+<div aria-hidden="true" class="par par-3" style="position: absolute; inset: 0; pointer-events: none">
+<div class="bob bob3" style="position: absolute; left: 22px; bottom: 22px; width: 14px; height: 14px; border-radius: 999px; background: var(--glass); box-shadow: var(--shadow-gloss)"></div></div>
+
+<div class="enter" style="position: relative; flex: 1 1 100%; min-width: 0; padding: 48px; border-radius: 24px; background: var(--glass); border: 1px solid var(--glass-rim); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: var(--shadow-float); display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+<div style="display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: var(--surface); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink)"><span aria-hidden="true" class="sun" style="width: 8px; height: 8px; border-radius: 999px; background: var(--sun)"></span>ENGENHARIA QUÍMICA · PONTE DE LIMA E PORTO</div>
+<h1 style="margin: 0; font-size: 72px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--ink)">Modelo processos e depois confronto-os com a realidade.</h1>
+<p style="margin: 0; max-width: 34em; font-size: 16px; line-height: 1.55; color: var(--ink)">Estudante de Mestrado em Engenharia Química na FEUP. Simulo instalações em Aspen Plus, construo modelos em Python e procuro a energia que um processo deixa por aproveitar.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<a href="#work" class="btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: var(--azure); color: var(--on-azure); font-weight: 600; text-decoration: none; box-shadow: var(--shadow-gloss), var(--shadow-dew)">Ver projetos</a>
+<a href="cv/Joao_Tomas_Lima_Caldas_CV.pdf" download="Joao_Tomas_Lima_Caldas_CV.pdf" class="btn2" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: var(--surface); color: var(--azure); font-weight: 600; text-decoration: none; border: 1px solid var(--line); box-sizing: border-box">Descarregar CV</a>
+</div>
+</div>
+<div class="art-hover" style="flex: 0 0 auto; max-width: 100%; overflow-x: auto"><pre role="img" data-ascii="hero" aria-label="Arte ASCII de cinco gotas com aspeto de vidro, de tamanhos bem diferentes: uma grande e quatro mais pequenas" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">
+
+                                                                                          .---.
+                                                                                         ;:...:-
+                                                                                         ~.   .~
+                                                                                         -:''-~.
+                                                                              ....        .'-.
+                                                                           .-==;;==:.
+                                                                          '=~..  .':=.
+                                                                          =:       .-=
+                                                                         .+'        '+
+                                                                          ;:.      .;'
+                                                                           :;-'..':='
+                                                                            .':::-.
+
+                                              ...-'''''-'..
+                                        .-~+cccxc**+++**vxvv*+~'.
+                                    .-=vv*+;;~~~~~~~~~~~~~~~;=+cvc;'
+                                 .:*x*=;~~;;==++===========;;~~~~;=cx+-             .':~~=;=;~:'.
+                               .=v*=~~;==+==;~~:---------::~~;;;;~~~~=cv;.       .-=++=====;;;;=++:.
+                             .+x+;~;=+==~:-''................'--:~~~~:~;*x;.    :*===~-'.....'-:~~;*~.
+                           .;v+;~;=+=~:'......             ......'-:~~~::;*v: .*==;-..         ..':~;*'
+                          -x*;~;=+;:-....                       ....'-:~::~;cv*;=-.               .':~*'
+                         ;v=~~=+;:-....                           ....'-::::;c;=-.                 .':~c.
+                        +v;~;==~-...                                 ...'-:::;=:.                   .'-==
+                       +c;~;+=:'...                                   ...'-::~;'.                   ..-~c
+                      ;v;~;+=:'..                                       ...'-:;'                    ..'~v
+                     'v=~;+=:'..                                         ...'-~'.                   ..'==
+                     x+~~==~'..                                           ...'::.                  ..':c'
+                    :v;~;+;-..                                            ...'':-..               ..':+~
+                    c*~~==:'..                                             ...'-:-'..           ...'~*~
+                   .o=~;=;-...                                             ...''-~:-'...........'':++'
+                   'x=:;=~-..                                               ...'':=*;:-'''''''-~=*='
+                   ;v;:;=~'..                                               ...''-~+x;=**+=+**;~'.
+                   ;v;:;=~'..                                               ...''-~=x.
+                   .x=:~;~-..                                              ....''-~+x
+                    o+~~;~-...                                             ....'':;*c
+                    **~:;;:'..                                             ....'-:=v~
+                    -v=:~;~-...                                           ....''-;+o.
+                     c*;:~~:'...                                         .....'-~=v;
+                     .x+~:~~-'...                                       .....'-:=*v
+                      -v=~:~~-'...                                     .....'-:;+x.
+                       :v=~:~:-'...                                  ......'-:;+x'
+                        ~x+~::::-'...                               .....''-:=*x'
+             ..---'.     'x*;::::-'.....                         ......''--~=cc.
+          .~===;;;;==~'   .*v=~:::--'......                   .......'''-~=+x;
+        .;+;~-.....'-:;=.   -cc=~::---''..........     ............''--~;+v*.
+       -==:.         .':*.    :vc=~::---''''...................''''-:~=+vc-
+      '*=-.           .':*      -*v*=~::---'''''.........''''''--:~;+cv+'
+      +;~.             .'*.       .~cx*+;~~::----'''''''----::~;=+cv+:
+      c;-              .'*.          .:+cvv*+==;;;~~~~;;;;=++*vv*;-.
+      =;:.             .:*               .':;+*ccvvcccvvcc*+;-.
+      .+~'.          ..-+'                       ... ...
+       -+~-..      ..':*-
+        .;=~-''..''-;+~.
+          .'~;+==+;~'</pre></div>
+</div>
+</section>
+
+<section aria-label="Em resumo" class="rv" style="margin-top: 96px; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-wrap: wrap; align-items: center; gap: 24px">
+<dl style="flex: 999 1 640px; min-width: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px 24px"><div style="min-width: 0"><dt style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">PROCURO</dt><dd style="margin: 4px 0 0; font-size: 16px; font-weight: 600; line-height: 1.4">Primeiro emprego em engenharia química, na indústria</dd></div><div style="min-width: 0"><dt style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">FORMAÇÃO</dt><dd style="margin: 4px 0 0; font-size: 16px; font-weight: 600; line-height: 1.4">Mestrado em Engenharia Química, FEUP (em curso)</dd></div><div style="min-width: 0"><dt style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">DISPONIBILIDADE</dt><dd style="margin: 4px 0 0; font-size: 16px; font-weight: 600; line-height: 1.4">A partir de meados de 2027</dd></div><div style="min-width: 0"><dt style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">MOBILIDADE</dt><dd style="margin: 4px 0 0; font-size: 16px; font-weight: 600; line-height: 1.4">Região Norte (Porto)</dd></div><div style="min-width: 0"><dt style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">CARTA DE CONDUÇÃO</dt><dd style="margin: 4px 0 0; font-size: 16px; font-weight: 600; line-height: 1.4">Sim</dd></div><div style="min-width: 0"><dt style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">IDIOMAS</dt><dd style="margin: 4px 0 0; font-size: 16px; font-weight: 600; line-height: 1.4">Português (nativo), inglês (C1)</dd></div></dl>
+<a href="cv/Joao_Tomas_Lima_Caldas_CV.pdf" download="Joao_Tomas_Lima_Caldas_CV.pdf" class="btn" style="flex: 0 0 auto; display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 999px; background: var(--azure); color: var(--on-azure); font-weight: 600; text-decoration: none; box-shadow: var(--shadow-gloss), var(--shadow-dew)">Descarregar CV</a>
+</section>
+<section id="industria" aria-labelledby="bondalti-h" class="rv" style="margin-top: 96px; padding: 48px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">EM DESTAQUE NA INDÚSTRIA · BONDALTI CHEMICALS · VERÃO DE 2026</div>
+<h2 id="bondalti-h" style="margin: 12px 0 0; font-size: 28px; line-height: 1.2; font-weight: 600">Testes para operadores, gerados em segundos</h2>
+<p style="margin: 12px 0 0; max-width: 44em">Na área de Produção de Anilina e Derivados da Bondalti, em Estarreja, desenvolvi uma plataforma digital que avalia os conhecimentos dos operadores da instalação de mononitrobenzeno (MNB).</p>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px">
+<div style="flex: 1 1 260px; min-width: 0; padding: 24px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">O PROBLEMA</div>
+<h3 style="margin: 12px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Não havia avaliação estruturada</h3>
+<p style="margin: 12px 0 0">A instalação não tinha uma forma estruturada de avaliar os conhecimentos dos seus operadores.</p>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; padding: 24px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">A SOLUÇÃO</div>
+<h3 style="margin: 12px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Um teste diferente para cada avaliação</h3>
+<p style="margin: 12px 0 0">A plataforma gera testes aleatórios em poucos segundos, por isso cada avaliação é diferente da anterior.</p>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; padding: 24px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">O RESULTADO</div>
+<h3 style="margin: 12px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Pronta para crescer</h3>
+<p style="margin: 12px 0 0">Foi desenvolvida para a instalação de MNB e pensada desde o início para ser alargada a outras instalações.</p>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Power Apps</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Power Automate</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">SharePoint</span></div>
+<p style="margin: 0; font-size: 14px; color: var(--ink-muted)">Carta de recomendação da Bondalti disponível a pedido.</p>
+</div>
+</section>
+
+<section id="work" style="margin-top: 96px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">PROJETOS EM DESTAQUE</div>
+<h2 class="rv" style="margin: 12px 0 0; font-size: 28px; line-height: 1.2; font-weight: 600">Projetos</h2>
+<p style="margin: 12px 0 0; max-width: 40em; color: var(--ink-muted)">Simulação, modelação e dados, a maior parte em acesso aberto no GitHub.</p>
+
+<div style="display: flex; flex-direction: column; gap: 24px; margin-top: 32px">
+<article class="rv lift" style="padding: 32px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">CASO DE ESTUDO · PYTHON · PYBAMM · TEA · LCA</div>
+<span style="padding: 4px 12px; border-radius: 8px; background: var(--sky-200); font-size: 14px; color: var(--ink)">Publicado</span>
+</div>
+<h3 style="margin: 12px 0 0; font-size: 28px; line-height: 1.2; font-weight: 600">Gémeo digital de baterias</h3>
+<p style="margin: 12px 0 0; max-width: 44em">Um modelo eletroquímico resolve uma carga em segundos, mas a vida útil de uma bateria, e com ela o seu custo e a sua pegada de carbono, decide-se ao longo de milhares de ciclos. O gémeo digital divide o problema nessa fronteira e segue uma bateria de um carro elétrico até uma segunda vida como armazenamento estacionário.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; margin-top: 24px">
+<div class="art-hover" style="flex: 999 1 560px; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box"><pre role="img" data-ascii="battery" aria-label="Arte ASCII de duas células de bateria cilíndricas sobre uma base, à frente de um ecrã com duas curvas de envelhecimento e um limite de fim de vida a tracejado" style="font-family: 'JetBrains Mono', monospace; font-size: 7px; line-height: 1.09; color: var(--azure)">
+                                                                               ............................  ....
+                            ............................................'''''''''''''''''''''''''''''''''''''''''.
+                            .................................................''''''''''''''''''''''''''''''''''''.
+                            .................................................''''''''''''''''''''''''''''''''''''.
+                            .....*.................................::........''''''''''''''''''''''''''''''''''''
+                            .....*==;~~:-''........................~~.......'''''''''''''''''''''''''''''''''''''
+                            .....c::~;;++*c**+;~:''................~~.......'''''''''''''''''''''''''''''''''''''
+                            .....*.........'':~;+*cc*+=;~:-''......~~.......'''''''''''''''''''''''''''''''''''''
+                            .....*.................':;=*cvc*+===;~:;~'......'''''''''''''''''''''''''''''''''''''
+                            .....*'.....................''~=+cc*++=+*++=;~-'''''''''''''''''''''''''''''''''''''.
+                            .....+:-~~~'...-~::~;'....~~~~~~-.':=*xv*;;;;~=++++=~~~~~:'''''-~~~~~~:'''''''''''''.
+                            .....+-....................''''''.....'==+cc*;-'''-:~;=+++=~:-''----::-'''''''''''''
+                            .....=-................................=-.'-~+cv*;-''''''-:~;+**+;~-''''''''''''''''
+                            .....;;................................+-.....'-~+vv+~''''''''''-~;+**+;~-''''''''''
+                             ....~;.....'''----...................'+-''.....'''-;*vc=-''''''''''''-:;:''''''''''
+                             ....~;'-''.:;=*cc='--~:........''''-~~;=+*~'''''''''''~+vv=:'''''''''''''''''''''''
+                             ....':'-:::~~;==+**cc**.......':::--:~;=+=;;;=*~''''''''':=cv+~'''''''''''''''''''.
+                             ......'--::~;;=+*******.......'---:::~;;=++****;''''''''''''-;cv+~''''''~~''''''''.
+                              .....'--::~;;=+*******.......'---::~~;==+*****;'''''''''''''''-;cv+:'''''''''''''.
+                                   '--::~;;=+*******.....'.'---::~~;==+*****;''''''''''''''''''-=vv=-''''''''''
+                                   '--::~;;=+*******       '---::~~;==+*****;....................'-=+..........
+                                   --:::~;;=+******c.      '---::~~;==+*****:
+                                   -;;====+++*cccccv.      ~~~~~~~;;==+*****~
+                                   -;;;===++**cccccv.      ~;;;;==+++**ccccc:
+                                   -;;;===++**cccccv.      ~;;;;===++**ccccc:
+                                   -;;;===++**cccccv.      ~;;;;===++**ccccc:
+                                   ';;;===++**cccccv.......~;;;;===++**ccccc:..
+                                   ';;;===++**cccccc-''''''~;;;;===++**ccccc:'''''''........
+                                   ';;;===++**cccccc--''''-~;;;;===++**ccccc-''''''''''''''''''''''''''...........................................
+                                   .;;;===++**cccccv'.''''-~;;;;===++**ccccc:---------------------------------''''''''''''''''''''''''''''''''''....
+                                    ;;;===++**cccccv.      ~;;;;===++**ccccc:---------------------------------------------''----''''''''......
+                        .'''''''....:~;;==++**ccc**c.      ~;;;;===++**ccccc:---'''''''''''''----------------------''''''''.....
+                     .'-'''''''''''''--:~~;==+******~~::--'-:~;===++***ccc**
+                  .'-''''''''''''''''--:~~;==+******+++++++;---:~~;;=+******::--''...
+               .'--'''''''''''''''''---:~~;==+******+++++++:---::~~;=++****++++++++**+*+++==;;;~~:::-.
+            .'--''''''''''''''''''''-:~;;==++*cccc*+==;;~~:----::~;;=++****++++++++++++++++++++++++++=--'..
+         .'--''''''''-'''''''''''''''''---:~::---''''''''''-:~~~~~;;=+***cc*++++==;;;+++++++++===;;~;+::--''.
+      .'--'''''''''''-+**+++=;~~~:::--''''''''''''''''''''''''-:~;;;;==;;::--''''''':++~~:::--------~+::--'..
+    .'''''-------'''''-----::~~;;;==+++***+*+=;;~~:::---'''''''''''''''''''''''''''-=+=-'''''''''''-~+::..
+    ~;;;~~:::-----''''''''------------------:~~;;;;=+++*****++=;;~~:::---''''''''''~+*:-------------~+::
+    -*ccc**+++=====;;;;~~~:::-----'''''''-------------------::~~;;;=++++*****++=;;;+*=--------------~+::.
+       ..'-:~~;=++*ccccc**+++=====;;;;;~~::::-----'''''''--------------------::~~;;=;---------------~+::.
+                     ...'-:~~;=++*ccccc**++++====;;;;;~~~:::------''''''''--------------------------~+::.
+                                    ...'-:~;;=++*ccccc**++++====;;;;;;~~~:::------'''''''''---------~+::'
+                                                   ..''-:~;;=+**ccccc**++++====;;;;;;~~~::::--------~+::'
+                                                                  ..''::~;;++*cccccc*+++++====;;;;;;+c::-
+                                                                                 ..'-:~~;;++*cccccccc+::'
+                                                                                                ..'--'.</pre></div>
+<div style="flex: 1 1 300px; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">COMO FUNCIONA</div>
+<ol style="margin: 8px 0 0; padding-left: 20px">
+<li style="margin-top: 8px">Um modelo físico (SPMe ou DFN, em PyBaMM) simula os primeiros dez ciclos: tensão, corrente e calor.</li>
+<li style="margin-top: 8px">Desses ciclos saem as condições que envelhecem a célula: profundidade de descarga, taxas de carga e temperatura.</li>
+<li style="margin-top: 8px">Modelos empíricos de envelhecimento, ajustados a medições publicadas, projetam a capacidade até 20 000 ciclos.</li>
+<li style="margin-top: 8px">A curva de capacidade alimenta uma análise tecnoeconómica (VAL, TIR, LCOS) e uma avaliação de ciclo de vida de triagem.</li>
+</ol>
+</div>
+</div>
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted); margin-top: 32px">RESULTADOS NAS CONDIÇÕES DE REFERÊNCIA</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px">
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">1227 ciclos</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">até 80 % de capacidade numa célula LFP, cerca do triplo de uma NMC (398), em linha com o medido em laboratório</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">89–90 %</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">da capacidade inicial quando a bateria sai do carro, ao fim de 8 anos e 146 000 km</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">+355 € / −262 €</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">da segunda vida face a um sistema LFP novo, com uma bateria NMC / LFP: decide o preço da bateria usada</div></div>
+<div style="flex: 1 1 200px; min-width: 0; padding: 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline)"><div style="font-size: 28px; line-height: 1.2; font-weight: 700; color: var(--azure)">21–22 g</div><div style="margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-muted)">de CO2eq por kWh entregue nas duas vidas, contra 25 g de um sistema LFP novo</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px">
+<div style="flex: 1 1 380px; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">COMO O VALIDEI</div>
+<ul style="margin: 8px 0 0; padding-left: 20px">
+<li style="margin-top: 8px">Calibrei o modelo NMC com medições de células LG M50T: a perda de lítio fica a 0,40 pontos percentuais (RMSE) nas células de treino e a 2,56 em células de teste a 10 °C.</li>
+<li style="margin-top: 8px">Sem reajustar, reproduz um VW ID.3 de ensaio (94,4 % previsto, 98,0 % medido) e um Tesla Model 3 após 79 100 km (91,4–94,4 % previsto, 91,9 % medido).</li>
+<li style="margin-top: 8px">O modelo de armazenamento acompanha a perda anual de capacidade de 21 sistemas domésticos reais.</li>
+</ul>
+</div>
+<div style="flex: 1 1 380px; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">O QUE AINDA NÃO ESTÁ BEM</div>
+<ul style="margin: 8px 0 0; padding-left: 20px">
+<li style="margin-top: 8px">A frio, o modelo é otimista: a 5 °C entrega 0,3–0,6 Ah a mais do que as células reais.</li>
+<li style="margin-top: 8px">O modelo laboratorial de NMC perdia cerca do triplo do que perderam carros reais; corrigi-o com fatores ajustados a uma frota de seis Smart e confirmei-o noutros veículos.</li>
+</ul>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 24px">
+<a href="https://github.com/TheJohn01/DigitalTwinBattery" style="font-weight: 600">Ver no GitHub →</a>
+<a href="https://battery-twin.streamlit.app/" style="font-weight: 600">Experimentar o dashboard →</a>
+</div>
+</article>
+<div style="display: flex; flex-wrap: wrap; gap: 24px">
+<article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
+<div class="art-hover" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="pinch" aria-label="Arte ASCII das curvas compostas quente e fria em forma de tubos sobre um par de eixos, unidas por barras onde há recuperação de calor, com uma esfera no pinch e uma bomba de calor ligada através dele" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">   .
+  .vc
+   ~:                                                        .-;*
+   ~~                                                    .-;**=:.
+   :~                                                .-;**=:.
+   :~                                            .'~+*=:.
+   -=                                        .'~+*=:'
+   '=                                    '-;**=+'.-:'
+   '=                               .':=*++~.~.-:-.
+   '*                           .-~+*++'~ '--~;~:'
+   .*                        '~~;*::'':-::-'..  .'::.
+   .*                     ';c*:'::::-'.            .~-
+   .c                  ';*c~-:~-.                    ~-
+    *               .:**+-;:~'                        ;-
+    *             -=c==.-:-':~:'.                     .;.
+    c          .~c*~~.::'      '-::~::-''.......  .    :~
+    *         +v=--':-.              ...''-----~'--'''''-'-'
+    *.       .-::-'.                           -:+********;~
+    c.  .'-:-'.            ..                  -:+*******c;:
+    *'---.        .............'''.''''''''''''::+*******c;~............
+    +:-------------''-''''''''''''''''''''''''':;+*+******=;''''''......
+     ..--------::-::::~~:~~~~;=;;===;=========;;++++**++**+;;~~~::---'.
+                                    ............''::::::::::~~~~:--::-
+                                                  ''''--------'.</pre></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">PYTHON · COOLPROP · ANÁLISE PINCH</div>
+<span style="padding: 4px 12px; border-radius: 8px; background: var(--sky-200); font-size: 14px; color: var(--ink)">Publicado</span>
+</div>
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Heatpump-Pinch</h3>
+<p style="margin: 0; color: var(--ink)">Ferramenta em Python para análise pinch e integração de bombas de calor de alta temperatura em processos industriais (CoolProp, Streamlit), validada com casos de referência da literatura.</p>
+<a href="https://github.com/TheJohn01/Heatpump-Pinch" style="font-weight: 600">Ver no GitHub →</a>
+</article>
+<article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
+<div class="art-hover" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="plant" aria-label="Arte ASCII de uma maqueta de instalação: uma coluna de pratos (instalação 1), dois tanques (instalação 2), uma esfera que representa o modelo de aprendizagem automática e um permutador de placas (instalação 3), ligados por tubagens" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">                  .
+           :c;;;;;+:
+           -c     =~
+         ::~==+~  ~=
+         -~=+cc=  :+
+         -;=**cc  -*
+         '~;=**c. -c
+          ~=+c*c. 'c.
+          ~=+*cc-  =~~;;;;~;;~~~;'
+          :~;+*c~       =;      =:
+          -;+*c*;       -:--    ::'.
+          ';=*cc+    .'.-:;*-...':;*.         ..        '
+          .~~=***    ':~;=**~-:~;=*c'       .'-;-....''-~:::::-
+           ~;+ccc.   ':~;=**;-:~;;++--:~:-''::;=;::~~:'~;~~~~;+
+           :;+**c.   .~;=+*c~-:~=*vv~-'.-===***;       ~~;~~~=;
+          .:;=**c==++++cvccc==+cccc*;;;;~=++*+*-''.....~~;~~~+-
+        .''-~**cc*++===+;c*c+++*c***+++++===+*c+++++====~;~~~*+='
+     .'''''-;+=~:----'-~::~;~~=~~;=+;;;;;=;=+*c++++=;;;=~~;;;c+++:'.
+   .'''''''~~~;;~~~~~;~~~~:::::----''''''-:~;;:-----::--;;~==*=;~:-'.
+  ;===;~~~~~::::-----''------::::~~~~;~;~;;;;;;;;;;;;;~~~~~=:'''''''
+   ...''--::::~~;;====+++++++++==;;~~~~~::::------'--------:'''''''''
+                            ....'''--::::~~;;====++*+++++++==;;;~~~~~~
+                                                       ....'''--:::~~-</pre></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">ASPEN PLUS · APRENDIZAGEM AUTOMÁTICA</div>
+<span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px; color: var(--leaf-ink)">Em curso</span>
+</div>
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Do CO2 capturado ao metanol</h3>
+<p style="margin: 0; color: var(--ink)">Três instalações simuladas em Aspen Plus e integradas numa só unidade. Um modelo de aprendizagem automática treinado com os resultados vai alimentar um site onde qualquer alteração aos dados de entrada dá uma resposta fiável.</p>
+
+</article>
+<article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
+<div class="art-hover" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="reactor" aria-label="Arte ASCII de um reator horizontal sobre apoios, com fundos abaulados, bocais flangeados e bainhas de termopares, em corte para mostrar o leito de partículas de catalisador" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">
+                    ~'    ':     -.     '      .
+             '~;:   ;~    -+     =:     *'     =:
+           .:c=-:+=;=;;~~~;=:::--=~-''''+'.....=-   .''
+          .'c~ 'c*+*+*++*=*=*==+=*;++=*=*=+*=*==+-..'-~'....
+   '~' .  .~+  +c=*+=c;v;c++c=c+***c+**+c+**+c=**'  '-~' .'-:
+  '++:-''':*;.'cc*ccccccvccvccc+c**c=c+**=c++*;c+.  '';' .'-~:
+  .cv+~-::~*=:~cccccc*c**c*c***+c+***c+***c***cc*...'-+'.'-:;+     .
+    . '~;;;*+~;c*+*+*+**********c*c*ccccccccc*c*+---::+---:~=+=---:~-
+       ~+++*c+=*++***++++**c*cc*c*****+*++*+*++*=:::~~*:::~=+*vc**+=:
+        :cvc*cc************+++++++*+**+*+**+*+**=;;;;=c;~;=+*;...'=+.
+          .:*cc*+++c***ccccccccccccc************++++=+c+=+**+''.
+           ...-:;==*****:::::~~;;===+++***cc***ccccc***cccc+:---'.
+              -:;==***=:::::::::::::::::::::===+~~;*c+=++=:::::::-'....
+               .:==**;::---:::::::::::::::::===+:::::::::::::::::::::::-
+                 --:.         ......''''---:===+:::::::::::::::::-...''.
+                                           .++++:-'.''-:::--:-''.
+                                            ....           .</pre></div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">ASPEN PLUS V15 · CINÉTICA · PROJETO DE GRUPO</div>
+<span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px; color: var(--leaf-ink)">Em curso</span>
+</div>
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Reator de metanação de Sabatier</h3>
+<p style="margin: 0; color: var(--ink)">Projeto de grupo, acompanhado por um professor: um reator de metanação de CO2 com catalisador de Ni/SiO2, modelado em Aspen Plus como reator de escoamento pistão (RPlug), com cinética de Langmuir–Hinshelwood–Hougen–Watson. Seguem-se a análise de sensibilidade e a otimização.</p>
+
+</article>
+</div>
+</div>
+</section>
+
+<section id="research" class="rv" style="margin-top: 96px; border-radius: 40px; padding: 48px; background: var(--leaf); color: var(--on-leaf); display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3">INVESTIGAÇÃO</div>
+<h2 style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600">Uma folha em vez de sulfitos</h2>
+<p style="margin: 0; max-width: 36em">Será que um extrato de folhas de <i>Eucalyptus globulus</i> estabiliza o vinho tinto tão bem como o dióxido de enxofre? O artigo testa-o como alternativa natural.</p>
+<p style="margin: 12px 0 0; font-size: 14px; line-height: 1.5"><i>Eucalyptus globulus Leaf Extract as a Natural Alternative to Sulphites in Red Wine Stabilization.</i> U.Porto Journal of Engineering, 12(3), 40–59.</p>
+<a href="https://doi.org/10.24840/2183-6493_012-003_003606" class="btn2" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; padding: 0 24px; border-radius: 999px; background: var(--surface); color: var(--azure); font-weight: 600; text-decoration: none; border: 1px solid var(--line); box-sizing: border-box">Ler o artigo</a>
+</div>
+<div class="art-hover" style="flex: 0 0 auto; max-width: 100%; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--leaf); box-sizing: border-box"><pre role="img" data-ascii="wine" aria-label="Arte ASCII de um copo de vinho tinto meio cheio, uma garrafa de vinho, um pequeno frasco conta-gotas com pipeta e raminhos de folhas de eucalipto" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--on-leaf)">
+
+                                                                   .:~::-
+                                                                   +c**cv.
+                                                                   ;****+
+                                                                   =++**=
+                                                                   =+***;
+                                                                   =***c-
+                                                                   =***v.
+                                                                   =***c
+                                                                  .****c.
+                                           .''.'....''''.      .~+c*****c=-
+                                          -;~--'...''--~;-    -c*+*c******c+.
+                                         -::.....''.....':-   +****+********~
+                                        .~:...   .   ....'~.  +************c:
+                                        -:-... .      ...':-  c************v'
+                                        ~--...        ....--  c************v.
+                                        ::-...        ....::  c************c
+                                        -c*+=;~::::::~;=+*v' .v*************
+                                         +*****cccccc*****+  .v************+
+                            .;;.         .c***************.  .c************=
+                            ;*c~          .+c**********c=.   'c************;
+                            ~**=            -+cc****cc+-     -c************:        .....
+                            c**v-             .'~==:'.       :c***********c' ...............
+                            c**c:                ''          ~************c''''''''''''.....      .
+                           -=+**+~               ''       ..';************c''''''''''''...      ...
+                          -+====+*:              -'    .'''''=*************''''''''''''..
+                          -++*++**=              -.  .'--''''=************+'-;::::-'..
+                          .~===+++=    .''----'  :'  .'------=******c*****=--:~~~~~-
+                          .--:~;=++---------''---~'----------;c**c=;~~=+cc=-'..-:;;'.
+                     .''.  :-:~;=++-------.'::---~-----:-'''''-;+**;::::;;.'-~;;;'.
+                    -----:-=+++*==;-:-'.   ~-----::-------::'  .'-:;~::~;;;~:'-~;~'.
+       ...'''.     .::::-:;~=+*+-----~'.   .:---::-----:~:--:~-~--~;::~:''.   -------'
+      :*cccccv''''---~~~:;~~:'..:---:;-:'   -----~+;----~~---:;~:~:;;--~'      -~::::~'    .'.
+      -*cc***=.......~~~~~~~~;='':~~;~::.   .:~:~;~;~;~;;~:~~;~;~':~=;;~:.   ....-~~~~~:~;~;~;~
+                   .~~~~~~~~~==;~;;~~~~~~~:::-:~~:~~~~~;;;~~~~~~===;=;;;;==;;;;==;;;~::-'':~~~;-
+                   ;~~~~~~;=;:.   -;~~~~~~;~--:-~~~~~~~;::;~~~~;;-        -~~~~~~         .;;;~.
+                   .:~===;:'     -~~~~~~;=:     ;;~~~;;~--==;==;'         -;~~~=.          .''.
+                                 :;;;;~~-.      .-~~~:-.   --'.           .~;;:.</pre></div>
+</section>
+
+<section id="experience" style="margin-top: 96px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<div style="flex: 999 1 560px; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">PERCURSO</div>
+<h2 class="rv" style="margin: 12px 0 0; font-size: 28px; line-height: 1.2; font-weight: 600">Onde trabalhei e estudei</h2>
+<div class="rv" style="margin-top: 32px; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
+<div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline);">
+<div aria-hidden="true" style="position: relative; flex: 0 0 28px; align-self: stretch">
+<span style="position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.55; color: var(--azure); white-space: pre">o--</span>
+<div class="tl-line" style="position: absolute; left: 3.5px; top: 17px; bottom: -41px; border-left: 1.5px solid var(--azure)"></div>
+</div>
+<div style="flex: 1 1 auto; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">2025 — PRESENTE</div>
+<h3 style="margin: 4px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Mestrado em Engenharia Química</h3>
+<div style="font-size: 14px; color: var(--ink-muted)">FEUP, Universidade do Porto</div>
+<p style="margin: 8px 0 0">1.º ano a tempo parcial, em paralelo com as últimas unidades curriculares da licenciatura.</p>
+</div>
+</div>
+<div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline);">
+<div aria-hidden="true" style="position: relative; flex: 0 0 28px; align-self: stretch">
+<span style="position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.55; color: var(--azure); white-space: pre">o--</span>
+<div class="tl-line" style="position: absolute; left: 3.5px; top: 17px; bottom: -41px; border-left: 1.5px solid var(--azure)"></div>
+</div>
+<div style="flex: 1 1 auto; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">VERÃO DE 2026</div>
+<h3 style="margin: 4px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Estágio de verão</h3>
+<div style="font-size: 14px; color: var(--ink-muted)">Bondalti Chemicals, Estarreja</div>
+<p style="margin: 8px 0 0">Na área de Produção de Anilina e Derivados, desenvolvi em Power Apps, Power Automate e SharePoint uma plataforma que gera testes para avaliar os conhecimentos dos operadores da instalação de mononitrobenzeno (MNB).</p>
+</div>
+</div>
+<div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline);">
+<div aria-hidden="true" style="position: relative; flex: 0 0 28px; align-self: stretch">
+<span style="position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.55; color: var(--azure); white-space: pre">o--</span>
+<div class="tl-line" style="position: absolute; left: 3.5px; top: 17px; bottom: -41px; border-left: 1.5px solid var(--azure)"></div>
+</div>
+<div style="flex: 1 1 auto; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">AGOSTO DE 2026</div>
+<h3 style="margin: 4px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Assistente de laboratório (sazonal)</h3>
+<div style="font-size: 14px; color: var(--ink-muted)">Casa de Nabais, Seara, Ponte de Lima</div>
+<p style="margin: 8px 0 0">Preparação e padronização de soluções e reagentes de análise durante a campanha de vindima. Controlo de qualidade de mostos e vinhos (pH, acidez total, SO₂, grau alcoólico) e acompanhamento das fermentações.</p>
+</div>
+</div>
+<div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline);">
+<div aria-hidden="true" style="position: relative; flex: 0 0 28px; align-self: stretch">
+<span style="position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.55; color: var(--azure); white-space: pre">o--</span>
+<div class="tl-line" style="position: absolute; left: 3.5px; top: 17px; bottom: -41px; border-left: 1.5px solid var(--azure)"></div>
+</div>
+<div style="flex: 1 1 auto; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">VERÃO DE 2024</div>
+<h3 style="margin: 4px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Estágio de verão</h3>
+<div style="font-size: 14px; color: var(--ink-muted)">Simoldes Plásticos, Oliveira de Azeméis</div>
+<p style="margin: 8px 0 0">Análises laboratoriais de formaldeído na indústria de polímeros. Fiz a revisão integral do protocolo de análise e reescrevi-o, com modificações e acrescentos, para o tornar mais claro.</p>
+</div>
+</div>
+<div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline);">
+<div aria-hidden="true" style="position: relative; flex: 0 0 28px; align-self: stretch">
+<span style="position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.55; color: var(--azure); white-space: pre">o--</span>
+<div class="tl-line" style="position: absolute; left: 3.5px; top: 17px; bottom: -41px; border-left: 1.5px solid var(--azure)"></div>
+</div>
+<div style="flex: 1 1 auto; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">VERÃO DE 2023</div>
+<h3 style="margin: 4px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Estágio de verão</h3>
+<div style="font-size: 14px; color: var(--ink-muted)">INL — International Iberian Nanotechnology Laboratory, Braga</div>
+<p style="margin: 8px 0 0">Investigação em tratamento de efluentes. Estudei a injeção de ozono na remoção de micropoluentes e, numa segunda fase, fiz ensaios de adsorção com azul de metileno.</p>
+</div>
+</div>
+<div style="display: flex; gap: 16px; padding: 16px 0;">
+<div aria-hidden="true" style="position: relative; flex: 0 0 28px; align-self: stretch">
+<span style="position: absolute; left: 0; top: 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.55; color: var(--azure); white-space: pre">o--</span>
+
+</div>
+<div style="flex: 1 1 auto; min-width: 0">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">2021 — 2026</div>
+<h3 style="margin: 4px 0 0; font-size: 20px; line-height: 1.3; font-weight: 600">Licenciatura em Engenharia Química</h3>
+<div style="font-size: 14px; color: var(--ink-muted)">FEUP, Universidade do Porto</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<aside style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 24px; padding-top: 72px">
+<div class="rv lift" style="padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Competências</h3>
+<div class="rv" style="margin-top: 16px"><div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">SIMULAÇÃO</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Aspen Plus</span></div></div>
+<div class="rv" style="margin-top: 16px"><div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">PROGRAMAÇÃO E DADOS</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Python</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">MATLAB</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Scilab</span></div></div>
+<div class="rv" style="margin-top: 16px"><div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">LABORATÓRIO</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Espetroscopia UV-Vis</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Controlo de qualidade</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Preparação de soluções</span></div></div>
+<div class="rv" style="margin-top: 16px"><div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">PROCESSOS</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Tratamento de efluentes</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Ozonização catalítica</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Adsorção</span></div></div>
+<div class="rv" style="margin-top: 16px"><div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">SOFTWARE</div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Excel</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Power Apps</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Power Automate</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">SharePoint</span><span style="padding: 4px 12px; border-radius: 8px; background: var(--ground); border: 1px solid var(--hairline); font-size: 14px">Microsoft Lists</span></div></div>
+</div>
+<div class="rv lift" style="padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600">Idiomas</h3>
+<div style="margin-top: 12px; display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--hairline)"><span>Português</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--azure); display: inline-block; overflow: hidden; white-space: nowrap; width: 14ch; vertical-align: bottom" class="type" aria-label="Nativo">[#####] nativo</span></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; padding: 8px 0"><span>Inglês</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--azure); display: inline-block; overflow: hidden; white-space: nowrap; width: 10ch; vertical-align: bottom" class="type" aria-label="C1">[####.] C1</span></div>
+</div>
+</aside>
+</section>
+
+<section aria-labelledby="bench" class="rv" style="margin-top: 96px; padding: 48px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+<div class="art-hover" style="flex: 0 1 380px; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box"><pre role="img" data-ascii="phone" aria-label="Arte ASCII de um telefone de disco com o auscultador pousado e um fio em espiral" style="font-family: 'JetBrains Mono', monospace; font-size: 7px; line-height: 1.09; color: var(--azure)">
+                   '~======;;;;;;;;;;;;;;;;~~:.
+           .-:;++++=;==============+++++++++++*+===~-.
+         '=*+++++++************************+++=;=++++**=:
+        '*++;=+++******************************=;~;+++++*=
+        .***********c=::***c:::::::~~~c**+~;*c************
+        ;+*cvvccvc*~.   *+*c          c+*~   '+cc*****cc=.
+      .+*c;...''.    .  ++*c.         c+*~     .-~;;;~-.
+     -+cv:        '=*c***+**********++*+**++++=~.
+    :*cv'       .;+++++=++++++========+++++++==++.
+   :++c:      .~*+++++++++++====++++++++++++===++=
+  .=+*+      '*;~~;;;=+=++++++++*+++++=++++++++++*-
+  '++*;      *++++++*+++++===+==+++++*++++++++++++*
+  .++c*     ~+++++++++***+++***+++**++++***+++++++*~
+   ~+*v-    *++++++++++***+++**++*cc*++===*+++++++**----''''--'''..
+   .=+*c'  ~++++*++*c**+++++*++++++=+**c****++++++**;--------------'.
+    .==*c-.+++++++++++++++==;;;==++++***+++****++++*+-------:------'.
+     .;***=++++++++ccc+++=========+++++++++******++**~----'.......
+       :+*++++++++++++++++========+++++++++*******++*+-----.
+        .;+++++++++++**++++++++++**++++++++********+**:----.
+         +++++++++++++++***+++*+++***++++********++++*=---'
+         =*************++**++***++**+++*******+++++++**::'
+          ':~~~;;;;====+++++****cccccccccccccccc*****c+:'
+                                     ......''''---:::-.</pre></div>
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">NA BANCADA</div>
+<h2 id="bench" style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600">Um telefone de disco que responde</h2>
+<p style="margin: 0; max-width: 36em">Um modelo de linguagem local a que só se acede por voz, através de um antigo telefone de disco. Um Raspberry Pi fica escondido dentro do telefone. Sem ecrã, sem teclado, sem nuvem.</p>
+<span style="align-self: flex-start; padding: 4px 12px; border-radius: 8px; background: var(--sky-200); font-size: 14px; color: var(--ink)">Em planeamento</span>
+</div>
+</section>
+
+</div>
+
+<a href="#top" class="totop btn2" aria-label="Voltar ao topo" style="position: fixed; right: 24px; bottom: 24px; z-index: 30; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 999px; background: var(--surface); color: var(--azure); border: 1px solid var(--line); box-shadow: var(--shadow-dew); text-decoration: none"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
+<footer id="contact" style="margin-top: 96px; background: var(--deep); color: var(--on-deep)">
+<div style="max-width: 1120px; margin: 0 auto; padding: 48px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
+<pre aria-hidden="true" data-ascii="drops" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.2; color: var(--on-deep)">.  o  O  o  .  o  O  o  .</pre>
+<h2 style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600; color: var(--on-deep)">Vamos conversar.</h2>
+<p style="margin: 0; max-width: 32em; color: var(--on-deep)">Perguntas sobre um projeto, uma dissertação ou um estágio são sempre bem-vindas.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; font-size: 16px">
+<a href="mailto:tomascaldas2016@gmail.com" style="color: var(--on-deep)">tomascaldas2016@gmail.com</a>
+<a href="https://www.linkedin.com/in/joao-tomas-caldas/" style="color: var(--on-deep)">linkedin.com/in/joao-tomas-caldas</a>
+<a href="https://github.com/TheJohn01" style="color: var(--on-deep)">github.com/TheJohn01</a>
+</div>
+</div>
+<div style="max-width: 1120px; margin: 0 auto; padding: 0 48px 32px; box-sizing: border-box; font-size: 14px; color: var(--on-deep)">© 2026 João Tomás Lima Caldas</div>
+</footer>
+
+</div>
+<script>
+(function () {
+var RAMP = " .'-:~;=+*cvxo";
+var ART_DAY = {"hero": "\n\n                                                                                          .---.\n                                                                                         ;:...:-\n                                                                                         ~.   .~\n                                                                                         -:''-~.\n                                                                              ....        .'-.\n                                                                           .-==;;==:.\n                                                                          '=~..  .':=.\n                                                                          =:       .-=\n                                                                         .+'        '+\n                                                                          ;:.      .;'\n                                                                           :;-'..':='\n                                                                            .':::-.\n\n                                              ...-'''''-'..\n                                        .-~+cccxc**+++**vxvv*+~'.\n                                    .-=vv*+;;~~~~~~~~~~~~~~~;=+cvc;'\n                                 .:*x*=;~~;;==++===========;;~~~~;=cx+-             .':~~=;=;~:'.\n                               .=v*=~~;==+==;~~:---------::~~;;;;~~~~=cv;.       .-=++=====;;;;=++:.\n                             .+x+;~;=+==~:-''................'--:~~~~:~;*x;.    :*===~-'.....'-:~~;*~.\n                           .;v+;~;=+=~:'......             ......'-:~~~::;*v: .*==;-..         ..':~;*'\n                          -x*;~;=+;:-....                       ....'-:~::~;cv*;=-.               .':~*'\n                         ;v=~~=+;:-....                           ....'-::::;c;=-.                 .':~c.\n                        +v;~;==~-...                                 ...'-:::;=:.                   .'-==\n                       +c;~;+=:'...                                   ...'-::~;'.                   ..-~c\n                      ;v;~;+=:'..                                       ...'-:;'                    ..'~v\n                     'v=~;+=:'..                                         ...'-~'.                   ..'==\n                     x+~~==~'..                                           ...'::.                  ..':c'\n                    :v;~;+;-..                                            ...'':-..               ..':+~\n                    c*~~==:'..                                             ...'-:-'..           ...'~*~\n                   .o=~;=;-...                                             ...''-~:-'...........'':++'\n                   'x=:;=~-..                                               ...'':=*;:-'''''''-~=*='\n                   ;v;:;=~'..                                               ...''-~+x;=**+=+**;~'.\n                   ;v;:;=~'..                                               ...''-~=x.\n                   .x=:~;~-..                                              ....''-~+x\n                    o+~~;~-...                                             ....'':;*c\n                    **~:;;:'..                                             ....'-:=v~\n                    -v=:~;~-...                                           ....''-;+o.\n                     c*;:~~:'...                                         .....'-~=v;\n                     .x+~:~~-'...                                       .....'-:=*v\n                      -v=~:~~-'...                                     .....'-:;+x.\n                       :v=~:~:-'...                                  ......'-:;+x'\n                        ~x+~::::-'...                               .....''-:=*x'\n             ..---'.     'x*;::::-'.....                         ......''--~=cc.\n          .~===;;;;==~'   .*v=~:::--'......                   .......'''-~=+x;\n        .;+;~-.....'-:;=.   -cc=~::---''..........     ............''--~;+v*.\n       -==:.         .':*.    :vc=~::---''''...................''''-:~=+vc-\n      '*=-.           .':*      -*v*=~::---'''''.........''''''--:~;+cv+'\n      +;~.             .'*.       .~cx*+;~~::----'''''''----::~;=+cv+:\n      c;-              .'*.          .:+cvv*+==;;;~~~~;;;;=++*vv*;-.\n      =;:.             .:*               .':;+*ccvvcccvvcc*+;-.\n      .+~'.          ..-+'                       ... ...\n       -+~-..      ..':*-\n        .;=~-''..''-;+~.\n          .'~;+==+;~'", "battery": "\n                                                                               ............................  ....\n                            ............................................'''''''''''''''''''''''''''''''''''''''''.\n                            .................................................''''''''''''''''''''''''''''''''''''.\n                            .................................................''''''''''''''''''''''''''''''''''''.\n                            .....*.................................::........''''''''''''''''''''''''''''''''''''\n                            .....*==;~~:-''........................~~.......'''''''''''''''''''''''''''''''''''''\n                            .....c::~;;++*c**+;~:''................~~.......'''''''''''''''''''''''''''''''''''''\n                            .....*.........'':~;+*cc*+=;~:-''......~~.......'''''''''''''''''''''''''''''''''''''\n                            .....*.................':;=*cvc*+===;~:;~'......'''''''''''''''''''''''''''''''''''''\n                            .....*'.....................''~=+cc*++=+*++=;~-'''''''''''''''''''''''''''''''''''''.\n                            .....+:-~~~'...-~::~;'....~~~~~~-.':=*xv*;;;;~=++++=~~~~~:'''''-~~~~~~:'''''''''''''.\n                            .....+-....................''''''.....'==+cc*;-'''-:~;=+++=~:-''----::-'''''''''''''\n                            .....=-................................=-.'-~+cv*;-''''''-:~;+**+;~-''''''''''''''''\n                            .....;;................................+-.....'-~+vv+~''''''''''-~;+**+;~-''''''''''\n                             ....~;.....'''----...................'+-''.....'''-;*vc=-''''''''''''-:;:''''''''''\n                             ....~;'-''.:;=*cc='--~:........''''-~~;=+*~'''''''''''~+vv=:'''''''''''''''''''''''\n                             ....':'-:::~~;==+**cc**.......':::--:~;=+=;;;=*~''''''''':=cv+~'''''''''''''''''''.\n                             ......'--::~;;=+*******.......'---:::~;;=++****;''''''''''''-;cv+~''''''~~''''''''.\n                              .....'--::~;;=+*******.......'---::~~;==+*****;'''''''''''''''-;cv+:'''''''''''''.\n                                   '--::~;;=+*******.....'.'---::~~;==+*****;''''''''''''''''''-=vv=-''''''''''\n                                   '--::~;;=+*******       '---::~~;==+*****;....................'-=+..........\n                                   --:::~;;=+******c.      '---::~~;==+*****:\n                                   -;;====+++*cccccv.      ~~~~~~~;;==+*****~\n                                   -;;;===++**cccccv.      ~;;;;==+++**ccccc:\n                                   -;;;===++**cccccv.      ~;;;;===++**ccccc:\n                                   -;;;===++**cccccv.      ~;;;;===++**ccccc:\n                                   ';;;===++**cccccv.......~;;;;===++**ccccc:..\n                                   ';;;===++**cccccc-''''''~;;;;===++**ccccc:'''''''........\n                                   ';;;===++**cccccc--''''-~;;;;===++**ccccc-''''''''''''''''''''''''''...........................................\n                                   .;;;===++**cccccv'.''''-~;;;;===++**ccccc:---------------------------------''''''''''''''''''''''''''''''''''....\n                                    ;;;===++**cccccv.      ~;;;;===++**ccccc:---------------------------------------------''----''''''''......\n                        .'''''''....:~;;==++**ccc**c.      ~;;;;===++**ccccc:---'''''''''''''----------------------''''''''.....\n                     .'-'''''''''''''--:~~;==+******~~::--'-:~;===++***ccc**\n                  .'-''''''''''''''''--:~~;==+******+++++++;---:~~;;=+******::--''...\n               .'--'''''''''''''''''---:~~;==+******+++++++:---::~~;=++****++++++++**+*+++==;;;~~:::-.\n            .'--''''''''''''''''''''-:~;;==++*cccc*+==;;~~:----::~;;=++****++++++++++++++++++++++++++=--'..\n         .'--''''''''-'''''''''''''''''---:~::---''''''''''-:~~~~~;;=+***cc*++++==;;;+++++++++===;;~;+::--''.\n      .'--'''''''''''-+**+++=;~~~:::--''''''''''''''''''''''''-:~;;;;==;;::--''''''':++~~:::--------~+::--'..\n    .'''''-------'''''-----::~~;;;==+++***+*+=;;~~:::---'''''''''''''''''''''''''''-=+=-'''''''''''-~+::..\n    ~;;;~~:::-----''''''''------------------:~~;;;;=+++*****++=;;~~:::---''''''''''~+*:-------------~+::\n    -*ccc**+++=====;;;;~~~:::-----'''''''-------------------::~~;;;=++++*****++=;;;+*=--------------~+::.\n       ..'-:~~;=++*ccccc**+++=====;;;;;~~::::-----'''''''--------------------::~~;;=;---------------~+::.\n                     ...'-:~~;=++*ccccc**++++====;;;;;~~~:::------''''''''--------------------------~+::.\n                                    ...'-:~;;=++*ccccc**++++====;;;;;;~~~:::------'''''''''---------~+::'\n                                                   ..''-:~;;=+**ccccc**++++====;;;;;;~~~::::--------~+::'\n                                                                  ..''::~;;++*cccccc*+++++====;;;;;;+c::-\n                                                                                 ..'-:~~;;++*cccccccc+::'\n                                                                                                ..'--'.", "pinch": "   .\n  .vc\n   ~:                                                        .-;*\n   ~~                                                    .-;**=:.\n   :~                                                .-;**=:.\n   :~                                            .'~+*=:.\n   -=                                        .'~+*=:'\n   '=                                    '-;**=+'.-:'\n   '=                               .':=*++~.~.-:-.\n   '*                           .-~+*++'~ '--~;~:'\n   .*                        '~~;*::'':-::-'..  .'::.\n   .*                     ';c*:'::::-'.            .~-\n   .c                  ';*c~-:~-.                    ~-\n    *               .:**+-;:~'                        ;-\n    *             -=c==.-:-':~:'.                     .;.\n    c          .~c*~~.::'      '-::~::-''.......  .    :~\n    *         +v=--':-.              ...''-----~'--'''''-'-'\n    *.       .-::-'.                           -:+********;~\n    c.  .'-:-'.            ..                  -:+*******c;:\n    *'---.        .............'''.''''''''''''::+*******c;~............\n    +:-------------''-''''''''''''''''''''''''':;+*+******=;''''''......\n     ..--------::-::::~~:~~~~;=;;===;=========;;++++**++**+;;~~~::---'.\n                                    ............''::::::::::~~~~:--::-\n                                                  ''''--------'.", "plant": "                  .\n           :c;;;;;+:\n           -c     =~\n         ::~==+~  ~=\n         -~=+cc=  :+\n         -;=**cc  -*\n         '~;=**c. -c\n          ~=+c*c. 'c.\n          ~=+*cc-  =~~;;;;~;;~~~;'\n          :~;+*c~       =;      =:\n          -;+*c*;       -:--    ::'.\n          ';=*cc+    .'.-:;*-...':;*.         ..        '\n          .~~=***    ':~;=**~-:~;=*c'       .'-;-....''-~:::::-\n           ~;+ccc.   ':~;=**;-:~;;++--:~:-''::;=;::~~:'~;~~~~;+\n           :;+**c.   .~;=+*c~-:~=*vv~-'.-===***;       ~~;~~~=;\n          .:;=**c==++++cvccc==+cccc*;;;;~=++*+*-''.....~~;~~~+-\n        .''-~**cc*++===+;c*c+++*c***+++++===+*c+++++====~;~~~*+='\n     .'''''-;+=~:----'-~::~;~~=~~;=+;;;;;=;=+*c++++=;;;=~~;;;c+++:'.\n   .'''''''~~~;;~~~~~;~~~~:::::----''''''-:~;;:-----::--;;~==*=;~:-'.\n  ;===;~~~~~::::-----''------::::~~~~;~;~;;;;;;;;;;;;;~~~~~=:'''''''\n   ...''--::::~~;;====+++++++++==;;~~~~~::::------'--------:'''''''''\n                            ....'''--::::~~;;====++*+++++++==;;;~~~~~~\n                                                       ....'''--:::~~-", "reactor": "\n                    ~'    ':     -.     '      .\n             '~;:   ;~    -+     =:     *'     =:\n           .:c=-:+=;=;;~~~;=:::--=~-''''+'.....=-   .''\n          .'c~ 'c*+*+*++*=*=*==+=*;++=*=*=+*=*==+-..'-~'....\n   '~' .  .~+  +c=*+=c;v;c++c=c+***c+**+c+**+c=**'  '-~' .'-:\n  '++:-''':*;.'cc*ccccccvccvccc+c**c=c+**=c++*;c+.  '';' .'-~:\n  .cv+~-::~*=:~cccccc*c**c*c***+c+***c+***c***cc*...'-+'.'-:;+     .\n    . '~;;;*+~;c*+*+*+**********c*c*ccccccccc*c*+---::+---:~=+=---:~-\n       ~+++*c+=*++***++++**c*cc*c*****+*++*+*++*=:::~~*:::~=+*vc**+=:\n        :cvc*cc************+++++++*+**+*+**+*+**=;;;;=c;~;=+*;...'=+.\n          .:*cc*+++c***ccccccccccccc************++++=+c+=+**+''.\n           ...-:;==*****:::::~~;;===+++***cc***ccccc***cccc+:---'.\n              -:;==***=:::::::::::::::::::::===+~~;*c+=++=:::::::-'....\n               .:==**;::---:::::::::::::::::===+:::::::::::::::::::::::-\n                 --:.         ......''''---:===+:::::::::::::::::-...''.\n                                           .++++:-'.''-:::--:-''.\n                                            ....           .", "wine": "\n\n                                                                   .:~::-\n                                                                   +c**cv.\n                                                                   ;****+\n                                                                   =++**=\n                                                                   =+***;\n                                                                   =***c-\n                                                                   =***v.\n                                                                   =***c\n                                                                  .****c.\n                                           .''.'....''''.      .~+c*****c=-\n                                          -;~--'...''--~;-    -c*+*c******c+.\n                                         -::.....''.....':-   +****+********~\n                                        .~:...   .   ....'~.  +************c:\n                                        -:-... .      ...':-  c************v'\n                                        ~--...        ....--  c************v.\n                                        ::-...        ....::  c************c\n                                        -c*+=;~::::::~;=+*v' .v*************\n                                         +*****cccccc*****+  .v************+\n                            .;;.         .c***************.  .c************=\n                            ;*c~          .+c**********c=.   'c************;\n                            ~**=            -+cc****cc+-     -c************:        .....\n                            c**v-             .'~==:'.       :c***********c' ...............\n                            c**c:                ''          ~************c''''''''''''.....      .\n                           -=+**+~               ''       ..';************c''''''''''''...      ...\n                          -+====+*:              -'    .'''''=*************''''''''''''..\n                          -++*++**=              -.  .'--''''=************+'-;::::-'..\n                          .~===+++=    .''----'  :'  .'------=******c*****=--:~~~~~-\n                          .--:~;=++---------''---~'----------;c**c=;~~=+cc=-'..-:;;'.\n                     .''.  :-:~;=++-------.'::---~-----:-'''''-;+**;::::;;.'-~;;;'.\n                    -----:-=+++*==;-:-'.   ~-----::-------::'  .'-:;~::~;;;~:'-~;~'.\n       ...'''.     .::::-:;~=+*+-----~'.   .:---::-----:~:--:~-~--~;::~:''.   -------'\n      :*cccccv''''---~~~:;~~:'..:---:;-:'   -----~+;----~~---:;~:~:;;--~'      -~::::~'    .'.\n      -*cc***=.......~~~~~~~~;='':~~;~::.   .:~:~;~;~;~;;~:~~;~;~':~=;;~:.   ....-~~~~~:~;~;~;~\n                   .~~~~~~~~~==;~;;~~~~~~~:::-:~~:~~~~~;;;~~~~~~===;=;;;;==;;;;==;;;~::-'':~~~;-\n                   ;~~~~~~;=;:.   -;~~~~~~;~--:-~~~~~~~;::;~~~~;;-        -~~~~~~         .;;;~.\n                   .:~===;:'     -~~~~~~;=:     ;;~~~;;~--==;==;'         -;~~~=.          .''.\n                                 :;;;;~~-.      .-~~~:-.   --'.           .~;;:.", "phone": "\n                   '~======;;;;;;;;;;;;;;;;~~:.\n           .-:;++++=;==============+++++++++++*+===~-.\n         '=*+++++++************************+++=;=++++**=:\n        '*++;=+++******************************=;~;+++++*=\n        .***********c=::***c:::::::~~~c**+~;*c************\n        ;+*cvvccvc*~.   *+*c          c+*~   '+cc*****cc=.\n      .+*c;...''.    .  ++*c.         c+*~     .-~;;;~-.\n     -+cv:        '=*c***+**********++*+**++++=~.\n    :*cv'       .;+++++=++++++========+++++++==++.\n   :++c:      .~*+++++++++++====++++++++++++===++=\n  .=+*+      '*;~~;;;=+=++++++++*+++++=++++++++++*-\n  '++*;      *++++++*+++++===+==+++++*++++++++++++*\n  .++c*     ~+++++++++***+++***+++**++++***+++++++*~\n   ~+*v-    *++++++++++***+++**++*cc*++===*+++++++**----''''--'''..\n   .=+*c'  ~++++*++*c**+++++*++++++=+**c****++++++**;--------------'.\n    .==*c-.+++++++++++++++==;;;==++++***+++****++++*+-------:------'.\n     .;***=++++++++ccc+++=========+++++++++******++**~----'.......\n       :+*++++++++++++++++========+++++++++*******++*+-----.\n        .;+++++++++++**++++++++++**++++++++********+**:----.\n         +++++++++++++++***+++*+++***++++********++++*=---'\n         =*************++**++***++**+++*******+++++++**::'\n          ':~~~;;;;====+++++****cccccccccccccccc*****c+:'\n                                     ......''''---:::-.", "drops": ".  o  O  o  .  o  O  o  ."};
+var ART_DUSK = {"hero": "\n\n                                                                                          '''-.\n                                                                                         ~.;  '-\n                                                                                         -    .~\n                                                                                         :-..'~.\n                                                                              ....        .'-.\n                                                                           .:~---:;:.\n                                                                          -;.'c.   .=.\n                                                                         .=. .:     '=\n                                                                         .=         .+\n                                                                          ;'       .~-\n                                                                          .:~'....-;'\n                                                                            .-:::-'\n\n                                              .''------:'..\n                                        .:;*cvcxc*+++++*cvcvc+~-.\n                                    .:+vv*+;;~::--'''''--::~;=+cvc=-.\n                                 .~*v*=;:-'...             ...'-:;=cv*-.            .':;;===;;:-.\n                               '+v*=~-..                        ..':~=cv=.       .:=+;-''...''-;++~.\n                             .+x+;:'.                              ..':;+x=.   .~*~'.          ..'~*;.\n                           .=v+~-..                                   .':;+v~ '*;.                ..;*'\n                          -x*;:.                                        .':;cv*-.    :oo~           .:*-\n                         =v=~'.                                           .-~c:     .*oo=             :c.\n                        *c;:.          .-~;~:'                             .-;.      .'.              .;=\n                       +c;:.          -=xxxxx='                              '                        .:c\n                      =c;:.          ';xvcccx*:.                                                      .:v\n                     -x=:.           ';xxvvxx='                                                       '~+\n                     x+~'             ';*cc+~'                                                       .-*'\n                    ~v;:.              .....                                   .                    .-=;\n                    v+~'                                                        '.                 .-+~\n                   .o=:.                                                        ':-.            ..-=+'\n                   'x;:.                                                        .-;+;-'.......'-~+='\n                   =v;-.                                                        .'-=x=;++=;=++;~-.\n                   ;v;-.                                                        .'-=o'  .....\n                   'x;:.                                                       ..'-=x\n                   .o=:.                                                       .'-:*c\n                    c*~-.                                                      .'-~v;\n                    -x=:.                                                     ..--=o.\n                     c*~-.                                                    .'-~v;\n                     'x+~'.                                                  .'-:*v.\n                      :x=:'.                                                .'-:+x'\n                       ~v=:'.                                              .'-:+x'\n                        ~x=~-.                                           ..'-:+x'\n             ..---'.     -x*;:'.                                       ..'--~cc.\n          ';=~--'--;=;'   .*v=~-.                                    ..''-:+x;\n        .;~'.       ..;=.   -cc=~-'.                               ..''-:=v*'\n       -='  ''         -+'    :vc=~:''.                        ...''--:=vc-\n      '*.  -oo.         -+      :*v+;~:-''...             ....'''--:;*v+'\n      +-   .'.          .+.       ';cv*=~::--'''''''''''''''---:~=cv+:.\n      c.                .=.          .:+cvc+=;~~:::::::::~~;=*vvc;-.\n      =-                '+               .'~;+*ccvvcccvvcc*+;-.\n      '+.              '='                       .......\n       -+-.          .-=-\n        .;=:'..  ..':=~.\n          .'~;=;;=;~'.", "battery": "\n                                ... .......'''''''-::::::::::~~~~~~~~~~~~~~~~~;;;;;;;;;;;;;;;;;;;;;;;;;;~~~~~~~~~-\n                           ;ccccvvccvvvvvvvvvvvvvvccccccccccc**************************************++++++++++++++;\n                           =ccccccccccccccccccccccccccccc******************************************++++++++++++++~\n                           =cccccvccccccccccccccccccccccc******************************************++++++++++++++:\n                           ;ccccv;ccccccccccccccccccccccc******************************************+++++++++++++*'\n                           ~ccccv;+=+**ccvvcccccccccccccc**********++******************************+++++++++++++*.\n                           ~ccccv~vc**+==;;;;=+*ccccccccc**********++******************************++++++++++++++\n                           'vcccc;vcccccccccvc*+=;;~~;=+*ccccc*****+*******************************++++++++++++++\n                           'vcccc;vcccccccccccccccccc+=~-.'-~===+*c+*******************************+++++++++++++=\n                           'vcccc;vccccccccccccccccccccccc*+;~:;=++;;===+*cc**********************++++++++++++++~\n                           .vcccc=cc***ccccc*cc**ccccc*******cc*+;--;+++++======+*++++******+=====++++++++++++++:\n                           .vcccc+vcccccccccccccccccccccccccc*****c=+;::;+cc**c*+=;~;;=+***********+++++++++++++-\n                           .vcccc+vcccccccccccccccccccccc**********=c**c*=~:;+c********+======****+++++++++++++*.\n                            *cccc+*cccccccccccccccccccccc**********=c******c*;~:=*c***********=;;===+*+++++++++*.\n                            *cccc**ccccccc*cccccccccccccc**********=c**********c+;:~+***************=+++++++++++\n                            *cccc**c*cvv*+=;~~=vvv**ccccc**c*cccc===;~~*cc**********;::=**********+++++++++++++=\n                            =cccccc*+++==;;~~::-'..~ccccc***+*****+++=++*+=:+**********=~:;*******+++++++++++++;\n                            =cccccc*+=;;~:--'.     ~ccccc***+++=;;;~---'.   =*************+~:;****+++++++++++++~\n                            -=+*ccc*+=;;~:--'.     ~ccccc***+==;;~~:-''.    =****************+~:;**++++++++++++:\n                                  .=+=;;~:--'.     :ccccvcc*+==;;~~:-''.    =*******************=::=*+++++++++*'\n                                   ;+=;;~::-'.     ........=+==;;~~:-''.   .~;;;;;================;..;;;;;~:~~:\n                                   ~+=;;~::-'.     .       =+==;;~~:-''.   .\n                                   -:::::--''.             ;===;;~~:-''.\n                                   -::--'''..              ~::----'''.\n                                   -::--'''..              ~::---'''..\n                                   -::--'''..              ~::---'''..\n                                   '::--'''..              ~::---'''..\n                                   '::--'''..              ~::---'''..\n                                   '::--'''..              ~::---'''..\n                                   .~:---''..              ~::---'''..\n                                   .~:---''..              ~::---'''..\n                       .~===;;~~~~~:+=;~:--'.      .       :::---'''..\n                    .:=*++++++++***++==;~~:-'.     ..'.....==;~:--''..     .\n                 .:=*++++++++***+++++==;~~:-'.     .'''''''=+==;;~~:-'.    ......\n              .:=*+++++++++**++++++++==;~~:-'.     ..''''''++==;;~::-'.    .'''''''''''.............\n           .-=*+++++++++**++++++++++++=;~::-''..'-:~;;===++++==;;~::-'.    .''''''''''............'''.\n        .-;+++++++++++cccc*******++++++****+******+++++++++++=;;;~::-'.   .'--:~~;;==:..'''--::~~;;;~'\n     .-;++++++++++++++==;====++*cccccccccc*******++++++++++++**+====;;==+******++++++'-===++++++++++=-\n    :cc****+++++++++++++++++++==;;;;;;;;;;;;===+**ccccccccc*******++++++++++++++++++~.;+++++++++++++;-\n    =;;=+++**ccccccccc*****++++++++++++++++*+++==;;;;;;;;;;;;;==++*****c***********=''++++++++++++++;-\n    ..''''---::::~~~;;==++***cccccccc*****++++++++++++++++++++++==;;;;;;;;;~;;;;=++:.~++++++++++++++;-\n                ......'''---::::~~~;;;==++*****ccc*******++++++++++++++++++++++++==;=+++++++++++++++;-\n                               ......'''----::::~~~;;;==+++************+++++++++++++++++++++++++++++;-\n                                              ......'''----::::~~~~;;;==+++++********+++++++++++++++;-\n                                                             ......'''----:::::~~~~;;;===+++++++++++;-\n                                                                            ......''''----:::::~~~~~-.\n                                                                                           ......'''", "pinch": "\n   '\n   .                                                         .'-'\n   .                                                     .-::'.\n   .                                                 .-::-.\n                                                 .-::-.\n                                             .-::--;:\n                                        .':::-.'~cv='\n                                    .-:~:'. .~*v+-\n                                .-::-'..:~+cv*;:~:.\n                             ':c*--;+cvc+;-.     .:;.\n                          .--';vcc+;-..            .~-\n    .                  .-:''=v*-.                    :-\n                     '-'.;+v=.                        :'\n    .             .''.'=v*-.-~~:-..                   .~.\n    .          .''..~*v~.      .'-:~~~:::---'''-:::::::~:-.\n    .         '-:=cc+-                 ........;vvvvvvvvvvc.\n    .     .-;*cc=:'.                           :=~-------:;.\n    ..'~+cc+~'.                                :=:.......';.\n    .+*~'.                                     :=:.......';.\n    ....  .   .                                -;~:::::::~;.\n              .       ............................  .  ....", "plant": "           .------'\n           ::-----~\n          .:-..   ~\n         ;cc*+~.  :.\n         ~;~-...  :.\n         :;~-...  -'\n         -;;:'..  '-\n         .=~-'..  '-............\n         .;;~'..  .-;;;~=;;;~;;;;.\n          ;;;:..       .~.     .~.\n          :~:-...     =vvc=' .=vc+;.      .'-.\n          :;~-'..    ~cvc=~- =vvv+;-    -cxvvxc-       .*****-\n          ';;:'..    :=;~:'. ;==;:'.   .xcccvc*;-----~;;=*****'\n          .=~-'..    -;~:-'. ~;~;;;~:~;;*cvv+*;:-----..'~~::::.\n           ;~:'......';;~-.. ~;;~:'''.  '~~~-'''       '~~::::\n         .;=~~-..++=:--''.'':---'. '''..'=;:-'''....'..:~:::::\n      .-=*+++:-..-:~;;=;*::'''---'''''''-~~~:'.-'''-;**;~::::-''.\n    .;*++++*=;=****++++++++=++=+==;;;====~::-..-:~~;+++;~:~::-'''.\n  -+*+++++++++***+++**++++++++**********+*++=+**++++++++~~+;~:;=+*-\n .==++++********ccccccccccc****++==++++++++***+++++++++++++=**++++*~\n        ........''''--:::~~;;====+++++**********************+++++++*;\n                                   .........'''----::~~~;;;====++++++-\n                                                              .......", "reactor": "\n                    -     '.     '      '      .\n          ..':-.... -     '.     :      :      :.\n        '+cc+~+cc~~~~~;;~~~~~::~:;:::---~----'':'...';:\n       ~vccc:ccc:'-'-----:-:-----'-----:-::::::~~cccc=;cc*=-\n   -..-cccvc=cc+'*==+~*-*:=;:=-;::~'~'-:':'--'-'-c***=;c**+=:\n  -~=**+**=:+cv-.:.:''-.~.~-:~'='=;:+-=;:+-=;-=-;vcc*+=c**+=~'\n  ....;=;;~';;=..'.'.-'''.:.:'':.~'-:.:'--.:.'-.~ccc*=;c**=;:-     '\n      '~:::'-~~..'.'.''''.'.'....'....'.'..'.''.~===;~~+==;~-'~===;;-\n       --''..---::::-:-----''.''......'.''.'.''.~;;;~::;;;~:'..:::::'\n        .  .   ......'''''--:::::~~~::::~:::-:--:::::-'~~:-'..    ..\n                -~:.                ......'''''-''''-'.--'. .\n                '''.                        '--'   ..\n                .''.                        ----   .\n                .-'.                        -'''\n                 ..                         -''.\n                                           .-'-.", "phone": "\n                   .'''''''..................\n           ....'..-vovcc**+++==;;;~~~::::---'  ......\n         .''''..  '='..............          'oo;-......\n        .'.=ox:                              .;*coo~.\n           ....         '-'.         .''..     ..~~'.\n        .'.                .\n      ..'.              .  .\n     .'.           .   .   . .........   .  ....\n    .'..        .''''''''..'''''''''''....''''''.\n   .'.         .'''''''..'''''''..''''''''''''''..\n   ''.       .-oooooxc;--:~;~~:-'...'------'''''...\n  .''.       .-;~~;;~;=++*=;;;~;=;;~:''------'''.\n   ''.      ..   .-;=:'.............-::-'=.\n   .'..     .   .-;'....'--.'~~-...'-.~voc'\n    .'..   ..   .:....''-'.'---'..::'.--. ..\n     ''..  .    -...:~:..-===;;;~:...'-~'. ..\n      .'....    '....''..;---------.........\n       .-..      ..'::...-:------:-.........\n         ..       ...'':...'----'..........\n         .          .'-'...'..............\n         .            ...-:-....'.'-:.... ..."};
+var root = document.getElementById('dp');
+var btn = document.getElementById('theme-toggle');
+var txt = document.getElementById('theme-text');
+var moon = document.querySelector('.ic-moon'), sun = document.querySelector('.ic-sun');
+var pres = {};
+document.querySelectorAll('[data-ascii]').forEach(function (el) { pres[el.getAttribute('data-ascii')] = el; });
+var reduced = false;
+try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+var theme = 'day';
+try { theme = localStorage.getItem('dp-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dusk' : 'day'); } catch (e) {}
+var prog = {}, anim = {}, vis = {}, th = {}, raf = null;
+function source(k) { return (theme === 'dusk' && ART_DUSK[k]) ? ART_DUSK[k] : ART_DAY[k]; }
+function thresholds(k, s) {
+  var key = k + ':' + theme;
+  if (th[key]) return th[key];
+  var lines = s.split('\n').length, a = new Float32Array(s.length), row = 0;
+  for (var i = 0; i < s.length; i++) {
+    if (s.charCodeAt(i) === 10) { row++; continue; }
+    var r = ((i * 2654435761) >>> 0) % 1000 / 1000;
+    a[i] = 0.55 * r + 0.45 * (row / lines) * 0.98;
+  }
+  return (th[key] = a);
+}
+function frame(k, p) {
+  var s = source(k);
+  if (p === undefined || p >= 1) return s;
+  var t = thresholds(k, s), out = '';
+  for (var i = 0; i < s.length; i++) {
+    var ch = s[i];
+    if (ch === '\n' || ch === ' ') { out += ch; continue; }
+    var h = t[i];
+    out += h < p ? ch : (h < p + 0.16 ? RAMP[(i * 7 + Math.floor(p * 60)) % RAMP.length] : ' ');
+  }
+  return out;
+}
+function paint(k) { if (pres[k]) pres[k].textContent = frame(k, prog[k]); }
+function tick() {
+  if (raf) return;
+  raf = requestAnimationFrame(function step(now) {
+    raf = null; var active = false;
+    for (var k in anim) {
+      var v = Math.min(1, (now - anim[k]) / 1400);
+      if (prog[k] !== v) { prog[k] = v; paint(k); }
+      if (v < 1) active = true; else delete anim[k];
+    }
+    if (active) raf = requestAnimationFrame(step);
+  });
+}
+function start(k) {
+  if (reduced || !window.requestAnimationFrame) return;
+  anim[k] = performance.now(); prog[k] = 0; paint(k); tick();
+}
+function applyTheme(animate) {
+  var dusk = theme === 'dusk';
+  root.classList.toggle('dusk', dusk);
+  btn.setAttribute('aria-pressed', dusk ? 'true' : 'false');
+  txt.textContent = dusk ? 'Modo claro' : 'Modo escuro';
+  moon.style.display = dusk ? 'none' : 'inline-flex';
+  sun.style.display = dusk ? 'inline-flex' : 'none';
+  for (var k in pres) { if (!(k in anim)) paint(k); }
+}
+applyTheme(false);
+btn.addEventListener('click', function () {
+  theme = theme === 'dusk' ? 'day' : 'dusk';
+  try { localStorage.setItem('dp-theme', theme); } catch (e) {}
+  root.classList.add('theming');
+  applyTheme(true);
+  setTimeout(function () { root.classList.remove('theming'); }, 650);
+  for (var k in vis) start(k);
+});
+document.querySelectorAll('.art-hover').forEach(function (el) {
+  var p = el.querySelector('[data-ascii]');
+  if (!p) return;
+  el.addEventListener('mouseenter', function () { var k = p.getAttribute('data-ascii'); if (!(k in anim)) start(k); });
+});
+if (reduced || !('IntersectionObserver' in window)) return;
+for (var k in pres) { prog[k] = 0; paint(k); }
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    var k = e.target.getAttribute('data-ascii');
+    if (e.isIntersecting) { vis[k] = true; if (!e.target._seen) { e.target._seen = true; start(k); } }
+    else delete vis[k];
+  });
+}, { threshold: 0.2 });
+for (var k2 in pres) io.observe(pres[k2]);
+})();
+</script>
+</body>
+</html>
