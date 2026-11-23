@@ -72,23 +72,51 @@ html{scroll-behavior:smooth}
 @keyframes type{from{width:0}}
 }
 }
+@media (max-width: 720px){
+.wrap{padding:8px 16px 0 !important}
+.site-head{gap:8px !important;padding:10px 0 14px !important;flex-wrap:nowrap !important}
+.site-head nav{gap:8px !important;flex-wrap:nowrap !important}
+.site-head .nl{display:none !important}
+.theme-btn{width:44px;padding:0 !important;justify-content:center}
+.theme-label{position:absolute !important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.contact-btn{padding:0 16px !important;font-size:15px !important}
+.contact-btn .lg{display:none}
+.contact-btn .sm{display:inline !important}
+.brand{font-size:18px !important;white-space:nowrap}
+#top{padding:16px !important;border-radius:24px !important;gap:16px !important}
+#top > .enter{padding:24px !important;gap:24px !important}
+#top h1{font-size:44px !important;line-height:1.05 !important}
+.chip{border-radius:14px !important;font-size:11px !important}
+[style*="margin-top: 96px"]{margin-top:56px !important}
+#industria,#research{padding:24px !important}
+.case{padding:20px !important}
+.case-art,.thumb,.wine-art{padding:12px 8px !important}
+.cardc{padding:20px !important}
+pre[data-ascii="hero"]{font-size:max(2.6px,calc((100vw - 112px) / 67.2)) !important}
+pre[data-ascii="battery"]{font-size:max(2.2px,calc((100vw - 96px) / 90)) !important}
+pre[data-ascii="pinch"],pre[data-ascii="plant"],pre[data-ascii="reactor"]{font-size:max(3px,calc((100vw - 96px) / 43.2)) !important}
+pre[data-ascii="wine"]{font-size:max(2.6px,calc((100vw - 104px) / 62.4)) !important}
+.foot{padding:32px 16px !important}
+.foot2{padding:0 16px 24px !important}
+.totop{right:16px !important;bottom:16px !important}
+}
 </style>
 </head>
 <body>
 <div class="dp" id="dp" style="background: var(--ground); color: var(--ink); font-family: Figtree, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; line-height: 1.55; min-height: 100vh">
 
-<div style="max-width: 1120px; margin: 0 auto; padding: 8px 48px 0; box-sizing: border-box">
+<div class="wrap" style="max-width: 1120px; margin: 0 auto; padding: 8px 48px 0; box-sizing: border-box">
 
-<header style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0 24px; background: var(--ground)">
-<a href="#top" style="font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 8px">
+<header class="site-head" style="position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0 24px; background: var(--ground)">
+<a href="#top" class="brand" style="font-weight: 700; font-size: 20px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 8px">
 <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--azure)">o.</span>Tomás Caldas</a>
 <nav aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 16px; font-weight: 600">
 <a href="#industria" class="nl" style="color: var(--ink); text-decoration: none">Indústria</a>
 <a href="#work" class="nl" style="color: var(--ink); text-decoration: none">Projetos</a>
 <a href="#research" class="nl" style="color: var(--ink); text-decoration: none">Investigação</a>
 <a href="#experience" class="nl" style="color: var(--ink); text-decoration: none">Percurso</a>
-<button type="button" class="btn2" id="theme-toggle" aria-pressed="false" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--surface); color: var(--azure); border: 1px solid var(--line); font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer"><span class="ic-moon" style="display: inline-flex"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span><span class="ic-sun" style="display: none"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span><span id="theme-text">Modo escuro</span></button>
-<a href="#contact" class="btn" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 24px; border-radius: 999px; background: var(--azure); color: var(--on-azure); text-decoration: none; box-shadow: var(--shadow-gloss), var(--shadow-dew)">Entrar em contacto</a>
+<button type="button" class="btn2 theme-btn" id="theme-toggle" aria-pressed="false" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--surface); color: var(--azure); border: 1px solid var(--line); font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer"><span class="ic-moon" style="display: inline-flex"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span><span class="ic-sun" style="display: none"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></span><span class="theme-label" id="theme-text">Modo escuro</span></button>
+<a href="#contact" class="btn contact-btn" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 24px; border-radius: 999px; background: var(--azure); color: var(--on-azure); text-decoration: none; box-shadow: var(--shadow-gloss), var(--shadow-dew)"><span class="lg">Entrar em contacto</span><span class="sm" style="display: none">Contacto</span></a>
 </nav>
 <div aria-hidden="true" class="progress" style="position: absolute; left: 0; right: 0; bottom: 10px; height: 2px; border-radius: 999px; background: var(--azure)"></div>
 </header>
@@ -103,7 +131,7 @@ html{scroll-behavior:smooth}
 
 <div class="enter" style="position: relative; flex: 1 1 100%; min-width: 0; padding: 48px; border-radius: 24px; background: var(--glass); border: 1px solid var(--glass-rim); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: var(--shadow-float); display: flex; flex-wrap: wrap; align-items: center; gap: 32px">
 <div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
-<div style="display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: var(--surface); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink)"><span aria-hidden="true" class="sun" style="width: 8px; height: 8px; border-radius: 999px; background: var(--sun)"></span>ENGENHARIA QUÍMICA · PONTE DE LIMA E PORTO</div>
+<div class="chip" style="display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: var(--surface); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink)"><span aria-hidden="true" class="sun" style="width: 8px; height: 8px; border-radius: 999px; background: var(--sun)"></span>ENGENHARIA QUÍMICA · PONTE DE LIMA E PORTO</div>
 <h1 style="margin: 0; font-size: 72px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--ink)">Modelo processos e depois confronto-os com a realidade.</h1>
 <p style="margin: 0; max-width: 34em; font-size: 16px; line-height: 1.55; color: var(--ink)">Estudante de Mestrado em Engenharia Química na FEUP. Simulo instalações em Aspen Plus, construo modelos em Python e procuro a energia que um processo deixa por aproveitar.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 16px">
@@ -207,7 +235,7 @@ html{scroll-behavior:smooth}
 <p style="margin: 12px 0 0; max-width: 40em; color: var(--ink-muted)">Simulação, modelação e dados, a maior parte em acesso aberto no GitHub.</p>
 
 <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 32px">
-<article class="rv lift" style="padding: 32px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
+<article class="rv lift case" style="padding: 32px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew)">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px">
 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; color: var(--ink-muted)">CASO DE ESTUDO · PYTHON · SIMULAÇÃO DE BATERIAS</div>
 <span style="padding: 4px 12px; border-radius: 8px; background: var(--sky-200); font-size: 14px; color: var(--ink)">Publicado</span>
@@ -215,7 +243,7 @@ html{scroll-behavior:smooth}
 <h3 style="margin: 12px 0 0; font-size: 28px; line-height: 1.2; font-weight: 600">Gémeo digital de baterias</h3>
 <p style="margin: 12px 0 0; max-width: 44em">Quanto tempo dura a bateria de um carro elétrico? Compensa reaproveitá-la depois para guardar energia? E qual é a sua pegada de carbono? Construí um simulador que responde a estas perguntas para quatro tipos de baterias, a partir da forma como são usadas.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: center; margin-top: 24px">
-<div class="art-hover" style="flex: 999 1 560px; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="battery" aria-label="Arte ASCII de duas células de bateria cilíndricas sobre uma base, à frente de um ecrã com duas curvas de envelhecimento e um limite de fim de vida a tracejado" style="font-family: 'JetBrains Mono', monospace; font-size: 6.2px; line-height: 1.09; color: var(--azure)">
+<div class="art-hover case-art" style="flex: 999 1 560px; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="battery" aria-label="Arte ASCII de duas células de bateria cilíndricas sobre uma base, à frente de um ecrã com duas curvas de envelhecimento e um limite de fim de vida a tracejado" style="font-family: 'JetBrains Mono', monospace; font-size: 6.2px; line-height: 1.09; color: var(--azure)">
                                                                                ............................  ....
                             ............................................'''''''''''''''''''''''''''''''''''''''''.
                             .................................................''''''''''''''''''''''''''''''''''''.
@@ -313,8 +341,8 @@ html{scroll-behavior:smooth}
 </div>
 </article>
 <div style="display: flex; flex-wrap: wrap; gap: 24px">
-<article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
-<div class="art-hover" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="pinch" aria-label="Arte ASCII das curvas compostas quente e fria em forma de tubos sobre um par de eixos, unidas por barras onde há recuperação de calor, com uma esfera no pinch e uma bomba de calor ligada através dele" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">   .
+<article class="rv lift cardc" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
+<div class="art-hover thumb" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="pinch" aria-label="Arte ASCII das curvas compostas quente e fria em forma de tubos sobre um par de eixos, unidas por barras onde há recuperação de calor, com uma esfera no pinch e uma bomba de calor ligada através dele" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">   .
   .vc
    ~:                                                        .-;*
    ~~                                                    .-;**=:.
@@ -346,8 +374,8 @@ html{scroll-behavior:smooth}
 <p style="margin: 0; color: var(--ink)">Uma ferramenta em Python que mostra onde uma bomba de calor de alta temperatura pode reaproveitar calor num processo industrial, e quanta energia isso poupa. Validei-a com casos de referência da literatura.</p>
 <a href="https://github.com/TheJohn01/Heatpump-Pinch" style="font-weight: 600">Ver no GitHub →</a>
 </article>
-<article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
-<div class="art-hover" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="plant" aria-label="Arte ASCII de uma maqueta de instalação: uma coluna de pratos (instalação 1), dois tanques (instalação 2), uma esfera que representa o modelo de aprendizagem automática e um permutador de placas (instalação 3), ligados por tubagens" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">                  .
+<article class="rv lift cardc" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
+<div class="art-hover thumb" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="plant" aria-label="Arte ASCII de uma maqueta de instalação: uma coluna de pratos (instalação 1), dois tanques (instalação 2), uma esfera que representa o modelo de aprendizagem automática e um permutador de placas (instalação 3), ligados por tubagens" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">                  .
            :c;;;;;+:
            -c     =~
          ::~==+~  ~=
@@ -378,8 +406,8 @@ html{scroll-behavior:smooth}
 <p style="margin: 0; color: var(--ink)">Três instalações simuladas em Aspen Plus e integradas numa só unidade. Um modelo de aprendizagem automática treinado com os resultados vai alimentar um site onde qualquer alteração aos dados de entrada dá uma resposta fiável.</p>
 
 </article>
-<article class="rv lift" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
-<div class="art-hover" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="reactor" aria-label="Arte ASCII de um reator horizontal sobre apoios, com fundos abaulados, bocais flangeados e bainhas de termopares, em corte para mostrar o leito de partículas de catalisador" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">
+<article class="rv lift cardc" style="flex: 1 1 300px; min-width: 0; padding: 24px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow-dew); display: flex; flex-direction: column; gap: 12px">
+<div class="art-hover thumb" style="overflow-x: auto; padding: 16px 8px; border-radius: 14px; background: var(--ground); border: 1px solid var(--hairline); box-sizing: border-box; display: flex; justify-content: center"><pre role="img" data-ascii="reactor" aria-label="Arte ASCII de um reator horizontal sobre apoios, com fundos abaulados, bocais flangeados e bainhas de termopares, em corte para mostrar o leito de partículas de catalisador" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--azure)">
                     ~'    ':     -.     '      .
              '~;:   ;~    -+     =:     *'     =:
            .:c=-:+=;=;;~~~;=:::--=~-''''+'.....=-   .''
@@ -417,7 +445,7 @@ html{scroll-behavior:smooth}
 <p style="margin: 12px 0 0; font-size: 14px; line-height: 1.5"><i>Eucalyptus globulus Leaf Extract as a Natural Alternative to Sulphites in Red Wine Stabilization.</i> U.Porto Journal of Engineering, 12(3), 40–59.</p>
 <a href="https://doi.org/10.24840/2183-6493_012-003_003606" class="btn2" style="align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; padding: 0 24px; border-radius: 999px; background: var(--surface); color: var(--azure); font-weight: 600; text-decoration: none; border: 1px solid var(--line); box-sizing: border-box">Ler o artigo</a>
 </div>
-<div class="art-hover" style="flex: 0 0 auto; max-width: 100%; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--leaf); box-sizing: border-box"><pre role="img" data-ascii="wine" aria-label="Arte ASCII de um copo de vinho tinto meio cheio, uma garrafa de vinho, um pequeno frasco conta-gotas com pipeta e raminhos de folhas de eucalipto" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--on-leaf)">
+<div class="art-hover wine-art" style="flex: 0 0 auto; max-width: 100%; min-width: 0; overflow-x: auto; padding: 24px 16px; border-radius: 14px; background: var(--leaf); box-sizing: border-box"><pre role="img" data-ascii="wine" aria-label="Arte ASCII de um copo de vinho tinto meio cheio, uma garrafa de vinho, um pequeno frasco conta-gotas com pipeta e raminhos de folhas de eucalipto" style="font-family: 'JetBrains Mono', monospace; font-size: 6px; line-height: 1.09; color: var(--on-leaf)">
 
                                                                    .:~::-
                                                                    +c**cv.
@@ -558,7 +586,7 @@ html{scroll-behavior:smooth}
 
 <a href="#top" class="totop btn2" aria-label="Voltar ao topo" style="position: fixed; right: 24px; bottom: 24px; z-index: 30; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 999px; background: var(--surface); color: var(--azure); border: 1px solid var(--line); box-shadow: var(--shadow-dew); text-decoration: none"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></a>
 <footer id="contact" style="margin-top: 96px; background: var(--deep); color: var(--on-deep)">
-<div style="max-width: 1120px; margin: 0 auto; padding: 48px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div class="foot" style="max-width: 1120px; margin: 0 auto; padding: 48px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
 <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
 <pre aria-hidden="true" data-ascii="drops" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.2; color: var(--on-deep)">.  o  O  o  .  o  O  o  .</pre>
 <h2 style="margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600; color: var(--on-deep)">Vamos conversar.</h2>
@@ -570,7 +598,7 @@ html{scroll-behavior:smooth}
 <a href="https://github.com/TheJohn01" style="color: var(--on-deep)">github.com/TheJohn01</a>
 </div>
 </div>
-<div style="max-width: 1120px; margin: 0 auto; padding: 0 48px 32px; box-sizing: border-box; font-size: 14px; color: var(--on-deep)">© 2026 João Tomás Lima Caldas</div>
+<div class="foot2" style="max-width: 1120px; margin: 0 auto; padding: 0 48px 32px; box-sizing: border-box; font-size: 14px; color: var(--on-deep)">© 2026 João Tomás Lima Caldas</div>
 </footer>
 
 </div>
