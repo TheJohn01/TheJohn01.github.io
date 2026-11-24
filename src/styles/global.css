@@ -915,6 +915,112 @@ pre {
   visibility: hidden;
 }
 
+/* Páginas de projeto e de publicação */
+.edu-item .more + .more {
+  margin-left: 16px;
+}
+.page {
+  max-width: 920px;
+  margin: 48px auto 0;
+}
+.back {
+  font-weight: 600;
+}
+.page-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 32px;
+  align-items: center;
+  margin-top: 24px;
+}
+.page-title {
+  margin: 12px 0 0;
+  font-size: 44px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.page-head .citation {
+  margin: 12px 0 16px;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+.page-art {
+  padding: 16px;
+}
+.notice {
+  max-width: 44em;
+  margin: 32px 0 0;
+  padding: 16px 24px;
+  border-left: 4px solid var(--leaf);
+}
+.notice + .prose {
+  margin-top: 32px;
+}
+.prose {
+  max-width: 44em;
+  margin-top: 48px;
+}
+.prose h2 {
+  margin: 48px 0 0;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 600;
+}
+.prose h3 {
+  margin: 32px 0 0;
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose figure {
+  margin: 12px 0 0;
+}
+.prose ul,
+.prose ol {
+  padding-left: 20px;
+}
+.prose li + li {
+  margin-top: 4px;
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.prose table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.prose th,
+.prose td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+}
+.prose details {
+  margin-top: 24px;
+  padding: 16px 24px;
+  border-radius: 14px;
+  background: var(--ground);
+  border: 1px solid var(--hairline);
+}
+.prose details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--azure);
+}
+
 /* ---------- 5. Movimento ---------- */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes enter {
@@ -1072,6 +1178,15 @@ pre {
 
 /* ---------- 6. Telemóvel ---------- */
 @media (max-width: 720px) {
+  .page {
+    margin-top: 24px;
+  }
+  .page-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .page-title {
+    font-size: 32px;
+  }
   .wrap {
     padding: 8px 16px 0;
   }

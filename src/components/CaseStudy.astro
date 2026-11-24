@@ -4,12 +4,14 @@ import type { CollectionEntry } from 'astro:content';
 import AsciiArt from './AsciiArt.astro';
 import Label from './ui/Label.astro';
 import StatusTag from './ui/StatusTag.astro';
+import { hasBody } from '../lib/text';
 
 interface Props {
   project: CollectionEntry<'projects'>;
 }
 
-const { data, id } = Astro.props.project;
+const { data, id, body } = Astro.props.project;
+const page = hasBody(body) ? `/projetos/${id}/` : undefined;
 const study = data.caseStudy;
 if (!study) throw new Error(`O projeto "${id}" não tem o campo caseStudy.`);
 ---
@@ -65,8 +67,9 @@ if (!study) throw new Error(`O projeto "${id}" não tem o campo caseStudy.`);
   }
 
   {
-    data.links.length > 0 && (
+    (page || data.links.length > 0) && (
       <div class="case-links">
+        {page && <a href={page} class="more">Ler mais →</a>}
         {data.links.map((link) => <a href={link.href} class="more">{link.label} →</a>)}
       </div>
     )

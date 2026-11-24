@@ -1,0 +1,61 @@
+---
+// Página de um projeto: o texto longo do ficheiro Markdown em src/content/projects.
+// Só é criada quando o ficheiro tem texto (ver hasBody).
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import AsciiArt from '../../components/AsciiArt.astro';
+import Label from '../../components/ui/Label.astro';
+import StatusTag from '../../components/ui/StatusTag.astro';
+import Base from '../../layouts/Base.astro';
+import { person } from '../../data/site';
+import { hasBody } from '../../lib/text';
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection('projects', (entry) => hasBody(entry.body));
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<Base title={`${data.title} — ${person.shortName}`} description={data.summary}>
+  <main class="page">
+    <a href="/#work" class="back">← Voltar aos projetos</a>
+    <header class="page-head">
+      <div class="page-head-copy">
+        <div class="meta-row">
+          <Label text={data.tags.join(' · ')} />
+          <StatusTag status={data.status} />
+        </div>
+        <h1 class="page-title">{data.title}</h1>
+        <p class="lede">{data.summary}</p>
+        {
+          data.links.length > 0 && (
+            <div class="case-links">
+              {data.links.map((link) => <a href={link.href} class="more">{link.label} →</a>)}
+            </div>
+          )
+        }
+      </div>
+      <div class="art-hover page-art well art-frame">
+        <AsciiArt name={data.art} label={data.artLabel} />
+      </div>
+    </header>
+    {
+      data.status === 'Em curso' && (
+        <p class="notice well">
+          <strong>Projeto em curso.</strong> O conteúdo desta página ainda não é final e vai mudar à medida que o trabalho avança.
+        </p>
+      )
+    }
+    <article class="prose">
+      <Content />
+    </article>
+  </main>
+</Base>

@@ -4,6 +4,7 @@
 import { getCollection } from 'astro:content';
 import { education, experience, languages, skills } from '../data/journey';
 import Label from './ui/Label.astro';
+import { hasBody } from '../lib/text';
 
 const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
 
@@ -53,12 +54,13 @@ function levelBar(level: number, short: string): string {
         ))
       }
       {
-        publications.map(({ data }) => (
+        publications.map(({ data, id, body }) => (
           <div class="edu-item">
             <Label text={`Publicação · ${data.year}`} />
             <h4>{data.cardTitle}</h4>
             <div class="muted">{data.role}</div>
             <p>{data.summary}</p>
+            {hasBody(body) && <a href={`/publicacoes/${id}/`} class="more">Ler mais →</a>}
             <a href={data.doi} class="more">Ler o artigo →</a>
           </div>
         ))
