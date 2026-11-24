@@ -1,14 +1,16 @@
 ---
 // Secção "Investigação": a publicação mais recente que tenha o campo highlight.
 import { getCollection } from 'astro:content';
-import { inlineItalic } from '../lib/text';
+import { hasBody, inlineItalic } from '../lib/text';
 import AsciiArt from './AsciiArt.astro';
 import Label from './ui/Label.astro';
 
 const publications = (await getCollection('publications'))
   .filter((entry) => entry.data.highlight)
   .sort((a, b) => b.data.year - a.data.year);
-const pub = publications[0]?.data;
+const entry = publications[0];
+const pub = entry?.data;
+const page = entry && hasBody(entry.body) ? `/publicacoes/${entry.id}/` : undefined;
 const highlight = pub?.highlight;
 ---
 
@@ -22,7 +24,10 @@ const highlight = pub?.highlight;
         <p class="citation">
           <i>{pub.title}.</i> {pub.journal}, {pub.issue}.
         </p>
-        <a href={pub.doi} class="btn sm btn-secondary">Ler o artigo</a>
+        <div class="actions">
+          {page && <a href={page} class="btn sm btn-primary">Ler mais</a>}
+          <a href={pub.doi} class="btn sm btn-secondary">Ler o artigo</a>
+        </div>
       </div>
       <div class="art-hover wine-art">
         <AsciiArt name={highlight.art} label={highlight.artLabel} />

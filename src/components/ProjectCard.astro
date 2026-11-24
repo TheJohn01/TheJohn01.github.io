@@ -4,12 +4,13 @@ import type { CollectionEntry } from 'astro:content';
 import AsciiArt from './AsciiArt.astro';
 import Label from './ui/Label.astro';
 import StatusTag from './ui/StatusTag.astro';
+import { hasBody } from '../lib/text';
 
 interface Props {
   project: CollectionEntry<'projects'>;
 }
 
-const { data } = Astro.props.project;
+const { data, id, body } = Astro.props.project;
 ---
 
 <article class="card cardc rv lift">
@@ -22,5 +23,6 @@ const { data } = Astro.props.project;
   </div>
   <h3 class="h3">{data.title}</h3>
   <p>{data.summary}</p>
+  {hasBody(body) && <a href={`/projetos/${id}/`} class="more">Ler mais →</a>}
   {data.links.map((link) => <a href={link.href} class="more">{link.label} →</a>)}
 </article>

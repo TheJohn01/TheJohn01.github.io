@@ -1,0 +1,52 @@
+---
+// Página de uma publicação: o texto longo do ficheiro Markdown em src/content/publications.
+// Só é criada quando o ficheiro tem texto (ver hasBody).
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import AsciiArt from '../../components/AsciiArt.astro';
+import Label from '../../components/ui/Label.astro';
+import Base from '../../layouts/Base.astro';
+import { person } from '../../data/site';
+import { hasBody, inlineItalic } from '../../lib/text';
+
+export const getStaticPaths = (async () => {
+  const publications = await getCollection('publications', (entry) => hasBody(entry.body));
+  return publications.map((publication) => ({ params: { id: publication.id }, props: { publication } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  publication: CollectionEntry<'publications'>;
+}
+
+const { publication } = Astro.props;
+const { data } = publication;
+const highlight = data.highlight;
+const { Content } = await render(publication);
+---
+
+<Base title={`${highlight?.heading ?? data.cardTitle} — ${person.shortName}`} description={data.summary}>
+  <main class="page">
+    <a href={highlight ? '/#research' : '/#experience'} class="back">← Voltar</a>
+    <header class="page-head">
+      <div class="page-head-copy">
+        <Label text={`Publicação · ${data.year}`} />
+        <h1 class="page-title">{highlight?.heading ?? data.cardTitle}</h1>
+        {highlight ? <p class="lede" set:html={inlineItalic(highlight.lede)} /> : <p class="lede">{data.summary}</p>}
+        <p class="citation">
+          <i>{data.title}.</i> {data.journal}, {data.issue}. {data.role}.
+        </p>
+        <a href={data.doi} class="btn sm btn-secondary">Ler o artigo</a>
+      </div>
+      {
+        highlight && (
+          <div class="art-hover page-art well art-frame">
+            <AsciiArt name={highlight.art} label={highlight.artLabel} />
+          </div>
+        )
+      }
+    </header>
+    <article class="prose">
+      <Content />
+    </article>
+  </main>
+</Base>

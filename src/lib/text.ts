@@ -24,3 +24,11 @@ function escapeHtml(text: string): string {
 export function inlineItalic(text: string): string {
   return escapeHtml(text).replace(/\*([^*]+)\*/g, '<i>$1</i>');
 }
+
+/**
+ * Diz se o corpo de um ficheiro Markdown tem texto, ignorando comentários <!-- -->.
+ * Só os projetos e publicações com texto têm página própria e ligação "Ler mais".
+ */
+export function hasBody(body: string | undefined): boolean {
+  return (body ?? '').replace(/<!--[\s\S]*?-->/g, '').trim().length > 0;
+}
