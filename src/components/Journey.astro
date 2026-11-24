@@ -87,7 +87,8 @@ function levelBar(level: number, short: string): string {
           return (
             <div class="lang-row">
               <span>{language.name}</span>
-              <span class="lang-bar type" aria-label={language.spoken} style={`width: ${bar.length}ch`}>{bar}</span>
+              <span aria-hidden="true" class="lang-bar type" style={`width: ${bar.length}ch`}>{bar}</span>
+              <span class="sr-only">{language.spoken}</span>
             </div>
           );
         })

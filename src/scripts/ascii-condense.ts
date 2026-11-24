@@ -1,7 +1,7 @@
 // Animação de "condensação" da arte ASCII: os caracteres aparecem de cima para baixo,
 // passando por uma rampa de caracteres leves, como gotas a formarem-se.
 // Corre quando a peça entra no ecrã, ao passar o rato por cima e ao trocar de tema.
-import { ART_DAY, ART_DUSK, type Theme } from '../lib/ascii';
+import { ART_DUSK, type Theme } from '../lib/ascii';
 
 const RAMP = " .'-:~;=+*cvxo";
 const DURATION_MS = 1400;
@@ -16,10 +16,11 @@ export interface AsciiController {
 }
 
 export function initAscii(getTheme: () => Theme): AsciiController {
-  const pres = new Map<string, HTMLElement>();
-  for (const el of document.querySelectorAll<HTMLElement>('[data-ascii]')) {
-    const key = el.dataset['ascii'];
-    if (key) pres.set(key, el);
+  // Guardado por elemento (não pelo nome da arte): duas peças com a mesma arte animam cada uma.
+  // A versão clara vem do próprio HTML, para não ir também no JavaScript.
+  const day = new Map<HTMLElement, string>();
+  for (const el of document.querySelectorAll<HTMLElement>('pre[data-ascii]')) {
+    day.set(el, el.textContent ?? '');
   }
 
   let reduced = false;
@@ -29,21 +30,22 @@ export function initAscii(getTheme: () => Theme): AsciiController {
     // matchMedia indisponível: assume movimento normal.
   }
 
-  const progress = new Map<string, number>();
-  const startedAt = new Map<string, number>();
-  const visible = new Set<string>();
-  const seen = new WeakSet<Element>();
+  const progress = new Map<HTMLElement, number>();
+  const startedAt = new Map<HTMLElement, number>();
+  const visible = new Set<HTMLElement>();
+  const seen = new WeakSet<HTMLElement>();
   const thresholdCache = new Map<string, Float32Array>();
   let raf = 0;
 
-  function source(key: string): string {
-    return (getTheme() === 'dusk' ? ART_DUSK[key] : undefined) ?? ART_DAY[key] ?? '';
+  /** Texto da arte para o tema atual. Sem versão escura, usa a clara. */
+  function source(el: HTMLElement): string {
+    const light = day.get(el) ?? '';
+    return getTheme() === 'dusk' ? (ART_DUSK[el.dataset['ascii'] ?? ''] ?? light) : light;
   }
 
   /** Limiar de cada carácter: metade aleatório (fixo), metade pela linha (de cima para baixo). */
-  function thresholds(key: string, text: string): Float32Array {
-    const cacheKey = `${key}:${getTheme()}`;
-    const cached = thresholdCache.get(cacheKey);
+  function thresholds(text: string): Float32Array {
+    const cached = thresholdCache.get(text);
     if (cached) return cached;
     const lines = text.split('\n').length;
     const out = new Float32Array(text.length);
@@ -56,14 +58,14 @@ export function initAscii(getTheme: () => Theme): AsciiController {
       const hash = (((i * 2654435761) >>> 0) % 1000) / 1000;
       out[i] = 0.55 * hash + 0.45 * (row / lines) * 0.98;
     }
-    thresholdCache.set(cacheKey, out);
+    thresholdCache.set(text, out);
     return out;
   }
 
-  function frame(key: string, p: number | undefined): string {
-    const text = source(key);
+  function frame(el: HTMLElement, p: number | undefined): string {
+    const text = source(el);
     if (p === undefined || p >= 1) return text;
-    const limits = thresholds(key, text);
+    const limits = thresholds(text);
     const shift = Math.floor(p * 60);
     let out = '';
     for (let i = 0; i < text.length; i++) {
@@ -78,73 +80,71 @@ export function initAscii(getTheme: () => Theme): AsciiController {
     return out;
   }
 
-  function paint(key: string): void {
-    const el = pres.get(key);
-    if (el) el.textContent = frame(key, progress.get(key));
+  function paint(el: HTMLElement): void {
+    el.textContent = frame(el, progress.get(el));
   }
 
   function step(now: number): void {
     raf = 0;
     let active = false;
-    for (const [key, t0] of startedAt) {
+    for (const [el, t0] of startedAt) {
       const value = Math.min(1, (now - t0) / DURATION_MS);
-      if (progress.get(key) !== value) {
-        progress.set(key, value);
-        paint(key);
+      if (progress.get(el) !== value) {
+        progress.set(el, value);
+        paint(el);
       }
       if (value < 1) active = true;
-      else startedAt.delete(key);
+      else startedAt.delete(el);
     }
     if (active) raf = requestAnimationFrame(step);
   }
 
-  function start(key: string): void {
+  function start(el: HTMLElement): void {
     if (reduced) return;
-    startedAt.set(key, performance.now());
-    progress.set(key, 0);
-    paint(key);
+    startedAt.set(el, performance.now());
+    progress.set(el, 0);
+    paint(el);
     if (!raf) raf = requestAnimationFrame(step);
   }
 
   function repaint(): void {
-    for (const key of pres.keys()) if (!startedAt.has(key)) paint(key);
+    for (const el of day.keys()) if (!startedAt.has(el)) paint(el);
   }
 
   // Primeiro desenho: troca para a versão escura, se for o caso.
   repaint();
 
   for (const wrapper of document.querySelectorAll<HTMLElement>('.art-hover')) {
-    const key = wrapper.querySelector<HTMLElement>('[data-ascii]')?.dataset['ascii'];
-    if (!key) continue;
+    const el = wrapper.querySelector<HTMLElement>('pre[data-ascii]');
+    if (!el) continue;
     wrapper.addEventListener('mouseenter', () => {
-      if (!startedAt.has(key)) start(key);
+      if (!startedAt.has(el)) start(el);
     });
   }
 
   if (!reduced && 'IntersectionObserver' in window) {
-    for (const key of pres.keys()) {
-      progress.set(key, 0);
-      paint(key);
+    for (const el of day.keys()) {
+      progress.set(el, 0);
+      paint(el);
     }
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const key = (entry.target as HTMLElement).dataset['ascii'];
-          if (!key) continue;
+          const el = entry.target as HTMLElement;
           if (entry.isIntersecting) {
-            visible.add(key);
-            if (!seen.has(entry.target)) {
-              seen.add(entry.target);
-              start(key);
+            visible.add(el);
+            if (!seen.has(el)) {
+              seen.add(el);
+              start(el);
             }
           } else {
-            visible.delete(key);
+            visible.delete(el);
           }
         }
       },
       { threshold: 0.2 },
     );
-    for (const el of pres.values()) observer.observe(el);
+    for (const el of day.keys()) observer.observe(el);
   }
 
   // A arte estava escondida até agora (ver Base.astro) para não piscar antes da animação.
@@ -153,7 +153,7 @@ export function initAscii(getTheme: () => Theme): AsciiController {
   return {
     repaint,
     replayVisible() {
-      for (const key of visible) start(key);
+      for (const el of visible) start(el);
     },
   };
 }

@@ -2,8 +2,6 @@
 // Rodapé com contactos (âncora #contact).
 import { contact, person } from '../data/site';
 import AsciiArt from './AsciiArt.astro';
-
-const year = new Date().getFullYear();
 ---
 
 <footer id="contact" class="section site-foot">
@@ -19,5 +17,5 @@ const year = new Date().getFullYear();
       <a href={person.github.href}>{person.github.label}</a>
     </div>
   </div>
-  <div class="foot2">© {year} {person.fullName}</div>
+  <div class="foot2">© {person.fullName}</div>
 </footer>

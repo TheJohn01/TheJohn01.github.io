@@ -1,12 +1,17 @@
 ---
 // Cabeçalho fixo: nome, navegação, botão de tema e botão de contacto.
+import { getCollection } from 'astro:content';
 import { nav, person } from '../data/site';
+
+// A secção "Investigação" só existe se alguma publicação tiver o campo highlight.
+const hasResearch = (await getCollection('publications')).some((entry) => entry.data.highlight);
+const links = nav.filter((item) => hasResearch || item.href !== '/#research');
 ---
 
 <header class="site-head">
   <a href="/#top" class="brand"><span class="brand-mark">o.</span>{person.shortName}</a>
   <nav aria-label="Principal" class="site-nav">
-    {nav.map((item) => <a href={item.href} class="nl">{item.label}</a>)}
+    {links.map((item) => <a href={item.href} class="nl">{item.label}</a>)}
     <button type="button" class="theme-btn" id="theme-toggle" aria-pressed="false">
       <span class="theme-icon when-day">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
