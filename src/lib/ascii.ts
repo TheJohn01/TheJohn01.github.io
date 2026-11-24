@@ -19,7 +19,8 @@ function byName(files: Record<string, string>): Record<string, string> {
   const out: Record<string, string> = {};
   for (const [path, text] of Object.entries(files)) {
     const name = path.split('/').pop()?.replace(/\.txt$/, '');
-    if (name) out[name] = text;
+    // Sem \r: um checkout no Windows pode trazer CRLF, que muda a altura da arte e a animação.
+    if (name) out[name] = text.replace(/\r/g, '');
   }
   return out;
 }
