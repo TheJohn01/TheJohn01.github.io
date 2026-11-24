@@ -5,21 +5,6 @@ Publicado em https://thejohn01.github.io.
 
 Feito com [Astro](https://astro.build) e TypeScript. Os textos estão em ficheiros de dados (`.ts`) e em Markdown (`.md`); o Astro junta tudo e gera páginas HTML estáticas. O GitHub constrói e publica o site sozinho sempre que há alterações no ramo `main`.
 
-## Onde mudar o quê
-
-| Quero mudar…                                              | Ficheiro                                   |
-| --------------------------------------------------------- | ------------------------------------------ |
-| Título do site, descrição, e-mail, LinkedIn, GitHub, CV   | `src/data/site.ts`                         |
-| Apresentação, "Em resumo" e destaque da Bondalti          | `src/data/home.ts`                         |
-| Experiência, formação, competências e idiomas             | `src/data/journey.ts`                      |
-| Um projeto                                                | `src/content/projects/<projeto>.md`        |
-| A publicação                                              | `src/content/publications/<artigo>.md`     |
-| Arte ASCII                                                | `src/assets/ascii/day/` e `dusk/`          |
-| Cores, letra, espaçamentos, animações, versão telemóvel   | `src/styles/global.css`                    |
-| O CV, a imagem de partilha e o ícone                      | `public/`                                  |
-
-As etiquetas pequenas em maiúsculas (ex.: "PROJETOS EM DESTAQUE") escrevem-se normalmente nos ficheiros; a conversão para maiúsculas é automática.
-
 ## Estrutura
 
 ```
