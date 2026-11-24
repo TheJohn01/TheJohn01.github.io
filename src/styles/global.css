@@ -948,6 +948,15 @@ pre {
 .page-art {
   padding: 16px;
 }
+.notice {
+  max-width: 44em;
+  margin: 32px 0 0;
+  padding: 16px 24px;
+  border-left: 4px solid var(--leaf);
+}
+.notice + .prose {
+  margin-top: 32px;
+}
 .prose {
   max-width: 44em;
   margin-top: 48px;

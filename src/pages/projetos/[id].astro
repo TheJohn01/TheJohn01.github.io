@@ -47,6 +47,13 @@ const { Content } = await render(project);
         <AsciiArt name={data.art} label={data.artLabel} />
       </div>
     </header>
+    {
+      data.status === 'Em curso' && (
+        <p class="notice well">
+          <strong>Projeto em curso.</strong> O conteúdo desta página ainda não é final e vai mudar à medida que o trabalho avança.
+        </p>
+      )
+    }
     <article class="prose">
       <Content />
     </article>
