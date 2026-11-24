@@ -1,0 +1,20 @@
+---
+// Faixa "Em resumo": o essencial para um recrutador, mais o botão do CV.
+import { quickFacts } from '../data/home';
+import { person } from '../data/site';
+import Label from './ui/Label.astro';
+---
+
+<section aria-label="Em resumo" class="section facts rv">
+  <dl class="facts-list">
+    {
+      quickFacts.map((fact) => (
+        <div>
+          <Label as="dt" text={fact.term} />
+          <dd>{fact.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <a href={person.cv.href} download={person.cv.filename} class="btn btn-primary">Descarregar CV</a>
+</section>

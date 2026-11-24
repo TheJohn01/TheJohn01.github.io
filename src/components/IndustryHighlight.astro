@@ -1,0 +1,26 @@
+---
+// Destaque do estágio na Bondalti: problema, solução e resultado.
+import { industryHighlight as h } from '../data/home';
+import Label from './ui/Label.astro';
+---
+
+<section id="industria" aria-labelledby="bondalti-h" class="section industry rv">
+  <Label text={h.label} />
+  <h2 id="bondalti-h" class="h2">{h.heading}</h2>
+  <p class="lede">{h.intro}</p>
+  <div class="columns">
+    {
+      h.columns.map((column) => (
+        <div class="column well">
+          <Label text={column.label} />
+          <h3 class="h3">{column.heading}</h3>
+          <p>{column.text}</p>
+        </div>
+      ))
+    }
+  </div>
+  <div class="industry-foot">
+    <div class="tags">{h.tools.map((tool) => <span class="tag">{tool}</span>)}</div>
+    <p class="muted">{h.note}</p>
+  </div>
+</section>

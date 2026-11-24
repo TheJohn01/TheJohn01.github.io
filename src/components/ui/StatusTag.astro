@@ -1,0 +1,12 @@
+---
+// Estado de um projeto: "Publicado" (azul) ou "Em curso" (verde).
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  status: CollectionEntry<'projects'>['data']['status'];
+}
+
+const { status } = Astro.props;
+---
+
+<span class:list={['tag', status === 'Publicado' ? 'is-published' : 'is-ongoing']}>{status}</span>

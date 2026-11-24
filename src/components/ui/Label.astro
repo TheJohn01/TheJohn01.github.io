@@ -1,0 +1,16 @@
+---
+// Etiqueta pequena em maiúsculas (ex.: "PROJETOS EM DESTAQUE").
+// Escreve-se o texto normalmente; a conversão para maiúsculas é feita aqui.
+import { caps } from '../../lib/text';
+
+interface Props {
+  text: string;
+  /** Elemento HTML a usar. Por omissão, div. */
+  as?: 'div' | 'dt';
+  class?: string;
+}
+
+const { text, as: Tag = 'div', class: className } = Astro.props;
+---
+
+<Tag class:list={['label', className]}>{caps(text)}</Tag>

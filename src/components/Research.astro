@@ -1,0 +1,32 @@
+---
+// Secção "Investigação": a publicação mais recente que tenha o campo highlight.
+import { getCollection } from 'astro:content';
+import { inlineItalic } from '../lib/text';
+import AsciiArt from './AsciiArt.astro';
+import Label from './ui/Label.astro';
+
+const publications = (await getCollection('publications'))
+  .filter((entry) => entry.data.highlight)
+  .sort((a, b) => b.data.year - a.data.year);
+const pub = publications[0]?.data;
+const highlight = pub?.highlight;
+---
+
+{
+  pub && highlight && (
+    <section id="research" class="section research rv">
+      <div class="research-copy">
+        <Label text="Investigação" class="inherit" />
+        <h2 class="h2">{highlight.heading}</h2>
+        <p class="research-lede" set:html={inlineItalic(highlight.lede)} />
+        <p class="citation">
+          <i>{pub.title}.</i> {pub.journal}, {pub.issue}.
+        </p>
+        <a href={pub.doi} class="btn sm btn-secondary">Ler o artigo</a>
+      </div>
+      <div class="art-hover wine-art">
+        <AsciiArt name={highlight.art} label={highlight.artLabel} />
+      </div>
+    </section>
+  )
+}

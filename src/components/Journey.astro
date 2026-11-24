@@ -1,0 +1,97 @@
+---
+// Secção "Percurso": linha do tempo da experiência, formação (com publicações),
+// competências e idiomas. Os textos vêm de src/data/journey.ts.
+import { getCollection } from 'astro:content';
+import { education, experience, languages, skills } from '../data/journey';
+import Label from './ui/Label.astro';
+
+const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
+
+/** Barra de nível no estilo [####.] seguida do texto curto. */
+function levelBar(level: number, short: string): string {
+  return `[${'#'.repeat(level)}${'.'.repeat(5 - level)}] ${short}`;
+}
+---
+
+<section id="experience" class="section">
+  <Label text="Percurso" />
+  <h2 class="h2 rv">Onde trabalhei e estudei</h2>
+
+  <div class="journey-row journey-first">
+    <div class="journey-main">
+      <div class="card rv">
+        <h3 class="h3 timeline-title">Experiência</h3>
+        {
+          experience.map((item, index) => (
+            <div class="tl-item">
+              <div aria-hidden="true" class="tl-rail">
+                <span class="tl-mark">o--</span>
+                {index < experience.length - 1 && <div class="tl-line" />}
+              </div>
+              <div class="tl-body">
+                <Label text={item.period} />
+                <h3 class="h3">{item.role}</h3>
+                <div class="muted">{item.organization}</div>
+                <p>{item.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="journey-side card rv lift">
+      <h3 class="h3">Formação</h3>
+      {
+        education.map((item) => (
+          <div class="edu-item">
+            <Label text={item.period} />
+            <h4>{item.title}</h4>
+            <div class="muted">{item.organization}</div>
+            <p>{item.text}</p>
+          </div>
+        ))
+      }
+      {
+        publications.map(({ data }) => (
+          <div class="edu-item">
+            <Label text={`Publicação · ${data.year}`} />
+            <h4>{data.cardTitle}</h4>
+            <div class="muted">{data.role}</div>
+            <p>{data.summary}</p>
+            <a href={data.doi} class="more">Ler o artigo →</a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="journey-row">
+    <div class="journey-main card rv lift">
+      <h3 class="h3">Competências</h3>
+      {
+        skills.map((group) => (
+          <div class="skill-group rv">
+            <Label text={group.label} />
+            <div class="tags">{group.items.map((skill) => <span class="tag">{skill}</span>)}</div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="journey-side card rv lift">
+      <h3 class="h3">Idiomas</h3>
+      {
+        languages.map((language) => {
+          const bar = levelBar(language.level, language.short);
+          return (
+            <div class="lang-row">
+              <span>{language.name}</span>
+              <span class="lang-bar type" aria-label={language.spoken} style={`width: ${bar.length}ch`}>{bar}</span>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

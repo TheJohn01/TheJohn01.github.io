@@ -1,0 +1,26 @@
+---
+// Uma peça de arte ASCII. O HTML leva a versão clara; o script em
+// src/scripts/ascii-condense.ts troca para a versão escura e anima a "condensação".
+import { artFor } from '../lib/ascii';
+
+interface Props {
+  /** Nome do ficheiro em src/assets/ascii/day, sem ".txt". */
+  name: string;
+  /** Descrição para leitores de ecrã. Sem ela, a arte é tratada como decorativa. */
+  label?: string | undefined;
+  /** Tamanho da letra em px (por omissão, 6). */
+  size?: number | undefined;
+  class?: string | undefined;
+}
+
+const { name, label, size, class: className } = Astro.props;
+const text = artFor(name);
+const style = size === undefined ? undefined : `--ascii-size: ${size}px`;
+---
+
+{/* O texto fica colado às etiquetas <pre> para não acrescentar espaços. */}
+{label ? (
+  <pre role="img" aria-label={label} data-ascii={name} class:list={['ascii', className]} style={style}>{text}</pre>
+) : (
+  <pre aria-hidden="true" data-ascii={name} class:list={['ascii', className]} style={style}>{text}</pre>
+)}

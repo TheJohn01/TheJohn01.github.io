@@ -1,0 +1,31 @@
+---
+// Secção "Projetos". Lê todos os ficheiros de src/content/projects e ordena-os pelo campo order.
+// Os projetos com caseStudy aparecem em grande; os restantes, em cartões lado a lado.
+import { getCollection } from 'astro:content';
+import CaseStudy from './CaseStudy.astro';
+import ProjectCard from './ProjectCard.astro';
+import Label from './ui/Label.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((project) => project.data.caseStudy);
+const others = projects.filter((project) => !project.data.caseStudy);
+---
+
+<section id="work" class="section">
+  <Label text="Projetos em destaque" />
+  <h2 class="h2 rv">Projetos</h2>
+  <p class="section-intro">Simulação, modelação e dados, a maior parte em acesso aberto no GitHub.</p>
+
+  <div class="project-list">
+    {featured.map((project) => <CaseStudy project={project} />)}
+    {
+      others.length > 0 && (
+        <div class="card-row">
+          {others.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>

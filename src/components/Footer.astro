@@ -1,0 +1,23 @@
+---
+// Rodapé com contactos (âncora #contact).
+import { contact, person } from '../data/site';
+import AsciiArt from './AsciiArt.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="section site-foot">
+  <div class="foot">
+    <div class="foot-copy">
+      <AsciiArt name="drops" class="foot-drops" />
+      <h2 class="h2">{contact.heading}</h2>
+      <p>{contact.text}</p>
+    </div>
+    <div class="foot-links">
+      <a href={`mailto:${person.email}`}>{person.email}</a>
+      <a href={person.linkedin.href}>{person.linkedin.label}</a>
+      <a href={person.github.href}>{person.github.label}</a>
+    </div>
+  </div>
+  <div class="foot2">© {year} {person.fullName}</div>
+</footer>

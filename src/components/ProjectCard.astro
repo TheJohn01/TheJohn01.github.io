@@ -1,0 +1,26 @@
+---
+// Cartão compacto de projeto, com miniatura ASCII.
+import type { CollectionEntry } from 'astro:content';
+import AsciiArt from './AsciiArt.astro';
+import Label from './ui/Label.astro';
+import StatusTag from './ui/StatusTag.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { data } = Astro.props.project;
+---
+
+<article class="card cardc rv lift">
+  <div class="art-hover thumb well art-frame">
+    <AsciiArt name={data.art} label={data.artLabel} />
+  </div>
+  <div class="meta-row">
+    <Label text={data.tags.join(' · ')} />
+    <StatusTag status={data.status} />
+  </div>
+  <h3 class="h3">{data.title}</h3>
+  <p>{data.summary}</p>
+  {data.links.map((link) => <a href={link.href} class="more">{link.label} →</a>)}
+</article>
