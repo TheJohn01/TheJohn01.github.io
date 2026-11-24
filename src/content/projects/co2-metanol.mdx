@@ -1,0 +1,174 @@
+---
+title: Do CO2 capturado ao metanol
+order: 3
+tags: [Aspen Plus, Aprendizagem automática]
+status: Em curso
+art: plant
+artLabel: "Arte ASCII de uma maqueta de instalação: uma coluna de pratos (instalação 1), dois tanques (instalação 2), uma esfera que representa o modelo de aprendizagem automática e um permutador de placas (instalação 3), ligados por tubagens"
+summary: Três instalações simuladas em Aspen Plus e integradas numa só unidade. Um modelo de aprendizagem automática treinado com os resultados vai alimentar um site onde qualquer alteração aos dados de entrada dá uma resposta fiável.
+---
+
+import Expert from '../../components/charts/Expert.astro';
+import Flow from '../../components/charts/Flow.astro';
+import LineChart from '../../components/charts/LineChart.astro';
+
+## O objetivo
+
+Transformar CO₂ capturado de gases de combustão em metanol, um combustível e uma matéria-prima da indústria química. A unidade junta três instalações, cada uma simulada em Aspen Plus:
+
+<Flow
+  steps={[
+    { title: 'Gases de combustão', text: '842 kmol/h, com 12,5 % de CO₂.' },
+    { title: '1. Captura de CO₂', text: 'Com aminas.' },
+    { title: '3. Síntese de metanol', text: 'Junta o H₂ da instalação 2 (13,7 t/dia, por eletrólise ou reforma de biometano); reage a cerca de 50 bar.' },
+  ]}
+  links={['CO₂ diluído', 'CO₂ · 100 t/dia']}
+  caption="O caminho do CO₂ pelas instalações. A instalação 2, de produção de hidrogénio, alimenta a síntese em paralelo."
+/>
+
+A base de projeto é capturar 100 t de CO₂ por dia, com 90 % de captura.
+
+<Expert>
+
+**Base de projeto**
+
+| Grandeza | Valor | Cálculo |
+|---|---|---|
+| CO₂ capturado | 100 t/dia = 94,7 kmol/h | 100 000 ÷ 44,01 ÷ 24 |
+| Taxa de captura | 90 % | — |
+| CO₂ no gás de combustão | 105,2 kmol/h | 94,7 ÷ 0,90 |
+| Gás de combustão (12,5 % de CO₂) | 842 kmol/h | 105,2 ÷ 0,125 |
+| H₂ necessário (H₂/CO₂ = 3) | 284,0 kmol/h = 13,7 t/dia | 3 × 94,7 |
+| Pressão do circuito de síntese | 50 bar no separador de alta pressão | — |
+
+**Especificação das correntes entre instalações (proposta, em rascunho)**
+
+| | CO₂ (captura → síntese) | H₂ (produção → síntese) |
+|---|---|---|
+| Caudal | 94,7 kmol/h (4,17 t/h) | 284,0 kmol/h (572,6 kg/h) |
+| Pressão e temperatura | 55 bar, 40 °C | 55 bar, 40 °C |
+| Pureza (base seca) | ≥ 99,5 % mol | ≥ 99,9 % mol |
+| O₂ | ≤ 10 ppm mol (como a especificação Northern Lights) | ≤ 10 ppm mol |
+| Outros | N₂ + Ar ≤ 0,1 %; enxofre ≤ 0,1 ppm; amina ≤ 10 ppm | CH₄ ≤ 0,5 % na rota de reforma |
+
+A 55 bar e 40 °C o CO₂ está acima da temperatura crítica (31 °C), por isso não condensa. O O₂ é o maior risco para o catalisador de Cu/ZnO, daí o mesmo limite nas duas correntes. Com 57 kWh/kg ao nível da instalação, o eletrolisador PEM precisa de cerca de 33 MW. Decisões em aberto: secar ou não o CO₂ (0,1 % ou 30 ppm de água), a pressão de síntese (50 a 70 bar) e o destino do CO₂ da rota de reforma.
+
+</Expert>
+
+## A primeira instalação: captura com aminas
+
+Os gases de combustão passam numa coluna (o absorvedor) onde uma solução de amina, a frio, absorve o CO₂. A solução carregada segue para uma segunda coluna (o stripper), onde é aquecida para libertar o CO₂ quase puro e voltar ao início. O calor gasto nesse aquecimento é o maior custo de operação da captura.
+
+<Flow
+  steps={[
+    { title: 'Absorvedor, cerca de 40 °C', text: 'A amina fria absorve o CO₂ dos gases de combustão.' },
+    { title: 'Stripper, 115–120 °C', text: 'O calor do reboiler liberta o CO₂ quase puro.' },
+    { title: 'Compressão', text: 'O CO₂ é comprimido até 55 bar para a síntese.' },
+  ]}
+  links={['solvente rico em CO₂', 'CO₂']}
+  loop="O solvente regenerado volta, arrefecido, ao absorvedor."
+  caption="O ciclo de captura com aminas. O reboiler do stripper precisa de cerca de 4,2 MW a 3,6 GJ por tonelada de CO₂."
+/>
+
+Estou a comparar três solventes:
+
+- **MEA**, a referência da indústria, rápida mas exigente em calor;
+- **AMP**, uma amina que transporta mais CO₂ por molécula;
+- **MDEA ativada com piperazina**, que gasta menos calor mas é a mais difícil de simular.
+
+Antes de simular, reuni as reações e a cinética de cada solvente, com a fonte de cada parâmetro. Confirmei vários contra as correlações originais e assinalei os que não consegui confirmar numa fonte aberta.
+
+<Expert>
+
+| | MEA | AMP | MDEA + PZ |
+|---|---|---|---|
+| Produto principal | Carbamato | Bicarbonato | Bicarbonato (MDEA) e carbamatos de PZ |
+| Capacidade estequiométrica | ~0,5 mol/mol | ~1 mol/mol | ~1 mol/mol de MDEA |
+| Velocidade | Rápida | Média | MDEA lenta; PZ muito rápida |
+| Calor de absorção | Elevado | Menor | Menor |
+| Risco de convergência | Baixo | Médio | Alto |
+
+**Modelo termodinâmico:** ENRTL-RK com componentes verdadeiros, CO₂, N₂ e O₂ como componentes de Henry. A Chemistry tem todas as reações iónicas em equilíbrio, para as propriedades; o conjunto REAC-DIST do RadFrac rate-based tem as reações rápidas em equilíbrio e os passos limitantes como pares cinéticos, direta e inversa, com filme líquido discretizado com reação.
+
+**Parâmetros cinéticos diretos** (lei de potência, base molaridade, k em m³/(kmol·s)):
+
+| Reação | k | E | Fonte | Verificação |
+|---|---|---|---|---|
+| CO₂ + OH⁻ → HCO₃⁻ | 4,32 × 10¹³ | 55,46 kJ/mol | Pinsent et al. (1956) | +1,5 % a 25 °C face à correlação original |
+| MEA + CO₂ + H₂O → MEACOO⁻ + H₃O⁺ | 9,77 × 10¹⁰ | 41,26 kJ/mol | Hikita et al. (1977) | +2,4 % a 25 °C |
+| AMP + CO₂ + H₂O → AMPH⁺ + HCO₃⁻ | 1,77 × 10¹⁰ | 42,8 kJ/mol | Ajuste meu aos 4 pontos de Saha et al. (1995) | resíduos abaixo de 1 % |
+| MDEA + CO₂ + H₂O → MDEAH⁺ + HCO₃⁻ | 4,01 × 10⁸ | 44,9 kJ/mol | Ko e Li (2000) | — |
+| PZ + CO₂ + H₂O → PZCOO⁻ + H₃O⁺ | 4,14 × 10¹⁰ | 33,6 kJ/mol | Bishnoi e Rochelle (2000) | a partir do valor a 25 °C |
+
+As reações inversas do MEA não estão confirmadas numa fonte aberta: vêm do ficheiro de exemplo do Aspen. O ajuste do AMP termina a 318 K, por isso no stripper (cerca de 393 K) é uma extrapolação.
+
+</Expert>
+
+## Simulação rigorosa, respostas imediatas
+
+Uma simulação rigorosa das colunas pode demorar minutos por caso. Para que qualquer pessoa possa mudar os dados de entrada e ter uma resposta na hora, o Aspen vai alimentar um modelo de aprendizagem automática:
+
+<Flow
+  steps={[
+    { title: 'Aspen Plus', text: 'Simulação rigorosa de cada caso.' },
+    { title: 'Campanha de dados', text: '150 casos de treino e 25 de validação.' },
+    { title: 'Modelo', text: 'Aprende a relação entre entradas e resultados.' },
+    { title: 'Aplicação web', text: 'Previsão imediata, com incerteza.' },
+  ]}
+  caption="Do simulador à aplicação. O Aspen só é preciso para gerar os dados; a aplicação corre sem ele."
+/>
+
+As entradas são o teor de CO₂ que fica no solvente regenerado, a pressão do stripper, a concentração de amina e o CO₂ no gás de combustão. As saídas incluem o calor gasto por tonelada de CO₂, o caudal de solvente e a potência de compressão do CO₂.
+
+<Expert>
+
+| Entrada | Gama (MEA) | Saídas (captura fixa em 90 %) |
+|---|---|---|
+| Lean loading | 0,15–0,35 mol/mol | Consumo específico do reboiler (GJ/t CO₂) |
+| Pressão do stripper | 150–220 kPa | Caudal de solvente pobre (t/h) |
+| Concentração de amina | 25–35 % m/m | Rich loading (mol/mol) |
+| CO₂ no gás de combustão | 8–15 % mol | Razão L/G (kg/kg); potência de compressão (MW) |
+
+- **Campanha:** hipercubo latino com sementes diferentes para treino e validação, ordenado por proximidade para cada caso partir de uma solução semelhante; automação do Aspen por COM; repetição após falha; filtros de qualidade (captura de 0,900 e erro de balanço de CO₂ abaixo de 1 %); retoma depois de uma interrupção.
+- **Modelo:** um processo gaussiano por saída, kernel de Matérn (ν = 2,5) com ruído branco.
+- **Aceitação:** erro médio no consumo do reboiler até 3 % e cobertura dos intervalos de 95 % de pelo menos 80 %, nos casos de validação.
+- **Na aplicação:** sem extrapolação fora da gama simulada; aviso quando um ponto está longe dos dados de treino ou tem incerteza muito acima do habitual (zonas onde o Aspen não convergiu).
+
+</Expert>
+
+## Em que ponto está
+
+<Flow
+  steps={[
+    { title: 'Código e aplicação', text: 'Testados com um Aspen simulado (31 testes).', status: 'feito' },
+    { title: 'Reações e cinética', text: 'Três solventes, com fonte de cada parâmetro.', status: 'feito' },
+    { title: 'Simulação do MEA', text: 'Primeiro passo: validar as propriedades.', status: 'em curso' },
+    { title: 'Dados reais e modelo', text: 'Campanha no Aspen e treino.', status: 'por fazer' },
+  ]}
+  caption="Estado em novembro de 2026."
+/>
+
+O modelo que está hoje na aplicação é de demonstração, treinado com dados sintéticos. Por isso esta página ainda não mostra resultados: chegam quando as simulações estiverem concluídas.
+
+<Expert>
+
+**Os dados contra os quais vou validar o modelo termodinâmico.** Antes de construir as colunas, o ENRTL-RK tem de reproduzir a pressão parcial de CO₂ sobre MEA a 30 % medida por Wagner et al. (2013). Critério de aceitação: desvio relativo médio absoluto (AARD) até 30 %, sem viés sistemático numa isotérmica inteira. Como referência, o modelo UNIQUAC estendido de Aronu et al. (2011) tem 24,3 %.
+
+<LineChart
+  title="Solubilidade de CO₂ em MEA a 30 % (dados de validação)"
+  xLabel="Loading (mol CO₂/mol MEA)"
+  yLabel="Pressão parcial de CO₂ (kPa)"
+  xDomain={[0, 0.6]}
+  yDomain={[1, 100]}
+  yLog
+  series={[
+    { name: '313 K (40 °C)', mode: 'points', points: [[0.467, 1.38], [0.493, 3.27], [0.509, 6.08], [0.521, 9.02], [0.539, 17.5], [0.558, 29.2], [0.577, 49.1], [0.593, 66.4]] },
+    { name: '353 K (80 °C)', mode: 'points', points: [[0.293, 1.58], [0.352, 3.75], [0.396, 6.59], [0.429, 11.8], [0.445, 18.4], [0.459, 23], [0.47, 29.6], [0.486, 39.7], [0.499, 55.2], [0.512, 70.4], [0.516, 78.7]] },
+    { name: '392 K (119 °C)', mode: 'points', points: [[0.103, 2.92], [0.115, 3.1], [0.132, 4.24], [0.171, 7.16], [0.213, 12.2], [0.24, 16], [0.273, 24.2], [0.284, 27.6], [0.323, 41.6], [0.351, 62.4], [0.361, 69.8], [0.363, 73.2]] },
+  ]}
+  caption="31 medições de Wagner et al. (2013), J. Chem. Eng. Data 58, 883–895, via o arquivo ThermoML do NIST. Cobrem o fundo do absorvedor (40 °C, loading rico) e o stripper (120 °C, loading pobre)."
+/>
+
+**Próximas fases:** simular as instalações de hidrogénio e de metanol; integrar o calor entre elas (o reator de metanol, com camisa de água em ebulição a 220–250 °C, gera vapor que pode servir o reboiler do stripper); e encadear os três modelos pelas correntes de interface, com propagação da incerteza por Monte Carlo.
+
+</Expert>

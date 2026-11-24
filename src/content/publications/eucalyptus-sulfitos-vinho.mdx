@@ -1,0 +1,175 @@
+---
+title: Eucalyptus globulus Leaf Extract as a Natural Alternative to Sulphites in Red Wine Stabilization
+journal: U.Porto Journal of Engineering
+issue: 12(3), 40–59
+year: 2026
+doi: https://doi.org/10.24840/2183-6493_012-003_003606
+cardTitle: Artigo no U.Porto Journal of Engineering
+role: Coautor, com sete colegas
+summary: Estudo do extrato de folhas de eucalipto como alternativa natural aos sulfitos na estabilização do vinho tinto.
+highlight:
+  heading: Uma folha em vez de sulfitos
+  lede: Será que um extrato de folhas de *Eucalyptus globulus* estabiliza o vinho tinto tão bem como o dióxido de enxofre? O artigo testa-o como alternativa natural.
+  art: wine
+  artLabel: Arte ASCII de um copo de vinho tinto meio cheio, uma garrafa de vinho, um pequeno frasco conta-gotas com pipeta e raminhos de folhas de eucalipto
+---
+
+import BarChart from '../../components/charts/BarChart.astro';
+import Expert from '../../components/charts/Expert.astro';
+import Flow from '../../components/charts/Flow.astro';
+
+## O desafio
+
+O dióxido de enxofre (SO₂) e os sulfitos são usados há muito tempo para proteger o vinho da oxidação e dos microrganismos. Mas o seu uso é cada vez mais regulado, por estar associado a riscos para a saúde, e há mais procura de vinhos naturais, com menos aditivos.
+
+Ao mesmo tempo, as folhas de *Eucalyptus globulus* são um subproduto abundante da indústria do papel, e são ricas em eucaliptol e outros compostos com atividade antioxidante e antimicrobiana.
+
+<Expert>
+
+O SO₂ e os sais de sulfito (E220–E228) atuam por uma série de reações redox, de sulfito a sulfato, com o oxigénio, e evitam a deterioração microbiológica. A proposta usa uma extração hidroalcoólica dos compostos bioativos das folhas, com foco no eucaliptol (1,8-cineol), que na literatura representa 50–80 % do extrato de *E. globulus*, embora com grande variação conforme a origem geográfica e as condições ambientais.
+
+</Expert>
+
+## Como escolhemos a ideia
+
+O trabalho começou com uma análise do mercado de bebidas fermentadas e várias ideias de produto. Avaliámo-las com uma matriz de critérios ponderados, e a substituição de sulfitos por extrato de eucalipto teve a melhor nota:
+
+<BarChart
+  title="Nota final de cada ideia (de 1 a 5)"
+  max={5}
+  bars={[
+    { label: 'Extrato de eucalipto em vez de SO₂ no vinho tinto', value: 4.4, highlight: true },
+    { label: 'Kombucha com probióticos de resíduos agroindustriais', value: 3.2 },
+    { label: 'Cerveja com proteína', value: 3.0 },
+  ]}
+  caption="As três ideias mais bem classificadas. Fonte: tabela 1 do artigo."
+/>
+
+<Expert>
+
+| Critério (peso) | Eucalipto no vinho | Kombucha | Cerveja com proteína |
+|---|---|---|---|
+| Inovação (10 %) | 4 | 3 | 5 |
+| Impacto no sabor (10 %) | 3 | 4 | 3 |
+| Engenharia (20 %) | 5 | 2 | 2 |
+| Sustentabilidade (20 %) | 5 | 5 | 3 |
+| Procura (15 %) | 5 | 2 | 3 |
+| Concorrência (5 %) | 3 | 3 | 2 |
+| Custo (20 %) | 4 | 3 | 3 |
+| **Total** | **4,4** | **3,2** | **3,0** |
+
+A inovação foi avaliada pelo número de artigos na Scopus com palavras-chave de cada conceito. A kombucha perdeu na procura e na inovação (já tem probióticos); a cerveja com proteína na engenharia, porque a proteína causa turvação e instabilidade.
+
+</Expert>
+
+## O processo
+
+Propusemos o *Eucavinum*, um vinho tinto sem sulfitos adicionados, feito com vinho Vinhão. O processo tem três fases:
+
+<Flow
+  steps={[
+    { title: 'Preparar as folhas', text: 'Lavagem, secagem e moagem.' },
+    { title: 'Extrair', text: 'Etanol a 40 %, a 75 °C.' },
+    { title: 'Recuperar o solvente', text: 'Evaporação, para reutilizar o etanol.' },
+    { title: 'Incorporar', text: 'O extrato é misturado no vinho tinto já fermentado.' },
+  ]}
+  links={['folhas moídas', 'extrato + solvente', 'extrato']}
+  caption="O processo simulado em SuperPro Designer. Prevê cerca de 2 milhões de garrafas por ano, com 150 mg/L de eucaliptol no vinho."
+/>
+
+<Expert>
+
+**Balanço por lote** (SuperPro Designer, figuras 1 e 2 do artigo):
+
+| Corrente | Caudal | Notas |
+|---|---|---|
+| Folhas de eucalipto | 2200 kg | Humidade de 50 % |
+| Folhas moídas | 1368 kg | 60 °C, humidade de 20 % |
+| Solvente (etanol a 40 %) | 8497 kg | Recuperado e reutilizado |
+| Biomassa residual | 719 kg + 7,3 kg | Extrator e prensa de parafuso |
+| Água e etanol recuperados | 8764 kg | Evaporador de múltiplo efeito, 40 °C, 0,09 bar, 6 h |
+| Extrato de eucalipto | 374 kg | Misturado em 1500 m³ de vinho |
+
+A extração sólido-líquido foi simulada como misturador-decantador, por limitação do programa, com um rendimento de 27 % (Álvarez et al. 2021). Composição simulada do extrato: 58,8 % de 1,8-cineol, 17,6 % de globulol e 5,9 % de cada um de α-pineno, aromadendreno, limoneno e viridiflorol.
+
+</Expert>
+
+## O que medimos no laboratório
+
+A extração Soxhlet deu um rendimento próximo dos valores publicados, e os extratos mostraram uma atividade antioxidante moderada. Mas o vinho final teve muito menos eucaliptol do que a simulação previa:
+
+<BarChart
+  title="Eucaliptol no vinho: previsto e medido"
+  unit="mg/L"
+  bars={[
+    { label: 'Previsto pela simulação', value: 150 },
+    { label: 'Medido no Eucavinum', value: 0.2, highlight: true },
+  ]}
+  caption="O valor medido (200 µg/L) é cerca de 750 vezes menor do que o previsto. Fonte: secção 7.8 do artigo."
+/>
+
+<Expert>
+
+<BarChart
+  title="Rendimento de extração"
+  unit="%"
+  bars={[
+    { label: 'Soxhlet', value: 24.62, error: 1.22 },
+    { label: 'Ultrassons (UAE)', value: 9.91, error: 0.18 },
+  ]}
+  caption="Rodrigues et al. (2018) obtiveram 25,90 % por Soxhlet com etanol absoluto; Lima et al. (2025), 8,34–25,05 % por UAE com etanol a 50 %. Só os extratos Soxhlet foram caracterizados. Fonte: secção 7.7.1 do artigo."
+/>
+
+| Propriedade antioxidante | SOX₁ | SOX₂ |
+|---|---|---|
+| Fenólicos totais (mg GAE/g extrato) | 131,2 ± 1,1 | 118,0 ± 7,3 |
+| DPPH, IC₅₀ (mg/L) | 141,3 ± 2,1 | 157,2 ± 1,0 |
+| DPPH, equivalentes de Trolox (mg/g extrato) | 31,0 ± 0,5 | 27,9 ± 0,2 |
+| ABTS, IC₅₀ (mg/L) | mais de 50 % de inibição a 19,4 mg/L | 86,0 ± 5,9 |
+| ABTS, equivalentes de Trolox (mg/g extrato) | — | 32,5 ± 2,4 |
+
+O eucaliptol no extrato ficou entre 0,0096 e 0,022 %, muito abaixo dos 50–80 % da literatura. As causas prováveis são uma extração por otimizar (tempo, proporção de solvente, temperatura) e a perda de eucaliptol, muito volátil, na evaporação rotativa. A diferença entre SOX₁ e SOX₂ mostra que são precisas mais repetições. Na incorporação, 24,4 mL de extrato (28,64 g/L) foram juntos a 725,6 mL de vinho.
+
+</Expert>
+
+## A economia
+
+Com o custo de produção e uma margem de 35 %, cada garrafa seria vendida a 4,60 €:
+
+<BarChart
+  title="Por garrafa de Eucavinum"
+  unit="€"
+  bars={[
+    { label: 'Custo de produção', value: 2.99 },
+    { label: 'Preço de venda', value: 4.6, highlight: true },
+  ]}
+  caption="A análise preliminar dá um valor atual líquido de 2,1 M€ para um investimento de 2,8 M€, e recuperação do investimento em cerca de 4,4 anos. Fonte: secção 8 do artigo."
+/>
+
+<Expert>
+
+<BarChart
+  title="Custo de produção por 100 garrafas"
+  unit="€"
+  bars={[
+    { label: 'Eletricidade', value: 112.3, highlight: true },
+    { label: 'Vinho tinto por tratar', value: 75.41 },
+    { label: 'Garrafas, rolhas e rótulos', value: 67.91 },
+    { label: 'Vapor', value: 29.6 },
+    { label: 'Salários (com encargos)', value: 12.74 },
+    { label: 'Transporte', value: 0.71 },
+    { label: 'Água', value: 0.43 },
+    { label: 'Etanol (com reciclagem)', value: 0.38 },
+  ]}
+  caption="Total de 299,48 € por 100 garrafas, para 2 milhões de garrafas por ano. As folhas vêm da Navigator como subproduto, sem custo além do transporte. Fonte: tabela 6 do artigo."
+/>
+
+- **Investimento:** cerca de 701 mil € na fábrica (terreno, edifício, consumíveis, água e energia) e 2 M€ em equipamento, instalação e tubagens.
+- **Operação:** 250 dias por ano, 8 h por dia, com 11 trabalhadores; a produção começa no 4.º trimestre do 1.º ano e as vendas no 2.º trimestre do 2.º ano, depois de 6 meses de envelhecimento.
+- **Indicadores:** taxa de desconto de 15 %, VAL de 2,1 M€, TIR de 30 %, índice de rentabilidade de 1,75 e retorno do investimento de 75 %.
+
+</Expert>
+
+## O que ainda falta
+
+A diferença entre o eucaliptol medido e o simulado mostra que a extração ainda não está otimizada e que parte do eucaliptol se perde na evaporação. Faltam mais repetições dos ensaios, testar folhas do fornecedor previsto e medir a atividade antimicrobiana, para confirmar que o extrato substitui de facto o SO₂.

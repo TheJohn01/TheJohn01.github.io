@@ -34,6 +34,10 @@
   --shadow-gloss: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -8px 14px rgba(6, 40, 77, 0.14);
   --font-sans: 'Figtree Variable', Figtree, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+  /* Gráficos: azul, âmbar e violeta, validados para daltonismo e contraste. */
+  --chart-1: #0a6fc2;
+  --chart-2: #b25e00;
+  --chart-3: #8a3fbf;
   color-scheme: light;
 }
 .dp.dusk {
@@ -59,6 +63,9 @@
   --shadow-dew: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.45);
   --shadow-float: 0 2px 4px rgba(0, 0, 0, 0.45), 0 20px 48px rgba(0, 0, 0, 0.55);
   --shadow-gloss: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -8px 14px rgba(4, 33, 59, 0.2);
+  --chart-1: #3a8ad0;
+  --chart-2: #c07414;
+  --chart-3: #9a58cc;
   color-scheme: dark;
 }
 /* Transição suave ao trocar de tema (classe posta durante 650 ms pelo script). */
@@ -888,6 +895,283 @@ pre {
   visibility: hidden;
 }
 
+/* Gráficos e diagramas das páginas (src/components/charts) */
+.chart {
+  margin: 24px 0 0;
+}
+.chart-title {
+  margin: 0;
+  font-weight: 600;
+}
+.chart figcaption,
+.chart-note {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.tone-1 {
+  --tone: var(--chart-1);
+}
+.tone-2 {
+  --tone: var(--chart-2);
+}
+.tone-3 {
+  --tone: var(--chart-3);
+}
+.tone-muted {
+  --tone: var(--hairline);
+}
+.swatch,
+.bar,
+.split-part {
+  background: var(--tone);
+}
+/* Barras */
+.bars {
+  margin-top: 12px;
+}
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(0, 11em) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 4px 0;
+}
+.bar-label {
+  font-size: 14px;
+  line-height: 1.3;
+}
+.bar-cells {
+  display: grid;
+  gap: 2px;
+}
+.bar-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+}
+.bar {
+  flex: none;
+  height: 20px;
+  border-radius: 0 4px 4px 0;
+}
+.bar.is-dim {
+  opacity: 0.45;
+}
+.bar-value {
+  flex: none;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.bar-error {
+  position: absolute;
+  top: 50%;
+  height: 0;
+  border-top: 2px solid var(--ink);
+}
+.bar-ref {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  border-left: 2px solid var(--ink-muted);
+}
+.ref-key {
+  display: inline-block;
+  width: 2px;
+  height: 12px;
+  margin-right: 8px;
+  background: var(--ink-muted);
+  vertical-align: middle;
+}
+/* Barra dividida */
+.split {
+  display: flex;
+  gap: 2px;
+  margin-top: 12px;
+  height: 28px;
+}
+.split-part {
+  display: flex;
+  align-items: center;
+  min-width: 2px;
+  padding: 0 8px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+}
+.split-part.tone-muted {
+  color: var(--ink);
+}
+/* Linhas e pontos */
+.line-svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-top: 8px;
+  font-family: var(--font-sans);
+}
+.line-svg .grid {
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+.line-svg .axis {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.line-svg .tick,
+.line-svg .ref-label {
+  font-size: 14px;
+  fill: var(--ink-muted);
+}
+.line-svg .axis-label {
+  font-size: 14px;
+  fill: var(--ink);
+}
+.line-svg .ref {
+  stroke: var(--ink-muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+.line,
+.line-svg .line {
+  fill: none;
+  stroke: var(--tone);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.mark {
+  fill: var(--tone);
+  stroke: var(--ground);
+  stroke-width: 2;
+}
+.legend-mark {
+  flex: none;
+}
+/* Diagramas de passos e de processo */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.flow-step {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 150px;
+}
+.flow-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  align-self: stretch;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-dew);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.flow-text {
+  color: var(--ink-muted);
+}
+.flow-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: none;
+  width: 56px;
+  padding: 0 4px;
+  text-align: center;
+}
+.flow-arrow {
+  width: 100%;
+  height: 2px;
+  background: var(--azure);
+  position: relative;
+}
+.flow-arrow::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -4px;
+  border: 5px solid transparent;
+  border-left: 7px solid var(--azure);
+  border-right: 0;
+}
+.flow-link-text {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.25;
+  color: var(--ink-muted);
+}
+.flow-status {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.flow-step.is-feito .flow-box {
+  border-left: 4px solid var(--leaf);
+}
+.flow-step.is-em-curso .flow-box {
+  border-left: 4px solid var(--sun);
+}
+.flow-loop {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+/* Bloco "Para especialistas" */
+.expert {
+  margin-top: 24px;
+  padding: 16px 24px;
+  border-radius: 14px;
+  background: var(--ground);
+  border: 1px solid var(--hairline);
+}
+.expert summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--azure);
+}
+.expert-body > :first-child {
+  margin-top: 16px;
+}
+
 /* Páginas de projeto e de publicação */
 .edu-item .more + .more {
   margin-left: 16px;
@@ -983,18 +1267,6 @@ pre {
   padding: 8px 12px;
   border-bottom: 1px solid var(--hairline);
   text-align: left;
-}
-.prose details {
-  margin-top: 24px;
-  padding: 16px 24px;
-  border-radius: 14px;
-  background: var(--ground);
-  border: 1px solid var(--hairline);
-}
-.prose details summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--azure);
 }
 
 /* ---------- 5. Movimento ---------- */
@@ -1162,6 +1434,36 @@ pre {
   }
   .page-title {
     font-size: 32px;
+  }
+  .flow {
+    flex-direction: column;
+  }
+  .flow-step {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .flow-link {
+    width: auto;
+    padding: 4px 0;
+  }
+  .flow-arrow {
+    width: 2px;
+    height: 20px;
+  }
+  .flow-arrow::after {
+    right: -4px;
+    top: auto;
+    bottom: -1px;
+    border: 5px solid transparent;
+    border-top: 7px solid var(--azure);
+    border-bottom: 0;
+  }
+  .bar-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .expert {
+    padding: 12px 16px;
   }
   .wrap {
     padding: 8px 16px 0;

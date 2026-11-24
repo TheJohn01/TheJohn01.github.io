@@ -1,0 +1,127 @@
+---
+// Gráfico de barras horizontais em HTML/CSS: o texto fica legível em qualquer largura.
+// Uma série, ou duas lado a lado (ex.: previsto e medido), com legenda.
+// A barra maior ocupa 82 % da faixa, para o valor caber à frente.
+import { fmt } from '../../lib/chart';
+
+interface Bar {
+  label: string;
+  value: number;
+  /** Segunda série (ex.: o valor medido). */
+  second?: number;
+  /** Texto a mostrar em vez do número (ex.: "91–94"). */
+  display?: string;
+  secondDisplay?: string;
+  /** Incerteza (±), desenhada como bigode. */
+  error?: number;
+  /** Realça esta barra (as outras ficam mais discretas). */
+  highlight?: boolean;
+}
+
+interface Props {
+  title: string;
+  bars: Bar[];
+  unit?: string;
+  /** Nomes das séries, quando há duas. */
+  series?: [string, string];
+  /** Máximo do eixo; por omissão, o maior valor. */
+  max?: number;
+  /** Linha de referência (ex.: o limite de 5 anos). */
+  reference?: { value: number; label: string };
+  caption: string;
+}
+
+const { title, bars, unit = '', series, max, reference, caption } = Astro.props;
+const top = max ?? Math.max(...bars.flatMap((b) => [b.value + (b.error ?? 0), b.second ?? 0]));
+const pct = (v: number) => `${Math.max(0, Math.min(100, (v / top) * 82)).toFixed(2)}%`;
+const anyHighlight = bars.some((b) => b.highlight);
+const show = (v: number, d?: string) => `${d ?? fmt(v)}${unit ? ` ${unit}` : ''}`;
+const summary = `${title}: ${bars
+  .map(
+    (b) =>
+      `${b.label} ${show(b.value, b.display)}${b.second !== undefined && series ? `, ${series[1]} ${show(b.second, b.secondDisplay)}` : ''}`,
+  )
+  .join('; ')}.`;
+---
+
+<figure class="chart">
+  <p class="chart-title">{title}</p>
+  {
+    series && (
+      <ul class="legend">
+        <li>
+          <span aria-hidden="true" class="swatch tone-1" />
+          {series[0]}
+        </li>
+        <li>
+          <span aria-hidden="true" class="swatch tone-2" />
+          {series[1]}
+        </li>
+      </ul>
+    )
+  }
+  <div class="bars" role="img" aria-label={summary}>
+    {
+      bars.map((bar) => (
+        <div class="bar-row">
+          <span class="bar-label">{bar.label}</span>
+          <span class="bar-cells">
+            <span class="bar-track" title={`${bar.label}: ${show(bar.value, bar.display)}`}>
+              <span
+                class:list={['bar', 'tone-1', anyHighlight && !bar.highlight && 'is-dim']}
+                style={`width: ${pct(bar.value)}`}
+              />
+              {bar.error !== undefined && (
+                <span
+                  class="bar-error"
+                  style={`left: ${pct(bar.value - bar.error)}; width: calc(${pct(bar.value + bar.error)} - ${pct(bar.value - bar.error)})`}
+                />
+              )}
+              <span class="bar-value">
+                {show(bar.value, bar.display)}
+                {bar.error !== undefined && ` ± ${fmt(bar.error)}`}
+              </span>
+              {reference && <span class="bar-ref" style={`left: ${pct(reference.value)}`} />}
+            </span>
+            {bar.second !== undefined && (
+              <span class="bar-track" title={`${bar.label} (${series?.[1] ?? ''}): ${show(bar.second, bar.secondDisplay)}`}>
+                <span class="bar tone-2" style={`width: ${pct(bar.second)}`} />
+                <span class="bar-value">{show(bar.second, bar.secondDisplay)}</span>
+                {reference && <span class="bar-ref" style={`left: ${pct(reference.value)}`} />}
+              </span>
+            )}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+  {
+    reference && (
+      <p class="chart-note">
+        <span aria-hidden="true" class="ref-key" />
+        {reference.label}
+      </p>
+    )
+  }
+  <figcaption>{caption}</figcaption>
+  <table class="sr-only">
+    <caption>{title}</caption>
+    <tr>
+      <th scope="col">Item</th>
+      <th scope="col">{series?.[0] ?? 'Valor'}</th>
+      {series && <th scope="col">{series[1]}</th>}
+    </tr>
+    {
+      bars.map((bar) => (
+        <tr>
+          <th scope="row">{bar.label}</th>
+          <td>
+            {show(bar.value, bar.display)}
+            {bar.error !== undefined && ` ± ${fmt(bar.error)}`}
+          </td>
+          {series && <td>{bar.second !== undefined ? show(bar.second, bar.secondDisplay) : '—'}</td>}
+        </tr>
+      ))
+    }
+  </table>
+</figure>

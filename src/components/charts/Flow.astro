@@ -1,0 +1,45 @@
+---
+// Diagrama de passos ou de processo: caixas ligadas por setas, com o rótulo da corrente entre elas.
+// Na horizontal em ecrãs largos e na vertical no telemóvel. HTML simples, sem JavaScript.
+interface Step {
+  title: string;
+  text?: string;
+  /** Estado opcional, para listas de progresso. */
+  status?: 'feito' | 'em curso' | 'por fazer';
+}
+
+interface Props {
+  steps: Step[];
+  /** Rótulos das ligações entre passos (um a menos do que os passos). */
+  links?: string[];
+  /** Nota de reciclo, mostrada por baixo (ex.: o solvente que volta ao absorvedor). */
+  loop?: string;
+  caption: string;
+}
+
+const { steps, links = [], loop, caption } = Astro.props;
+---
+
+<figure class="chart flow-figure">
+  <ol class="flow">
+    {
+      steps.map((step, i) => (
+        <li class:list={['flow-step', step.status && `is-${step.status.replace(' ', '-')}`]}>
+          <div class="flow-box">
+            {step.status && <span class="flow-status">{step.status}</span>}
+            <strong>{step.title}</strong>
+            {step.text && <span class="flow-text">{step.text}</span>}
+          </div>
+          {i < steps.length - 1 && (
+            <span class="flow-link">
+              <span aria-hidden="true" class="flow-arrow" />
+              {links[i] && <span class="flow-link-text">{links[i]}</span>}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+  {loop && <p class="flow-loop"><span aria-hidden="true">↺ </span>{loop}</p>}
+  <figcaption>{caption}</figcaption>
+</figure>
