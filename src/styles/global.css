@@ -246,7 +246,8 @@ pre {
   cursor: default;
 }
 .art-frame {
-  overflow-x: auto;
+  /* Só deslocamento horizontal, como último recurso; nunca vertical (overflow-x: auto ligava os dois). */
+  overflow: auto hidden;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -477,7 +478,7 @@ pre {
 .hero-art {
   flex: 0 0 auto;
   max-width: 100%;
-  overflow-x: auto;
+  overflow: auto hidden;
 }
 
 /* Em resumo */
@@ -688,7 +689,7 @@ pre {
   flex: 0 0 auto;
   max-width: 100%;
   min-width: 0;
-  overflow-x: auto;
+  overflow: auto hidden;
   padding: 24px 16px;
   border-radius: 14px;
   background: var(--leaf);
