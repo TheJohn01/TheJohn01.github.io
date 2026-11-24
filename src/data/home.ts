@@ -53,4 +53,6 @@ export const industryHighlight = {
   ] satisfies CaseColumn[],
   tools: ['Power Apps', 'Power Automate', 'SharePoint'],
   note: 'Carta de recomendação da Bondalti disponível a pedido.',
+  artLabel:
+    'Arte ASCII de uma instalação química genérica, com coluna, tanques, chaminé e um suporte de tubagens, e à frente uma consola que mostra um teste com caixas de verificação',
 } as const;
