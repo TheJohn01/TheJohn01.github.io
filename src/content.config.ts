@@ -27,14 +27,10 @@ const projects = defineCollection({
     artLabel: z.string(),
     summary: z.string(),
     links: z.array(link).default([]),
-    /** Só no projeto em destaque: as secções do caso de estudo. */
+    /** Só no projeto em destaque: os principais resultados, mostrados em grande. O resto vai no texto da página. */
     caseStudy: z
       .object({
-        howItWorks: z.array(z.string()).min(1),
         findings: z.array(z.object({ value: z.string(), text: z.string() })).min(1),
-        validation: z.array(z.string()).min(1),
-        limitations: z.array(z.string()).min(1),
-        technical: z.array(z.string()).default([]),
       })
       .optional(),
   }),

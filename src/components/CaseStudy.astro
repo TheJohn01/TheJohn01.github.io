@@ -1,7 +1,9 @@
 ---
-// Projeto em destaque, em formato de caso de estudo (usa o campo caseStudy do Markdown).
+// Projeto em destaque na página inicial: arte e principais resultados (campo caseStudy do Markdown).
+// O texto completo está na página do projeto.
 import type { CollectionEntry } from 'astro:content';
 import AsciiArt from './AsciiArt.astro';
+import Findings from './Findings.astro';
 import Label from './ui/Label.astro';
 import StatusTag from './ui/StatusTag.astro';
 import { hasBody } from '../lib/text';
@@ -11,9 +13,9 @@ interface Props {
 }
 
 const { data, id, body } = Astro.props.project;
-const page = hasBody(body) ? `/projetos/${id}/` : undefined;
 const study = data.caseStudy;
 if (!study) throw new Error(`O projeto "${id}" não tem o campo caseStudy.`);
+const page = hasBody(body) ? `/projetos/${id}/` : undefined;
 ---
 
 <article class="case rv lift">
@@ -21,57 +23,25 @@ if (!study) throw new Error(`O projeto "${id}" não tem o campo caseStudy.`);
     <Label text={data.tags.join(' · ')} />
     <StatusTag status={data.status} />
   </div>
-  <h3 class="case-title">{data.title}</h3>
-  <p class="lede">{data.summary}</p>
-
   <div class="case-split">
+    <div class="case-side">
+      <h3 class="case-title">{data.title}</h3>
+      <p class="lede">{data.summary}</p>
+      {
+        (page || data.links.length > 0) && (
+          <div class="case-links">
+            {page && <a href={page} class="more">Ler mais →</a>}
+            {data.links.map((link) => <a href={link.href} class="more">{link.label} →</a>)}
+          </div>
+        )
+      }
+    </div>
     <div class="art-hover case-art well art-frame">
       <AsciiArt name={data.art} label={data.artLabel} size={6.2} />
     </div>
-    <div class="case-steps">
-      <Label text="Como funciona" />
-      <ol class="list">{study.howItWorks.map((step) => <li>{step}</li>)}</ol>
-    </div>
   </div>
 
-  <Label text="O que descobri" class="findings-label" />
-  <div class="findings">
-    {
-      study.findings.map((finding) => (
-        <div class="finding well">
-          <div class="finding-value">{finding.value}</div>
-          <div class="finding-text">{finding.text}</div>
-        </div>
-      ))
-    }
+  <div class="case-results">
+    <Findings findings={study.findings} />
   </div>
-
-  <div class="case-cols">
-    <div>
-      <Label text="Como o validei" />
-      <ul class="list">{study.validation.map((item) => <li>{item}</li>)}</ul>
-    </div>
-    <div>
-      <Label text="O que ainda não está bem" />
-      <ul class="list">{study.limitations.map((item) => <li>{item}</li>)}</ul>
-    </div>
-  </div>
-
-  {
-    study.technical.length > 0 && (
-      <details class="details well">
-        <summary>Detalhes técnicos</summary>
-        <ul class="list">{study.technical.map((item) => <li>{item}</li>)}</ul>
-      </details>
-    )
-  }
-
-  {
-    (page || data.links.length > 0) && (
-      <div class="case-links">
-        {page && <a href={page} class="more">Ler mais →</a>}
-        {data.links.map((link) => <a href={link.href} class="more">{link.label} →</a>)}
-      </div>
-    )
-  }
 </article>
