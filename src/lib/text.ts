@@ -5,11 +5,6 @@ export function caps(text: string): string {
   return text.toLocaleUpperCase('pt-PT');
 }
 
-/** Junta etiquetas com o separador " · " e põe-nas em maiúsculas. */
-export function tagLine(tags: readonly string[]): string {
-  return caps(tags.join(' · '));
-}
-
 const ESCAPES: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
