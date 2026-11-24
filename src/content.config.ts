@@ -1,5 +1,6 @@
 // Coleções de conteúdo em Markdown, validadas com Zod.
-// Cada ficheiro .md em src/content/projects é um projeto; em src/content/publications, uma publicação.
+// Cada ficheiro .md ou .mdx em src/content/projects é um projeto; em src/content/publications, uma publicação.
+// Os .mdx podem usar os gráficos de src/components/charts no meio do texto.
 // Se faltar um campo obrigatório ou tiver o tipo errado, `npm run build` falha com uma mensagem clara.
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
@@ -14,7 +15,7 @@ const link = z.object({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
     /** Ordem na página inicial (1 aparece primeiro). */
@@ -37,7 +38,7 @@ const projects = defineCollection({
 });
 
 const publications = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/publications' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/publications' }),
   schema: z.object({
     /** Título original do artigo. */
     title: z.string(),

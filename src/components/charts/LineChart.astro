@@ -1,0 +1,185 @@
+---
+// Gráfico de linhas ou pontos em SVG, com eixo y linear ou logarítmico.
+// Até 3 séries; a partir de 2, legenda e marcadores de forma diferente (a cor nunca vai sozinha).
+import { fmt, logTicks, niceTicks } from '../../lib/chart';
+
+type Point = [number, number];
+
+interface Series {
+  name: string;
+  points: Point[];
+  mode?: 'line' | 'points';
+}
+
+interface Props {
+  title: string;
+  series: Series[];
+  xLabel: string;
+  yLabel: string;
+  xDomain?: [number, number];
+  yDomain?: [number, number];
+  yLog?: boolean;
+  /** Linhas de referência horizontais (y) ou verticais (x). */
+  references?: { axis: 'x' | 'y'; value: number; label: string }[];
+  caption: string;
+}
+
+const { title, series, xLabel, yLabel, yLog = false, references = [], caption } = Astro.props;
+const all = series.flatMap((s) => s.points);
+const xDomain: [number, number] = Astro.props.xDomain ?? [
+  Math.min(...all.map((p) => p[0])),
+  Math.max(...all.map((p) => p[0])),
+];
+const yDomain: [number, number] = Astro.props.yDomain ?? [
+  Math.min(...all.map((p) => p[1])),
+  Math.max(...all.map((p) => p[1])),
+];
+
+// Geometria no espaço do viewBox; o SVG estica até à largura do contentor (no máximo 560 px).
+const W = 480;
+const H = 320;
+const M = { top: 16, right: 20, bottom: 52, left: 60 };
+const iw = W - M.left - M.right;
+const ih = H - M.top - M.bottom;
+const ty = (v: number) => (yLog ? Math.log10(v) : v);
+const sx = (v: number) => M.left + ((v - xDomain[0]) / (xDomain[1] - xDomain[0])) * iw;
+const sy = (v: number) => M.top + ih - ((ty(v) - ty(yDomain[0])) / (ty(yDomain[1]) - ty(yDomain[0]))) * ih;
+const inside = ([x, y]: Point) => x >= xDomain[0] && x <= xDomain[1] && y >= yDomain[0] && y <= yDomain[1];
+
+const xTicks = niceTicks(xDomain[0], xDomain[1]);
+const yTicks = yLog
+  ? logTicks(yDomain[0], yDomain[1]).filter((t) => t >= yDomain[0] && t <= yDomain[1])
+  : niceTicks(yDomain[0], yDomain[1]);
+const markers = ['circle', 'square', 'triangle'] as const;
+const path = (points: Point[]) =>
+  points
+    .filter(inside)
+    .map(([x, y], i) => `${i ? 'L' : 'M'}${sx(x).toFixed(1)},${sy(y).toFixed(1)}`)
+    .join('');
+const summary = `${title}. ${series.map((s) => `${s.name}: ${s.points.length} pontos`).join('; ')}.`;
+---
+
+<figure class="chart line-chart">
+  <p class="chart-title">{title}</p>
+  {
+    series.length > 1 && (
+      <ul class="legend">
+        {series.map((s, i) => (
+          <li>
+            <svg aria-hidden="true" class={`legend-mark tone-${i + 1}`} viewBox="0 0 16 16" width="16" height="16">
+              {s.mode !== 'points' ? (
+                <line x1="1" x2="15" y1="8" y2="8" class="line" />
+              ) : markers[i] === 'circle' ? (
+                <circle cx="8" cy="8" r="5" class="mark" />
+              ) : markers[i] === 'square' ? (
+                <rect x="3" y="3" width="10" height="10" rx="1" class="mark" />
+              ) : (
+                <path d="M8 2 14 13H2Z" class="mark" />
+              )}
+            </svg>
+            {s.name}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={summary} class="line-svg">
+    {
+      yTicks.map((t) => (
+        <g>
+          <line x1={M.left} x2={W - M.right} y1={sy(t)} y2={sy(t)} class="grid" />
+          <text x={M.left - 8} y={sy(t)} class="tick" text-anchor="end" dominant-baseline="middle">
+            {fmt(t)}
+          </text>
+        </g>
+      ))
+    }
+    {
+      xTicks.map((t) => (
+        <text x={sx(t)} y={H - M.bottom + 22} class="tick" text-anchor="middle">
+          {fmt(t)}
+        </text>
+      ))
+    }
+    <line x1={M.left} x2={W - M.right} y1={M.top + ih} y2={M.top + ih} class="axis" />
+    <text x={M.left + iw / 2} y={H - 6} class="axis-label" text-anchor="middle">{xLabel}</text>
+    <text
+      x={16}
+      y={M.top + ih / 2}
+      class="axis-label"
+      text-anchor="middle"
+      transform={`rotate(-90 16 ${M.top + ih / 2})`}>{yLabel}</text
+    >
+    {
+      references.map((r) =>
+        r.axis === 'y' ? (
+          <g>
+            <line x1={M.left} x2={W - M.right} y1={sy(r.value)} y2={sy(r.value)} class="ref" />
+            <text x={W - M.right} y={sy(r.value) - 7} class="ref-label" text-anchor="end">
+              {r.label}
+            </text>
+          </g>
+        ) : (
+          <g>
+            <line x1={sx(r.value)} x2={sx(r.value)} y1={M.top} y2={M.top + ih} class="ref" />
+            <text x={sx(r.value) + 6} y={M.top + 14} class="ref-label">
+              {r.label}
+            </text>
+          </g>
+        ),
+      )
+    }
+    {
+      series.map((s, i) =>
+        s.mode === 'points' ? (
+          <g class={`tone-${i + 1}`}>
+            {s.points.filter(inside).map(([x, y]) => {
+              const label = `${s.name}: ${fmt(x)}; ${fmt(y)}`;
+              return markers[i] === 'circle' ? (
+                <circle cx={sx(x)} cy={sy(y)} r="5" class="mark">
+                  <title>{label}</title>
+                </circle>
+              ) : markers[i] === 'square' ? (
+                <rect x={sx(x) - 4.5} y={sy(y) - 4.5} width="9" height="9" rx="1" class="mark">
+                  <title>{label}</title>
+                </rect>
+              ) : (
+                <path d={`M${sx(x)} ${sy(y) - 6}l5.5 10h-11Z`} class="mark">
+                  <title>{label}</title>
+                </path>
+              );
+            })}
+          </g>
+        ) : (
+          <g class={`tone-${i + 1}`}>
+            <path d={path(s.points)} class="line">
+              <title>{s.name}</title>
+            </path>
+          </g>
+        ),
+      )
+    }
+  </svg>
+  <figcaption>{caption}</figcaption>
+  <div class="sr-only">
+    <table>
+    <caption>{title}</caption>
+    <tr>
+      <th scope="col">Série</th>
+      <th scope="col">{xLabel}</th>
+      <th scope="col">{yLabel}</th>
+    </tr>
+    {
+      series.flatMap((s) =>
+        s.points.map(([x, y]) => (
+          <tr>
+            <td>{s.name}</td>
+            <td>{fmt(x)}</td>
+            <td>{fmt(y)}</td>
+          </tr>
+        )),
+      )
+    }
+  </table>
+  </div>
+</figure>

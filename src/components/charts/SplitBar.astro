@@ -1,0 +1,52 @@
+---
+// Barra dividida: um todo repartido em partes (ex.: o gás que cada medida substitui).
+// Larguras proporcionais aos valores; a percentagem vai dentro de cada bloco quando cabe.
+import { fmt } from '../../lib/chart';
+
+interface Part {
+  label: string;
+  value: number;
+  /** Cor da série (1 a 3) ou neutra. */
+  tone: 1 | 2 | 3 | 'muted';
+}
+
+interface Props {
+  title: string;
+  parts: Part[];
+  unit?: string;
+  caption: string;
+}
+
+const { title, parts, unit = '%', caption } = Astro.props;
+const total = parts.reduce((sum, part) => sum + part.value, 0);
+const summary = `${title}: ${parts.map((p) => `${p.label} ${fmt(p.value)} ${unit}`).join('; ')}.`;
+---
+
+<figure class="chart">
+  <p class="chart-title">{title}</p>
+  <div class="split" role="img" aria-label={summary}>
+    {
+      parts.map((part) => (
+        <span
+          class:list={['split-part', `tone-${part.tone}`]}
+          style={`flex-grow: ${part.value / total}`}
+          title={`${part.label}: ${fmt(part.value)} ${unit}`}
+        >
+          {part.value / total >= 0.12 && <span class="split-value">{fmt(part.value)} {unit}</span>}
+        </span>
+      ))
+    }
+  </div>
+  <ul class="legend">
+    {
+      parts.map((part) => (
+        <li>
+          <span aria-hidden="true" class:list={['swatch', `tone-${part.tone}`]} />
+          {part.label}
+          {part.value / total < 0.12 && ` (${fmt(part.value)} ${unit})`}
+        </li>
+      ))
+    }
+  </ul>
+  <figcaption>{caption}</figcaption>
+</figure>

@@ -1,0 +1,217 @@
+---
+title: Gémeo digital de baterias
+order: 1
+tags: [Caso de estudo, Python, Simulação de baterias]
+status: Publicado
+art: battery
+artLabel: Arte ASCII de duas células de bateria cilíndricas sobre uma base, à frente de um ecrã com duas curvas de envelhecimento e um limite de fim de vida a tracejado
+summary: Quanto tempo dura a bateria de um carro elétrico? Compensa reaproveitá-la depois para guardar energia? E qual é a sua pegada de carbono? Construí um simulador que responde a estas perguntas para quatro tipos de baterias, a partir da forma como são usadas.
+links:
+  - label: Ver no GitHub
+    href: https://github.com/TheJohn01/DigitalTwinBattery
+  - label: Experimentar o dashboard
+    href: https://battery-twin.streamlit.app/
+caseStudy:
+  findings:
+    - value: 3×
+      text: mais ciclos numa bateria LFP do que numa NMC antes de perder 20 % da capacidade (1227 contra 398)
+    - value: ≈ 90 %
+      text: da capacidade ainda disponível quando a bateria sai do carro, ao fim de 8 anos e 146 000 km
+    - value: Depende
+      text: "se a segunda vida compensa face a um sistema novo: entre +355 € e −262 €, conforme o preço da bateria usada"
+    - value: ≈ −14 %
+      text: de CO2 por kWh entregue face a um sistema novo, quando a pegada da bateria é repartida pelas duas vidas
+---
+
+import BarChart from '../../components/charts/BarChart.astro';
+import Expert from '../../components/charts/Expert.astro';
+import Flow from '../../components/charts/Flow.astro';
+
+## Porque fiz este projeto
+
+A forma como uma bateria é usada decide quanto tempo dura: a rapidez com que carrega e descarrega, a temperatura e o arrefecimento. E a duração decide duas coisas que importam fora do laboratório:
+
+- **o dinheiro:** quanta energia, e por isso quanta receita ou poupança, a bateria entrega antes de ser retirada;
+- **o ambiente:** a pegada do fabrico fica fixa quando a bateria é feita. Uma bateria que dura o dobro reparte essa pegada pelo dobro da energia. É por isso que o regulamento europeu das baterias, (UE) 2023/1542, mede a pegada de carbono por kWh entregue ao longo da vida.
+
+<Expert>
+
+O gémeo digital é um modelo de uma célula que responde às mesmas entradas que a célula real (regimes C de carga e descarga, temperatura ambiente, arrefecimento, ciclos por ano) e prevê o seu comportamento elétrico, térmico e de envelhecimento. Daí saem os indicadores económicos (VAL, TIR, payback descontado, LCOS) e ambientais por unidade funcional, que no regulamento é o kWh entregue ao longo da vida útil.
+
+</Expert>
+
+## O desafio: duas escalas de tempo
+
+Um modelo físico de uma bateria simula uma carga ou uma descarga, que dura segundos a horas. A vida útil depende de milhares de ciclos, ao longo de anos. Correr o modelo físico durante a vida inteira é lento, e os seus mecanismos de envelhecimento têm muitos parâmetros que raramente estão publicados para uma célula comercial. Por isso dividi o problema em três passos:
+
+<Flow
+  steps={[
+    { title: '1. Física', text: 'Alguns ciclos de carga e descarga simulados em detalhe (horas).' },
+    { title: '2. Envelhecimento', text: 'Perda de capacidade ao longo dos anos, com modelos ajustados a ensaios publicados.' },
+    { title: '3. Dinheiro e ambiente', text: 'Se o investimento compensa e o impacto de cada kWh entregue.' },
+  ]}
+  links={['condições de uso', 'curva de capacidade']}
+  caption="Como o gémeo digital liga as duas escalas de tempo."
+/>
+
+<Expert>
+
+| | Modelo físico | Modelo empírico de envelhecimento |
+|---|---|---|
+| O que resolve | Tensão, corrente, calor e estados internos (SPMe ou DFN, em PyBaMM) | Perda de capacidade a partir das condições de operação |
+| Escala | Um ciclo, segundos a horas | Até 20 000 ciclos |
+| Ponto fraco | Lento em milhares de ciclos; parâmetros de degradação raramente publicados | Não sabe nada de tensão nem de calor |
+
+- **Ponte entre os dois:** dos primeiros dez ciclos saem os fatores de esforço do envelhecimento: trajetória do estado de carga, profundidade de descarga, regimes C e temperatura da célula (núcleo e invólucro nas células cilíndricas).
+- **Envelhecimento:** um modelo por química, a partir do BLAST-Lite (NREL), reajustado a 46 pontos de estudos publicados, a 81 células de Severson et al. (2019) e a duas células Samsung 50E (REBELION).
+- **Calibração NMC:** células LG M50T (Kirkaldy et al. 2024); perda de inventário de lítio com RMSE de 0,40 p.p. no treino e 2,56 p.p. em validação a 10 °C. Um fator de eletrólito ajustado a descargas de 2–3C reproduz a capacidade a 0,07 Ah e a temperatura de superfície a 3,8 K (RMS), de 1C a 5C entre 25 e 35 °C.
+- **LFP:** inclui a queda súbita de capacidade ("joelho") com carregamento rápido, ajustada às curvas de Severson et al. (2019). Isso reduz para metade o erro de capacidade nas células medidas.
+
+</Expert>
+
+## Quanto dura cada química
+
+Nas condições por omissão (20 °C, carga a 0,3C, descarga a 1C, um ciclo por dia), as baterias LFP aguentam cerca de três vezes mais ciclos do que as NMC antes de perderem 20 % da capacidade.
+
+<BarChart
+  title="Ciclos até a bateria perder 20 % da capacidade"
+  bars={[
+    { label: 'LFP', value: 1227, highlight: true },
+    { label: 'NCA', value: 867 },
+    { label: 'Iões de sódio', value: 679 },
+    { label: 'NMC', value: 398 },
+  ]}
+  caption="Resultados do modelo nas condições por omissão. Fonte: README do projeto no GitHub."
+/>
+
+<Expert>
+
+A relação de cerca de 3× entre LFP e NMC coincide com a medida num único estudo com protocolos idênticos (Ohneseit et al. 2025). O valor dos iões de sódio vem do modelo ajustado aos ensaios da TUM com a própria célula do modelo físico. Dois resultados obrigaram a reajustar os termos de ciclagem do BLAST-Lite: o original para NCA sobrestimava a vida cerca de 12 vezes, e o de NMC tinha o sinal do efeito da temperatura trocado e nenhum efeito do regime de carga.
+
+</Expert>
+
+## As duas vidas de uma bateria
+
+O gémeo digital acompanha a bateria de um carro elétrico em duas vidas:
+
+1. **No carro:** condução e carregamento diários, incluindo carregamentos rápidos, verificados contra os limites de durabilidade da norma Euro 7.
+2. **Em armazenamento:** depois de sair do carro, a bateria é reaproveitada para guardar energia e comparada com um sistema LFP novo, comprado no mesmo ano, em custo e em carbono.
+
+O carregamento rápido muda pouco com um uso normal do carro. Ao fim de 8 anos, mesmo que todos os carregamentos sejam rápidos, a bateria perde só mais um ou dois pontos de capacidade:
+
+<BarChart
+  title="Capacidade com que a bateria sai do carro, ao fim de 8 anos"
+  unit="%"
+  max={100}
+  series={['Uso normal', 'Só carregamentos rápidos']}
+  bars={[
+    { label: 'NMC', value: 89.9, second: 87.5 },
+    { label: 'LFP', value: 88.9, second: 87.4 },
+  ]}
+  caption="Carregamentos rápidos de 20 a 80 %, com a bateria pré-condicionada. Fonte: README do projeto no GitHub."
+/>
+
+A segunda vida é renhida no custo, porque reaproveitar só poupa o pack de baterias, cerca de um quinto do custo de um sistema novo. No ambiente, porém, ganha: repartida pelas duas vidas, a pegada do fabrico por kWh entregue fica abaixo da de um sistema novo.
+
+<Expert>
+
+**Segunda vida face a um sistema LFP novo**, 8 anos de armazenamento a 80 % de profundidade, nas condições por omissão:
+
+| Química da bateria usada | Diferença face ao sistema novo |
+|---|---|
+| NMC | +355 € (melhor) |
+| LFP | −262 € (pior) |
+
+Uma bateria usada gratuita torna a segunda vida rentável para as duas químicas; os preços publicados mais altos tornam-na uma perda. O custo do reaproveitamento segue a calculadora B2U do NREL.
+
+**Pegada do fabrico por kWh entregue**, nas condições por omissão (a unidade funcional é a energia entregue, por isso a duração pesa tanto como o fabrico):
+
+<BarChart
+  title="Pegada de carbono por kWh entregue"
+  unit="g CO₂eq"
+  bars={[
+    { label: 'LFP', value: 15.8 },
+    { label: 'NCA', value: 16.4 },
+    { label: 'Iões de sódio', value: 19.7 },
+    { label: 'NMC', value: 25.3 },
+  ]}
+  caption="As pegadas de fabrico por kWh de capacidade são semelhantes; a diferença vem da duração. ACV de triagem com dados de Degen et al. (2024). Fonte: README do projeto no GitHub."
+/>
+
+O carregamento rápido de uma célula NCA (Samsung 50E, máximo de 1C) faria cair a capacidade de 85,6 % para 75,0 %, uma extrapolação para lá das suas especificações.
+
+</Expert>
+
+## O que o dashboard permite fazer
+
+No [dashboard](https://battery-twin.streamlit.app/), qualquer pessoa pode:
+
+- escolher a química (NMC, LFP, NCA ou iões de sódio), as velocidades de carga e descarga e a temperatura;
+- definir o uso do carro: quilómetros por dia, anos de uso e parte de carregamentos rápidos;
+- ver em linguagem simples se a bateria dura, se compensa, se a segunda vida vale a pena e qual é a pegada de carbono;
+- comparar três usos da bateria: comprar e vender energia no mercado diário português, guardar a energia de painéis solares numa casa, ou reduzir a fatura de uma empresa;
+- descarregar os relatórios económico e ambiental em PDF ou Word.
+
+<Expert>
+
+- **Economia:** VAL, TIR, payback descontado e LCOS com preços horários do OMIE, tarifas da ERSE de 2026 e o imposto do Orçamento do Estado de 2026. Segue a estrutura da ISO/TS 14076:2025 e o custeio do ciclo de vida da IEC 60300-3-3 e da ISO 15686-5.
+- **Ambiente:** ACV de triagem segundo a ISO 14040/14044, com a unidade funcional do Regulamento (UE) 2023/1542 e as regras do JRC para a pegada de carbono de baterias industriais.
+- **Relatórios:** exportados em PDF ou Word, com a estrutura das normas.
+
+</Expert>
+
+## Como o validei
+
+Comparei o modelo com medições de baterias reais, incluindo carros que o modelo nunca tinha visto:
+
+<BarChart
+  title="Capacidade restante: previsto pelo modelo e medido"
+  unit="%"
+  max={100}
+  series={['Previsto', 'Medido']}
+  bars={[
+    { label: 'VW ID.3 (carro de ensaio)', value: 94.4, second: 98.0 },
+    { label: 'ID.3, ensaio de autoestrada com carregamentos rápidos', value: 94.4, second: 92.2 },
+    { label: 'Tesla Model 3, 79 100 km', value: 94.4, display: '91,4–94,4', second: 91.9 },
+  ]}
+  caption="Previsões feitas sem reajustar o modelo. No Tesla, o modelo dá um intervalo; a barra mostra o limite superior. Fontes: Schreiber et al. (2025), Bilfinger et al. (2025), via README do projeto."
+/>
+
+Acompanha também a perda de capacidade de 21 baterias domésticas reais.
+
+<Expert>
+
+- **Laboratório contra frota:** o modelo NMC de laboratório perdia cerca de três vezes o que perderam seis Smart e.d. (Rücker et al. 2024). As perdas de calendário e de ciclagem foram escaladas por 0,54 e 0,21 no carro; os mesmos fatores corrigem o ensaio de autoestrada da célula do ID.3, por isso a diferença é da célula, não do uso.
+- **Sem correção:** o modelo LFP reproduz o Tesla Model 3 tal como está, e o modelo de armazenamento a perda anual de 21 sistemas domésticos (Figgener et al. 2024).
+- **Estimação de estado:** um filtro de Kalman estendido, com estimação da capacidade entre repousos, segue o SOC a 2,6 p.p. e o SOH a cerca de 2 p.p. nos ciclos simulados. Num Tesla Model 3 real segue o SOC a 3,1 p.p. (RMS) a partir de um valor inicial errado, sem conhecer a perda de 9 % de capacidade; num ano de um sistema doméstico real, a 2,3 p.p. (mediana).
+
+</Expert>
+
+## O que aprendi
+
+- **Os modelos publicados precisavam de ser corrigidos.** O modelo original para baterias NCA sobrestimava a vida cerca de 12 vezes, e o de NMC tinha o efeito da temperatura ao contrário.
+- **O laboratório não é o carro.** São os dados reais de utilização que tornam um gémeo digital credível.
+- **A química mais "verde" depende da duração**, não só do fabrico.
+
+## O que ainda não está bem
+
+- **Frio:** o modelo é otimista. A 5 °C prevê mais energia do que as baterias reais entregam.
+- **Ambiente:** é uma avaliação de ciclo de vida de triagem. Serve para comparar opções, não para afirmações públicas.
+- **Economia:** a receita do mercado é um limite superior, porque o modelo conhece os preços do dia seguinte.
+
+<Expert>
+
+- **Ciclo representativo:** a projeção repete o último ciclo simulado; voltar a simular a célula envelhecida encurta a vida NMC em 4,8 % e as outras em 0,3 % ou menos.
+- **Mecanismos aditivos:** as perdas de calendário e de ciclagem somam-se, sem interações (por exemplo, deposição de lítio a acelerar o crescimento da SEI). O único joelho é o do LFP com carregamento rápido.
+- **Células diferentes:** para LFP, NCA e iões de sódio, a física, o envelhecimento e os dados de ACV descrevem células diferentes da mesma química.
+- **Dados lidos de figuras:** os 46 pontos de envelhecimento publicados têm um erro de leitura de alguns por cento.
+- **ACV:** dados secundários, só ao nível da célula, sem a Circular Footprint Formula e sem revisão crítica.
+- **Economia:** um ano de preços horários repetido; planear com os preços da véspera dá 79–87 % da margem.
+
+</Expert>
+
+## Próximos passos
+
+- Dados medidos da segunda vida de baterias NMC modernas de carros. Não encontrei nenhum conjunto de dados aberto.
+- Física mais fiel a frio e a correntes altas, ajustada a ensaios da mesma célula.
+- Um modelo de envelhecimento que preveja quedas súbitas de capacidade também para NMC e para descargas profundas.
