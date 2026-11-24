@@ -10,8 +10,12 @@
 
 /* ---------- 1. Tokens ---------- */
 .dp {
-  --ground: #f1f9fe;
-  --surface: #ffffff;
+  /* Largura: cresce com o ecrã até 1600 px. Os valores fluidos têm o mínimo de hoje até 1280 px. */
+  --page-max: 1600px;
+  --gutter: clamp(48px, 4vw, 80px);
+  /* "Daylight suave": fundo cinza-azulado e cartões quase brancos, para tirar o encandeamento. */
+  --ground: #e9f2f8; /* azul dos links a 4,56:1, acima do mínimo AA */
+  --surface: #f8fbfd;
   --glass: rgba(255, 255, 255, 0.66);
   --glass-rim: rgba(255, 255, 255, 0.9);
   --sky-200: #c2e7fb;
@@ -68,6 +72,13 @@
   --chart-3: #9a58cc;
   color-scheme: dark;
 }
+/* O modo escuro mantém o gradiente e a linha de progresso de sempre. */
+.dp.dusk .hero {
+  background: linear-gradient(160deg, var(--azure) 0%, var(--aqua) 38%, var(--sky-200) 72%, var(--ground) 100%);
+}
+.dp.dusk .progress {
+  background: var(--azure);
+}
 /* Transição suave ao trocar de tema (classe posta durante 650 ms pelo script). */
 .dp.theming,
 .dp.theming * {
@@ -112,9 +123,9 @@ pre {
 }
 
 .wrap {
-  max-width: 1120px;
+  max-width: var(--page-max);
   margin: 0 auto;
-  padding: 8px 48px 0;
+  padding: 8px var(--gutter) 0;
   box-sizing: border-box;
 }
 .section {
@@ -135,7 +146,7 @@ pre {
 
 .h2 {
   margin: 12px 0 0;
-  font-size: 28px;
+  font-size: clamp(28px, 0.94vw + 16px, 34px);
   line-height: 1.2;
   font-weight: 600;
 }
@@ -238,7 +249,8 @@ pre {
 
 .ascii {
   font-family: var(--font-mono);
-  font-size: var(--ascii-size, 6px);
+  /* Igual até 1280 px; até +2 px a 1920 px. No telemóvel mandam os tamanhos por peça (secção 6). */
+  font-size: calc(var(--ascii-size, 6px) + clamp(0px, 0.3125vw - 4px, 2px));
   line-height: 1.09;
   color: var(--azure);
 }
@@ -345,7 +357,7 @@ pre {
   bottom: 10px;
   height: 2px;
   border-radius: 999px;
-  background: var(--azure);
+  background: var(--sun);
 }
 
 /* Apresentação */
@@ -354,7 +366,7 @@ pre {
   overflow: hidden;
   border-radius: 40px;
   padding: 48px;
-  background: linear-gradient(160deg, var(--azure) 0%, var(--aqua) 38%, var(--sky-200) 72%, var(--ground) 100%);
+  background: linear-gradient(160deg, var(--deep) 0%, var(--azure) 55%, var(--aqua) 100%);
   box-shadow: var(--shadow-float);
   display: flex;
   flex-wrap: wrap;
@@ -457,7 +469,7 @@ pre {
 }
 .display {
   margin: 0;
-  font-size: 72px;
+  font-size: clamp(72px, 3.75vw + 24px, 96px);
   line-height: 1;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -577,7 +589,7 @@ pre {
 }
 .case-title {
   margin: 12px 0 0;
-  font-size: 28px;
+  font-size: clamp(28px, 0.94vw + 16px, 34px);
   line-height: 1.2;
   font-weight: 600;
 }
@@ -843,9 +855,9 @@ pre {
   color: var(--on-deep);
 }
 .foot {
-  max-width: 1120px;
+  max-width: var(--page-max);
   margin: 0 auto;
-  padding: 48px;
+  padding: 48px var(--gutter);
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -883,9 +895,9 @@ pre {
   color: var(--on-deep);
 }
 .foot2 {
-  max-width: 1120px;
+  max-width: var(--page-max);
   margin: 0 auto;
-  padding: 0 48px 32px;
+  padding: 0 var(--gutter) 32px;
   box-sizing: border-box;
   font-size: 14px;
   color: var(--on-deep);
@@ -1035,7 +1047,7 @@ pre {
 .line-svg {
   display: block;
   width: 100%;
-  max-width: 560px;
+  max-width: 720px;
   height: auto;
   margin-top: 8px;
   font-family: var(--font-sans);
@@ -1158,7 +1170,7 @@ pre {
   margin: 8px 0 0;
   font-size: 14px;
 }
-/* Bloco "Para especialistas" */
+/* Bloco "Mais detalhes" */
 .expert {
   margin-top: 24px;
   padding: 16px 24px;
@@ -1180,7 +1192,7 @@ pre {
   margin-left: 16px;
 }
 .page {
-  max-width: 920px;
+  max-width: clamp(920px, 72vw, 1200px);
   margin: 48px auto 0;
 }
 .back {
@@ -1195,7 +1207,7 @@ pre {
 }
 .page-title {
   margin: 12px 0 0;
-  font-size: 44px;
+  font-size: clamp(44px, 1.875vw + 20px, 56px);
   line-height: 1.1;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -1221,8 +1233,16 @@ pre {
   margin-top: 32px;
 }
 .prose {
-  max-width: 44em;
   margin-top: 48px;
+}
+/* O texto fica com cerca de 70 caracteres por linha; gráficos, tabelas e blocos usam a largura toda. */
+.prose p,
+.prose ul,
+.prose ol,
+.prose h2,
+.prose h3,
+.prose figcaption {
+  max-width: 44em;
 }
 .prose h2 {
   margin: 48px 0 0;
@@ -1270,6 +1290,13 @@ pre {
   padding: 8px 12px;
   border-bottom: 1px solid var(--hairline);
   text-align: left;
+}
+
+/* Linha de progresso sem linhas do tempo do CSS: o script põe a classe e a variável --progress. */
+.js-progress .progress {
+  display: block;
+  transform-origin: left;
+  transform: scaleX(var(--progress, 0));
 }
 
 /* ---------- 5. Movimento ---------- */
@@ -1338,8 +1365,6 @@ pre {
     .totop {
       display: inline-flex;
       animation: totop linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0% 12%;
     }
     @keyframes totop {
       from {
@@ -1357,7 +1382,6 @@ pre {
       display: block;
       transform-origin: left;
       animation: grow-x linear both;
-      animation-timeline: scroll(root);
     }
     @keyframes grow-x {
       from {
@@ -1369,8 +1393,6 @@ pre {
     }
     .rv {
       animation: rise linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 30%;
     }
     @keyframes rise {
       from {
@@ -1385,8 +1407,6 @@ pre {
     .tl-line {
       transform-origin: top;
       animation: grow-y linear both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 50%;
     }
     @keyframes grow-y {
       from {
@@ -1398,7 +1418,6 @@ pre {
     }
     .par {
       animation: drift linear both;
-      animation-timeline: scroll(root);
     }
     .par-1 {
       --d: -160px;
@@ -1416,13 +1435,37 @@ pre {
     }
     .type {
       animation: type steps(10, end) both;
-      animation-timeline: view();
-      animation-range: entry 30% cover 45%;
     }
     @keyframes type {
       from {
         width: 0;
       }
+    }
+  }
+  /* As linhas do tempo vão num bloco à parte: o minificador junta-as ao atalho "animation",
+     onde os browsers as ignoram, e as animações ficavam paradas no fim. */
+  @supports (animation-range: 0% 100%) {
+    .totop {
+      animation-timeline: scroll(root);
+      animation-range: 0% 12%;
+    }
+    .progress {
+      animation-timeline: scroll(root);
+    }
+    .rv {
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+    .tl-line {
+      animation-timeline: view();
+      animation-range: entry 10% cover 50%;
+    }
+    .par {
+      animation-timeline: scroll(root);
+    }
+    .type {
+      animation-timeline: view();
+      animation-range: entry 30% cover 45%;
     }
   }
 }
