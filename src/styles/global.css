@@ -250,7 +250,7 @@ pre {
 .ascii {
   font-family: var(--font-mono);
   /* Igual até 1280 px; até +2 px a 1920 px. No telemóvel mandam os tamanhos por peça (secção 6). */
-  font-size: calc(var(--ascii-size, 6px) + clamp(0px, 0.3125vw - 4px, 2px));
+  font-size: calc(6px + clamp(0px, 0.3125vw - 4px, 2px));
   line-height: 1.09;
   color: var(--azure);
 }
@@ -263,6 +263,14 @@ pre {
   box-sizing: border-box;
   display: flex;
   justify-content: center;
+}
+/* A arte enche a largura da caixa: cada caractere tem 0,6 em (JetBrains Mono), com folga para arredondamentos.
+   --ascii-cols vem de AsciiArt.astro. */
+.art-fill {
+  container-type: inline-size;
+}
+.art-fill .ascii {
+  font-size: calc(100cqi / (var(--ascii-cols) * 0.605));
 }
 
 /* ---------- 4. Secções ---------- */
@@ -531,6 +539,24 @@ pre {
   border-radius: 24px;
   background: var(--surface);
   box-shadow: var(--shadow-dew);
+}
+.industry-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
+}
+.industry-copy {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+.industry-art {
+  flex: 1 1 360px;
+  max-width: 440px;
+  min-width: 0;
+  /* Centrada quando passa para baixo do texto. */
+  margin-inline: auto;
+  padding: 24px 16px;
 }
 .columns {
   display: flex;
@@ -1587,6 +1613,7 @@ pre {
     padding: 20px;
   }
   .case-art,
+  .industry-art,
   .thumb,
   .wine-art {
     padding: 12px 8px;
@@ -1598,8 +1625,9 @@ pre {
   pre[data-ascii='hero'] {
     font-size: max(2.6px, calc((100vw - 112px) / 67.2));
   }
+  /* 142 colunas na página do projeto (na página inicial manda .art-fill). */
   pre[data-ascii='battery'] {
-    font-size: max(2.2px, calc((100vw - 96px) / 90));
+    font-size: max(2.2px, calc((100vw - 72px) / 86.5));
   }
   pre[data-ascii='pinch'],
   pre[data-ascii='plant'],

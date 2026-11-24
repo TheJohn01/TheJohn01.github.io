@@ -8,14 +8,14 @@ interface Props {
   name: string;
   /** Descrição para leitores de ecrã. Sem ela, a arte é tratada como decorativa. */
   label?: string | undefined;
-  /** Tamanho da letra em px (por omissão, 6). */
-  size?: number | undefined;
   class?: string | undefined;
 }
 
-const { name, label, size, class: className } = Astro.props;
+const { name, label, class: className } = Astro.props;
 const text = artFor(name);
-const style = size === undefined ? undefined : `--ascii-size: ${size}px`;
+// --ascii-cols: largura da arte em caracteres, para a caixa do projeto em destaque a encher (global.css).
+const cols = Math.max(...text.split('\n').map((line) => line.length));
+const style = `--ascii-cols: ${cols}`;
 ---
 
 {/* O texto fica colado às etiquetas <pre> para não acrescentar espaços. */}
