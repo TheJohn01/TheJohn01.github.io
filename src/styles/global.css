@@ -968,8 +968,10 @@ pre {
 .bar-track {
   position: relative;
   display: flex;
+  flex-wrap: wrap; /* o valor passa para baixo da barra quando não cabe à frente */
+  align-content: flex-start;
   align-items: center;
-  gap: 8px;
+  gap: 2px 8px;
   min-height: 24px;
 }
 .bar {
@@ -988,7 +990,7 @@ pre {
 }
 .bar-error {
   position: absolute;
-  top: 50%;
+  top: 11px; /* centro da barra, mesmo quando o valor passa para a linha de baixo */
   height: 0;
   border-top: 2px solid var(--ink);
 }
@@ -1464,6 +1466,12 @@ pre {
   }
   .expert {
     padding: 12px 16px;
+  }
+  /* O SVG encolhe com o ecrã: letra maior para ficar com pelo menos 10 px. */
+  .line-svg .tick,
+  .line-svg .ref-label,
+  .line-svg .axis-label {
+    font-size: 16px;
   }
   .wrap {
     padding: 8px 16px 0;

@@ -161,7 +161,8 @@ const summary = `${title}. ${series.map((s) => `${s.name}: ${s.points.length} po
     }
   </svg>
   <figcaption>{caption}</figcaption>
-  <table class="sr-only">
+  <div class="sr-only">
+    <table>
     <caption>{title}</caption>
     <tr>
       <th scope="col">Série</th>
@@ -180,4 +181,5 @@ const summary = `${title}. ${series.map((s) => `${s.name}: ${s.points.length} po
       )
     }
   </table>
+  </div>
 </figure>

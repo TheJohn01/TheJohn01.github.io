@@ -77,7 +77,8 @@ const summary = `${title}: ${bars
                   style={`left: ${pct(bar.value - bar.error)}; width: calc(${pct(bar.value + bar.error)} - ${pct(bar.value - bar.error)})`}
                 />
               )}
-              <span class="bar-value">
+              {/* Com incerteza, o valor começa depois do fim do bigode, para não se sobrepor. */}
+              <span class="bar-value" style={bar.error !== undefined ? `margin-left: ${pct(bar.error)}` : undefined}>
                 {show(bar.value, bar.display)}
                 {bar.error !== undefined && ` ± ${fmt(bar.error)}`}
               </span>
@@ -104,7 +105,8 @@ const summary = `${title}: ${bars
     )
   }
   <figcaption>{caption}</figcaption>
-  <table class="sr-only">
+  <div class="sr-only">
+    <table>
     <caption>{title}</caption>
     <tr>
       <th scope="col">Item</th>
@@ -124,4 +126,5 @@ const summary = `${title}: ${bars
       ))
     }
   </table>
+  </div>
 </figure>
