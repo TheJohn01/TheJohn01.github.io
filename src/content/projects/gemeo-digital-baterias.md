@@ -12,10 +12,6 @@ links:
   - label: Experimentar o dashboard
     href: https://battery-twin.streamlit.app/
 caseStudy:
-  howItWorks:
-    - Simulo em detalhe alguns ciclos de carga e descarga, com um modelo físico da bateria.
-    - A partir deles, estimo como a bateria perde capacidade ao longo dos anos, com modelos ajustados a ensaios publicados.
-    - Com essa curva, calculo se o investimento compensa e qual é o impacto ambiental de cada kWh que a bateria entrega.
   findings:
     - value: 3×
       text: mais ciclos numa bateria LFP do que numa NMC antes de perder 20 % da capacidade (1227 contra 398)
@@ -25,19 +21,6 @@ caseStudy:
       text: "se a segunda vida compensa face a um sistema novo: entre +355 € e −262 €, conforme o preço da bateria usada"
     - value: ≈ −14 %
       text: de CO2 por kWh entregue face a um sistema novo, quando a pegada da bateria é repartida pelas duas vidas
-  validation:
-    - "Comparei o modelo com medições de baterias comerciais reais: o erro na perda de capacidade fica abaixo de meio ponto percentual nas células usadas para o ajustar e perto de 2,6 pontos em células que nunca tinha visto."
-    - "Sem o reajustar, previ o estado de baterias de carros reais: um VW ID.3 (94 % previsto, 98 % medido) e um Tesla Model 3 com 79 000 km (91–94 % previsto, 92 % medido)."
-    - Acompanha também a perda de capacidade de 21 baterias domésticas reais.
-  limitations:
-    - "Com frio, o modelo é otimista: a 5 °C prevê mais energia do que as baterias reais entregam."
-    - O modelo de laboratório envelhecia as baterias NMC cerca de três vezes mais depressa do que em carros reais; corrigi-o com dados de uma frota.
-  technical:
-    - "Física: modelos SPMe e DFN em PyBaMM, com modelo térmico concentrado e deposição de lítio no modelo NMC detalhado."
-    - "Envelhecimento: modelos empíricos do BLAST-Lite (NREL) reajustados a 46 pontos de estudos publicados, a 81 células de Severson et al. (2019) e a duas células Samsung 50E; projeção até 20 000 ciclos."
-    - "Calibração NMC com células LG M50T (Kirkaldy et al. 2024): perda de inventário de lítio com RMSE de 0,40 p.p. no treino e 2,56 p.p. em validação a 10 °C."
-    - "Economia: VAL, TIR, payback descontado e LCOS com preços horários do OMIE e tarifas da ERSE. Ambiente: ACV de triagem segundo a ISO 14040/14044, com a unidade funcional do Regulamento (UE) 2023/1542."
-    - "Estimação de estado: filtro de Kalman estendido para SOC e SOH, como um sistema de gestão de bateria."
 ---
 
 ## Porque fiz este projeto
@@ -51,7 +34,11 @@ A forma como uma bateria é usada decide quanto tempo dura: a rapidez com que ca
 
 Um modelo físico de uma bateria simula uma carga ou uma descarga, que dura segundos a horas. A vida útil depende de milhares de ciclos, ao longo de anos. Correr o modelo físico durante a vida inteira é lento, e os seus mecanismos de envelhecimento têm muitos parâmetros que raramente estão publicados para uma célula comercial.
 
-Por isso dividi o problema em duas partes. A física simula os primeiros ciclos em detalhe. A partir deles, modelos empíricos ajustados a medições publicadas projetam a perda de capacidade ao longo dos anos.
+Por isso dividi o problema em três passos:
+
+1. Simulo em detalhe alguns ciclos de carga e descarga, com um modelo físico da bateria.
+2. A partir deles, estimo como a bateria perde capacidade ao longo dos anos, com modelos ajustados a ensaios publicados.
+3. Com essa curva, calculo se o investimento compensa e qual é o impacto ambiental de cada kWh que a bateria entrega.
 
 ## As duas vidas de uma bateria
 
@@ -75,14 +62,21 @@ No [dashboard](https://battery-twin.streamlit.app/), qualquer pessoa pode:
 - comparar três usos da bateria: comprar e vender energia no mercado diário português, guardar a energia de painéis solares numa casa, ou reduzir a fatura de uma empresa;
 - descarregar os relatórios económico e ambiental em PDF ou Word.
 
+## Como o validei
+
+- Comparei o modelo com medições de baterias comerciais reais: o erro na perda de capacidade fica abaixo de meio ponto percentual nas células usadas para o ajustar e perto de 2,6 pontos em células que nunca tinha visto.
+- Sem o reajustar, previ o estado de baterias de carros reais: um VW ID.3 (94 % previsto, 98 % medido) e um Tesla Model 3 com 79 000 km (91–94 % previsto, 92 % medido).
+- Acompanha também a perda de capacidade de 21 baterias domésticas reais.
+
 ## O que aprendi
 
 - **Os modelos publicados precisavam de ser corrigidos.** O modelo original para baterias NCA sobrestimava a vida cerca de 12 vezes, e o de NMC tinha o efeito da temperatura ao contrário.
 - **O laboratório não é o carro.** O modelo de laboratório envelhecia as baterias NMC cerca de três vezes mais depressa do que carros reais. São os dados reais de utilização que tornam um gémeo digital credível.
 - **A química mais "verde" depende da duração.** Medida por kWh entregue, a pegada de LFP e NCA é a mais baixa nas condições por omissão (15,8 e 16,4 g de CO₂ equivalente), contra 25,3 g para NMC, embora o fabrico tenha pegadas semelhantes por kWh de capacidade.
 
-## Outros limites
+## O que ainda não está bem
 
+- **Frio:** o modelo é otimista. A 5 °C prevê mais energia do que as baterias reais entregam.
 - **Ambiente:** é uma avaliação de ciclo de vida de triagem, com dados secundários, ao nível da célula e sem revisão crítica. Serve para comparar opções, não para afirmações públicas.
 - **Economia:** repete um ano de preços horários durante todo o projeto e assume que se conhecem os preços do dia seguinte, por isso a receita do mercado é um limite superior.
 - **Dados:** parte dos pontos de envelhecimento foi lida de figuras de artigos, o que acrescenta um erro de leitura de alguns por cento.
@@ -96,6 +90,10 @@ No [dashboard](https://battery-twin.streamlit.app/), qualquer pessoa pode:
 <details>
 <summary>Detalhes técnicos</summary>
 
+- **Física:** modelos SPMe e DFN em PyBaMM, com modelo térmico concentrado e deposição de lítio no modelo NMC detalhado.
+- **Envelhecimento:** modelos empíricos do BLAST-Lite (NREL) reajustados a 46 pontos de estudos publicados, a 81 células de Severson et al. (2019) e a duas células Samsung 50E; projeção até 20 000 ciclos.
+- **Calibração NMC:** células LG M50T (Kirkaldy et al. 2024); perda de inventário de lítio com RMSE de 0,40 p.p. no treino e 2,56 p.p. em validação a 10 °C.
+- **Economia e ambiente:** VAL, TIR, payback descontado e LCOS com preços horários do OMIE e tarifas da ERSE. ACV de triagem segundo a ISO 14040/14044, com a unidade funcional do Regulamento (UE) 2023/1542.
 - **Estimação de estado:** filtro de Kalman estendido, com estimação da capacidade entre repousos. Nos ciclos simulados, erro de SOC até 2,6 pontos percentuais e de SOH cerca de 2 pontos. Num Tesla Model 3 real (LFP), segue o SOC a 3,1 pontos (RMS) a partir de um valor inicial errado, sem conhecer a perda de 9 % de capacidade. Num ano de um sistema doméstico real, segue cada dia a 2,3 pontos (mediana).
 - **Física a correntes altas:** um fator de eletrólito ajustado a descargas de 2–3C da LG M50 reproduz a capacidade a 0,07 Ah e a temperatura de superfície a 3,8 K (RMS), de 1C a 5C entre 25 e 35 °C.
 - **LFP:** o modelo inclui a queda súbita de capacidade ("joelho") com carregamento rápido, ajustada às curvas de Severson et al. (2019). Isso reduz para metade o erro de capacidade nas células medidas.

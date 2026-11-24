@@ -4,6 +4,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import AsciiArt from '../../components/AsciiArt.astro';
+import Findings from '../../components/Findings.astro';
 import Label from '../../components/ui/Label.astro';
 import StatusTag from '../../components/ui/StatusTag.astro';
 import Base from '../../layouts/Base.astro';
@@ -47,6 +48,13 @@ const { Content } = await render(project);
         <AsciiArt name={data.art} label={data.artLabel} />
       </div>
     </header>
+    {
+      data.caseStudy && (
+        <section class="page-findings">
+          <Findings findings={data.caseStudy.findings} />
+        </section>
+      )
+    }
     {
       data.status === 'Em curso' && (
         <p class="notice well">

@@ -1,0 +1,23 @@
+---
+// "O que descobri": os resultados principais de um caso de estudo (campo caseStudy.findings).
+// Usado no cartão da página inicial e na página do projeto.
+import Label from './ui/Label.astro';
+
+interface Props {
+  findings: readonly { value: string; text: string }[];
+}
+
+const { findings } = Astro.props;
+---
+
+<Label text="O que descobri" />
+<div class="findings">
+  {
+    findings.map((finding) => (
+      <div class="finding well">
+        <div class="finding-value">{finding.value}</div>
+        <div class="finding-text">{finding.text}</div>
+      </div>
+    ))
+  }
+</div>

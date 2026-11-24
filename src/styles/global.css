@@ -581,32 +581,24 @@ pre {
   margin-top: 24px;
 }
 .case-art {
-  flex: 999 1 560px;
+  flex: 1 1 460px;
   min-width: 0;
   padding: 24px 16px;
 }
-.case-steps {
+.case-side {
   flex: 1 1 300px;
   min-width: 0;
 }
-.list {
-  margin: 8px 0 0;
-  padding-left: 20px;
-}
-.list li {
-  margin-top: 8px;
-}
-.findings-label {
+.case-results {
   margin-top: 32px;
 }
 .findings {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
   margin-top: 12px;
 }
 .finding {
-  flex: 1 1 200px;
   min-width: 0;
   padding: 16px;
 }
@@ -621,25 +613,6 @@ pre {
   font-size: 14px;
   line-height: 1.5;
   color: var(--ink-muted);
-}
-.case-cols {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  margin-top: 32px;
-}
-.case-cols > div {
-  flex: 1 1 380px;
-  min-width: 0;
-}
-.details {
-  margin-top: 24px;
-  padding: 16px 24px;
-}
-.details summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--azure);
 }
 .case-links {
   display: flex;
@@ -947,6 +920,9 @@ pre {
 }
 .page-art {
   padding: 16px;
+}
+.page-findings {
+  margin-top: 48px;
 }
 .notice {
   max-width: 44em;
