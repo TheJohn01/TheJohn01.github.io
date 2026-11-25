@@ -1,11 +1,11 @@
 ---
 title: Do CO2 capturado ao metanol
 order: 3
-tags: [Aspen Plus, Aprendizagem automática]
+tags: [Aspen Plus V15, Aprendizagem automática]
 status: Em curso
 art: plant
 artLabel: "Arte ASCII de uma maqueta de instalação: uma coluna de pratos (instalação 1), dois tanques (instalação 2), uma esfera que representa o modelo de aprendizagem automática e um permutador de placas (instalação 3), ligados por tubagens"
-summary: Três instalações simuladas em Aspen Plus e integradas numa só unidade. Um modelo de aprendizagem automática treinado com os resultados vai alimentar um site onde qualquer alteração aos dados de entrada dá uma resposta fiável.
+summary: Três instalações simuladas em Aspen Plus V15 e integradas numa só unidade. Um modelo de aprendizagem automática treinado com os resultados vai alimentar um site onde qualquer alteração aos dados de entrada dá uma resposta fiável.
 ---
 
 import Expert from '../../components/charts/Expert.astro';
@@ -14,7 +14,7 @@ import LineChart from '../../components/charts/LineChart.astro';
 
 ## O objetivo
 
-Transformar CO₂ capturado de gases de combustão em metanol, um combustível e uma matéria-prima da indústria química. A unidade junta três instalações, cada uma simulada em Aspen Plus:
+Transformar CO₂ capturado de gases de combustão em metanol, um combustível e uma matéria-prima da indústria química. A unidade junta três instalações, cada uma simulada em Aspen Plus V15:
 
 <Flow
   steps={[
@@ -110,7 +110,7 @@ Uma simulação rigorosa das colunas pode demorar minutos por caso. Para que qua
 
 <Flow
   steps={[
-    { title: 'Aspen Plus', text: 'Simulação rigorosa de cada caso.' },
+    { title: 'Aspen Plus V15', text: 'Simulação rigorosa de cada caso.' },
     { title: 'Campanha de dados', text: '150 casos de treino e 25 de validação.' },
     { title: 'Modelo', text: 'Aprende a relação entre entradas e resultados.' },
     { title: 'Aplicação web', text: 'Previsão imediata, com incerteza.' },
