@@ -13,14 +13,15 @@
   /* Largura: cresce com o ecrã até 1600 px. Os valores fluidos têm o mínimo de hoje até 1280 px. */
   --page-max: 1600px;
   --gutter: clamp(48px, 4vw, 80px);
-  /* "Daylight suave": fundo cinza-azulado e cartões quase brancos, para tirar o encandeamento. */
-  --ground: #e9f2f8; /* azul dos links a 4,56:1, acima do mínimo AA */
-  --surface: #f8fbfd;
-  --glass: rgba(255, 255, 255, 0.66);
+  /* "Céu": fundo e cartões em azul-acinzentado, quase sem branco. Links a 5,2:1 no fundo e 5,7:1 nos cartões;
+     o vidro a 50 % deixa o texto do herói a 5:1 mesmo sobre a ponta funda do gradiente. */
+  --ground: #d9e7f1;
+  --surface: #e6f0f7;
+  --glass: rgba(255, 255, 255, 0.5);
   --glass-rim: rgba(255, 255, 255, 0.9);
   --sky-200: #c2e7fb;
   --aqua: #2bb8e6;
-  --azure: #0a6fc2;
+  --azure: #075fa8;
   --on-azure: #ffffff;
   --deep: #06284d;
   --on-deep: #eaf6ff;
@@ -31,7 +32,7 @@
   --ink: #0b2540;
   --ink-muted: #456079;
   --line: #4f86ad;
-  --hairline: #cfe5f3;
+  --hairline: #c4d9e8;
   --focus: #06284d;
   --shadow-dew: 0 1px 2px rgba(6, 40, 77, 0.08), 0 8px 24px rgba(10, 111, 194, 0.14);
   --shadow-float: 0 2px 4px rgba(6, 40, 77, 0.1), 0 20px 48px rgba(10, 111, 194, 0.22);
