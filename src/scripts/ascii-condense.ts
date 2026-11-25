@@ -48,9 +48,14 @@ export function initAscii(getTheme: () => Theme): AsciiController {
   let raf = 0;
 
   /** Texto da arte para o tema atual. Sem versão escura, usa a clara. */
+  /** Tema da peça: o do site, salvo as peças que ficam sempre claras (data-light-only). */
+  function themeOf(el: HTMLElement): Theme {
+    return el.dataset['lightOnly'] === undefined ? getTheme() : 'day';
+  }
+
   function source(el: HTMLElement): string {
     const light = day.get(el) ?? '';
-    return getTheme() === 'dusk' ? (ART_DUSK[el.dataset['ascii'] ?? ''] ?? light) : light;
+    return themeOf(el) === 'dusk' ? (ART_DUSK[el.dataset['ascii'] ?? ''] ?? light) : light;
   }
 
   /** Limiar de cada carácter: metade aleatório (fixo), metade pela linha (de cima para baixo). */
@@ -76,10 +81,10 @@ export function initAscii(getTheme: () => Theme): AsciiController {
     const text = source(el);
     const tone = toneOfEl.get(el);
     const variant = el.dataset['accents'];
-    const key = `${variant ?? ''}|${getTheme()}|${el.dataset['ascii'] ?? ''}`;
+    const key = `${variant ?? ''}|${themeOf(el)}|${el.dataset['ascii'] ?? ''}`;
     let marks = variant ? marksCache.get(key) : '';
     if (marks === undefined) {
-      marks = accentsFor(variant, getTheme(), text);
+      marks = accentsFor(variant, themeOf(el), text);
       marksCache.set(key, marks);
     }
     const done = p === undefined || p >= 1;

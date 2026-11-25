@@ -2,7 +2,8 @@
 
 A map has the art's grid: ' ' keeps the density tone, 'g' leaf, 'y' sun, 'w' white glint.
 Regions are rectangles (rows and columns inclusive); only drawn characters are marked, and a rule
-can take only the light characters (. ' -). Rendered scenes get their maps from ascii-scene.py.
+can take only the light characters (. ' -). Rendered scenes (battery, industry, wine) get their maps
+from ascii-scene.py.
 
     python scripts/ascii-accents.py      # writes src/assets/ascii/accents/<variant>[.dusk].txt
 """
@@ -16,18 +17,6 @@ MAPS = {
     # CO2 -> methanol: the sphere is the machine-learning model; it gets the one sun glint.
     'plant': ('plant', 'day', [((11, 15), (38, 46), 'y', False)]),
     'plant.dusk': ('plant', 'dusk', [((10, 14), (37, 45), 'y', False)]),
-    # Wine: eucalyptus sprigs and the table edge in leaf green (for the art off the leaf field).
-    'wine-leaves': ('wine', 'day', [
-        ((30, 36), (0, 99), 'g', False),
-        ((28, 29), (0, 19), 'g', False),
-        ((28, 29), (67, 99), 'g', False),
-        ((20, 27), (74, 99), 'g', False),
-    ]),
-    # Wine on the leaf field: the light strokes of the glass and the bottle become a white glint.
-    'wine-glint': ('wine', 'day', [
-        ((9, 27), (34, 53), 'w', True),
-        ((0, 28), (55, 72), 'w', True),
-    ]),
 }
 
 for variant, (name, theme, rules) in MAPS.items():

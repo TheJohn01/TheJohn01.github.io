@@ -14,9 +14,12 @@ interface Props {
   tones?: boolean | undefined;
   /** Com tones: mapa de acentos (src/assets/ascii/accents) que põe caracteres a folha, sol ou brilho branco. */
   accents?: string | undefined;
+  /** Fica sempre na versão clara (ex.: o vinho no campo verde, que é claro nos dois temas). */
+  lightOnly?: boolean | undefined;
 }
 
-const { name, label, class: className, tones, accents } = Astro.props;
+const { name, label, class: className, tones, accents, lightOnly } = Astro.props;
+const only = lightOnly ? '' : undefined;
 const text = artFor(name);
 // --ascii-cols: largura da arte em caracteres, para a caixa do projeto em destaque a encher (global.css).
 const cols = Math.max(...text.split('\n').map((line) => line.length));
@@ -29,14 +32,14 @@ const layers = tones ? splitTones(text, accentsFor(accents, 'day', text)) : [];
   <div class="ascii-stack">
     {layers.map((layer, tone) =>
       tone === 0 && label ? (
-        <pre role="img" aria-label={label} data-ascii={name} data-tone={tone} data-accents={accents} class:list={['ascii', `tone-${tone}`, className]} style={style}>{layer}</pre>
+        <pre role="img" aria-label={label} data-ascii={name} data-light-only={only} data-tone={tone} data-accents={accents} class:list={['ascii', `tone-${tone}`, className]} style={style}>{layer}</pre>
       ) : (
-        <pre aria-hidden="true" data-ascii={name} data-tone={tone} data-accents={accents} class:list={['ascii', `tone-${tone}`, className]} style={style}>{layer}</pre>
+        <pre aria-hidden="true" data-ascii={name} data-light-only={only} data-tone={tone} data-accents={accents} class:list={['ascii', `tone-${tone}`, className]} style={style}>{layer}</pre>
       ),
     )}
   </div>
 ) : label ? (
-  <pre role="img" aria-label={label} data-ascii={name} class:list={['ascii', className]} style={style}>{text}</pre>
+  <pre role="img" aria-label={label} data-ascii={name} data-light-only={only} class:list={['ascii', className]} style={style}>{text}</pre>
 ) : (
-  <pre aria-hidden="true" data-ascii={name} class:list={['ascii', className]} style={style}>{text}</pre>
+  <pre aria-hidden="true" data-ascii={name} data-light-only={only} class:list={['ascii', className]} style={style}>{text}</pre>
 )}
