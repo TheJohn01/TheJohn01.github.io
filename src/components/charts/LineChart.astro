@@ -45,6 +45,13 @@ const ty = (v: number) => (yLog ? Math.log10(v) : v);
 const sx = (v: number) => M.left + ((v - xDomain[0]) / (xDomain[1] - xDomain[0])) * iw;
 const sy = (v: number) => M.top + ih - ((ty(v) - ty(yDomain[0])) / (ty(yDomain[1]) - ty(yDomain[0]))) * ih;
 const inside = ([x, y]: Point) => x >= xDomain[0] && x <= xDomain[1] && y >= yDomain[0] && y <= yDomain[1];
+// Um ponto fora dos eixos desapareceria do gráfico sem aviso (e ficaria na tabela): o build pára.
+if (xDomain[0] >= xDomain[1] || yDomain[0] >= yDomain[1]) throw new Error(`"${title}": eixo sem amplitude.`);
+if (yLog && yDomain[0] <= 0) throw new Error(`"${title}": eixo logarítmico precisa de y > 0.`);
+for (const s of series) {
+  const out = s.points.find((p) => !inside(p));
+  if (out) throw new Error(`"${title}": o ponto [${out.join(', ')}] de "${s.name}" está fora dos eixos.`);
+}
 
 const xTicks = niceTicks(xDomain[0], xDomain[1]);
 const yTicks = yLog

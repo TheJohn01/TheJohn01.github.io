@@ -19,6 +19,7 @@ interface Props {
 
 const { title, parts, unit = '%', caption } = Astro.props;
 const total = parts.reduce((sum, part) => sum + part.value, 0);
+if (!(total > 0)) throw new Error(`"${title}": as partes têm de somar mais do que 0.`);
 const summary = `${title}: ${parts.map((p) => `${p.label} ${fmt(p.value)} ${unit}`).join('; ')}.`;
 ---
 

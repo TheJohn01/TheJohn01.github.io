@@ -47,12 +47,12 @@ export function initAscii(getTheme: () => Theme): AsciiController {
   const marksCache = new Map<string, string>();
   let raf = 0;
 
-  /** Texto da arte para o tema atual. Sem versão escura, usa a clara. */
   /** Tema da peça: o do site, salvo as peças que ficam sempre claras (data-light-only). */
   function themeOf(el: HTMLElement): Theme {
     return el.dataset['lightOnly'] === undefined ? getTheme() : 'day';
   }
 
+  /** Texto da arte para o tema da peça. Sem versão escura, usa a clara. */
   function source(el: HTMLElement): string {
     const light = day.get(el) ?? '';
     return themeOf(el) === 'dusk' ? (ART_DUSK[el.dataset['ascii'] ?? ''] ?? light) : light;

@@ -2,7 +2,7 @@
 // Uma peça de arte ASCII. O HTML leva a versão clara; o script em
 // src/scripts/ascii-condense.ts troca para a versão escura e anima a "condensação".
 // Com tones, a peça é desenhada em camadas sobrepostas, uma por tom Dewpoint (ver splitTones e os tons em global.css).
-import { accentsFor, artFor, splitTones } from '../lib/ascii';
+import { accentsFor, artFor, hasAccents, splitTones } from '../lib/ascii';
 
 interface Props {
   /** Nome do ficheiro em src/assets/ascii/day, sem ".txt". */
@@ -19,27 +19,23 @@ interface Props {
 }
 
 const { name, label, class: className, tones, accents, lightOnly } = Astro.props;
-const only = lightOnly ? '' : undefined;
 const text = artFor(name);
 // --ascii-cols: largura da arte em caracteres, para a caixa do projeto em destaque a encher (global.css).
 const cols = Math.max(...text.split('\n').map((line) => line.length));
-const style = `--ascii-cols: ${cols}`;
-const layers = tones ? splitTones(text, accentsFor(accents, 'day', text)) : [];
+// Sem tones, uma só camada, sem data-tone. Com tones, as camadas vão numa grelha e só a primeira leva a descrição.
+const layers = tones ? splitTones(text, accentsFor(accents, 'day', text), hasAccents(accents)) : [text];
+const Wrap = tones ? 'div' : Fragment;
 ---
 
 {/* O texto fica colado às etiquetas <pre> para não acrescentar espaços. */}
-{tones ? (
-  <div class="ascii-stack">
-    {layers.map((layer, tone) =>
-      tone === 0 && label ? (
-        <pre role="img" aria-label={label} data-ascii={name} data-light-only={only} data-tone={tone} data-accents={accents} class:list={['ascii', `tone-${tone}`, className]} style={style}>{layer}</pre>
-      ) : (
-        <pre aria-hidden="true" data-ascii={name} data-light-only={only} data-tone={tone} data-accents={accents} class:list={['ascii', `tone-${tone}`, className]} style={style}>{layer}</pre>
-      ),
-    )}
-  </div>
-) : label ? (
-  <pre role="img" aria-label={label} data-ascii={name} data-light-only={only} class:list={['ascii', className]} style={style}>{text}</pre>
-) : (
-  <pre aria-hidden="true" data-ascii={name} data-light-only={only} class:list={['ascii', className]} style={style}>{text}</pre>
-)}
+<Wrap class={tones ? 'ascii-stack' : undefined}>
+  {
+    layers.map((layer, i) => {
+      const tone = tones ? i : undefined;
+      const labelled = i === 0 && !!label;
+      return (
+        <pre role={labelled ? 'img' : undefined} aria-label={labelled ? label : undefined} aria-hidden={labelled ? undefined : 'true'} data-ascii={name} data-light-only={lightOnly ? '' : undefined} data-tone={tone} data-accents={tones ? accents : undefined} class:list={['ascii', tone !== undefined && `tone-${tone}`, className]} style={`--ascii-cols: ${cols}`}>{layer}</pre>
+      );
+    })
+  }
+</Wrap>

@@ -71,9 +71,17 @@ export function accentsFor(variant: string | undefined, theme: Theme, text: stri
     .join('\n');
 }
 
-/** Uma cópia do texto por camada: os caracteres das outras camadas passam a espaços (a grelha mantém-se). */
-export function splitTones(text: string, accents = ''): string[] {
-  const count = accents ? ACCENT_TONE_COUNT : TONE_COUNT;
+/** Diz se a peça tem mapa de acentos em algum dos temas (e, por isso, as camadas de acento). */
+export function hasAccents(variant: string | undefined): boolean {
+  return variant !== undefined && (variant in ACCENTS || `${variant}.dusk` in ACCENTS);
+}
+
+/**
+ * Uma cópia do texto por camada: os caracteres das outras camadas passam a espaços (a grelha mantém-se).
+ * `layered` dá as 6 camadas mesmo sem acentos neste tema, para os do outro tema terem onde ir.
+ */
+export function splitTones(text: string, accents = '', layered = accents !== ''): string[] {
+  const count = layered ? ACCENT_TONE_COUNT : TONE_COUNT;
   return Array.from({ length: count }, (_, tone) =>
     text.replace(/[^\s]/g, (ch, i: number) => (toneAt(ch, accents.charAt(i)) === tone ? ch : ' ')),
   );
