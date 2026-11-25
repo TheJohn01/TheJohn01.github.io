@@ -273,6 +273,44 @@ pre {
   font-size: calc(100cqi / (var(--ascii-cols) * 0.605));
 }
 
+/* Tons Dewpoint: cada peça é desenhada em camadas sobrepostas (AsciiArt tones), uma cor por camada.
+   Daylight (tinta = escuro): azure, e deep no mais denso. Dusk (tinta = luz): sky-200, azure, e ink no mais denso.
+   Acentos onde têm significado (mapas em src/assets/ascii/accents): folha, e sol só no Dusk. */
+.ascii-stack {
+  display: grid;
+}
+.ascii-stack > .ascii {
+  grid-area: 1 / 1;
+}
+.ascii-stack > .ascii + .ascii {
+  user-select: none;
+}
+.ascii.tone-0,
+.ascii.tone-1,
+.ascii.tone-4,
+.ascii.tone-5 {
+  color: var(--azure);
+}
+.ascii.tone-2 {
+  color: var(--deep);
+}
+.ascii.tone-3 {
+  color: var(--leaf-ink);
+}
+.dp.dusk .ascii.tone-0 {
+  color: var(--sky-200);
+}
+.dp.dusk .ascii.tone-2 {
+  color: var(--ink);
+}
+.dp.dusk .ascii.tone-3 {
+  color: var(--leaf);
+}
+/* O sol aparece uma vez por vista e só se vê no escuro (1,4:1 no claro). */
+.dp.dusk .ascii.tone-4 {
+  color: var(--sun);
+}
+
 /* ---------- 4. Secções ---------- */
 
 /* Cabeçalho */
@@ -733,8 +771,14 @@ pre {
   background: var(--leaf);
   box-sizing: border-box;
 }
-.wine-art .ascii {
+/* O campo verde é claro nos dois temas: tudo em on-leaf, com o brilho do vidro em branco (on-deep). */
+.dp .wine-art .ascii,
+.dp.dusk .wine-art .ascii {
   color: var(--on-leaf);
+}
+.dp .wine-art .ascii.tone-5,
+.dp.dusk .wine-art .ascii.tone-5 {
+  color: var(--on-deep);
 }
 
 /* Percurso */
@@ -1635,7 +1679,7 @@ pre {
     font-size: max(3px, calc((100vw - 96px) / 43.2));
   }
   pre[data-ascii='wine'] {
-    font-size: max(2.6px, calc((100vw - 104px) / 62.4));
+    font-size: max(2.6px, calc((100vw - 104px) / 56));
   }
   .foot {
     padding: 32px 16px;

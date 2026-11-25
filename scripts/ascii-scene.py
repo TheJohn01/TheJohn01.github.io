@@ -47,10 +47,13 @@ HORIZ = rot_z(np.pi / 2)     # cylinder axis (local y) -> world -x
 
 
 class Prim:
-    """A canonical primitive in a local frame: world = R @ local + c. mat: 0 plain, 1 patterned, 2 ground."""
+    """A canonical primitive in a local frame: world = R @ local + c. mat: 0 plain, 1 patterned, 2 ground.
+    accent: '' or a Dewpoint colour accent ('g' leaf, 'y' sun), written to the accent map.
+    alpha < 1 makes it see-through (glass); albedo darkens it (dark glass, wine); shine adds a highlight."""
 
-    def __init__(self, kind, c, size, R=I3, mat=0):
+    def __init__(self, kind, c, size, R=I3, mat=0, accent='', alpha=1.0, albedo=1.0, shine=0.0):
         self.kind, self.c, self.size, self.R, self.mat = kind, np.array(c, float), size, R, mat
+        self.accent, self.alpha, self.albedo, self.shine = accent, alpha, albedo, shine
 
     def hit(self, o, d):
         """Returns t (INF where missed) and the world normal."""
@@ -81,6 +84,31 @@ class Prim:
             tt = np.where(t0 > EPS, t0, t1)
             t = np.where((disc >= 0) & (tt > EPS), tt, INF)
             n = lo + ld * t[:, None]
+        elif self.kind == 'ellipsoid':   # radii (rx, ry, rz), kept only for ymin <= local y <= ymax
+            rx, ry, rz, ymin, ymax, cap = self.size   # cap='top' closes it with a disc at ymax (a liquid)
+            rad = np.array([rx, ry, rz])
+            ls, ds = lo / rad, ld / rad
+            a = (ds * ds).sum(1)
+            b = (ls * ds).sum(1)
+            cc = (ls * ls).sum(1) - 1
+            disc = b * b - a * cc
+            sq = np.sqrt(np.maximum(disc, 0))
+            best = np.full(len(t), INF)
+            nb = np.zeros_like(lo)
+            for tc in ((-b - sq) / a, (-b + sq) / a):
+                y = lo[:, 1] + ld[:, 1] * tc
+                ok = (disc >= 0) & (tc > EPS) & (y >= ymin) & (y <= ymax) & (tc < best)
+                q = lo + ld * tc[:, None]
+                best = np.where(ok, tc, best)
+                nb = np.where(ok[:, None], q / rad ** 2, nb)
+            if cap == 'top':
+                with np.errstate(divide='ignore', invalid='ignore'):
+                    tc = (ymax - lo[:, 1]) / ld[:, 1]
+                q = lo + ld * tc[:, None]
+                ok = (tc > EPS) & (((q / rad) ** 2).sum(1) <= 1) & (tc < best)
+                best = np.where(ok, tc, best)
+                nb = np.where(ok[:, None], np.array([0, 1, 0]), nb)
+            t, n = best, nb
         elif self.kind == 'cyl':   # axis = local y, radius r, from y=0 to y=hgt, capped
             r, hgt = self.size
             a = ld[:, 0] ** 2 + ld[:, 2] ** 2
@@ -124,11 +152,13 @@ class Scene:
     def ids(self, mat):
         return [i for i, q in enumerate(self.prims) if q.mat == mat]
 
-    def trace(self, o, d):
+    def trace(self, o, d, opaque_only=False):
         t = np.full(len(o), INF)
         n = np.zeros_like(o)
         mid = np.full(len(o), -1)
         for i, p in enumerate(self.prims):
+            if opaque_only and p.alpha < 1:
+                continue
             tt, nn = p.hit(o, d)
             closer = tt < t
             t = np.where(closer, tt, t)
@@ -182,7 +212,7 @@ def industry():
         lengths = np.array([0.86, 0.64, 0.76])
         line = inrow & (u > 0.24) & (u < lengths[np.clip(row, 0, 2).astype(int)])
         edge = (u < 0.03) | (u > 0.97) | (v < 0.05) | (v > 0.95)
-        return np.where(box | line | edge, 0.0, 1.0), front
+        return np.where(box | line | edge, 0.0, 1.0), front, box
 
     s.pattern = checklist
     return s
@@ -196,15 +226,112 @@ def battery():
     # four large cylindrical cells: body, a raised band near the top, the positive terminal
     for x in (-3.9, -1.3, 1.3, 3.9):
         s.add('cyl', (x, 0.2, 0), (1.0, 3.6))
-        s.add('cyl', (x, 3.0, 0), (1.04, 0.22))
+        s.add('cyl', (x, 3.0, 0), (1.04, 0.22), accent='g')
         s.add('cyl', (x, 3.8, 0), (0.36, 0.2))
     return s
 
 
-SCENES = {'industry': industry, 'battery': battery}
+def wine():
+    s = Scene((108, 42), eye=(2.2, 3.4, 9.6), look=(0.1, 2.15, 0.2), fov=0.33,
+              sun=(-0.55, 0.8, 0.5), fade=(0.2, 0.9, 3.3, 1.9))
+    s.add('box', (0, -0.1, 0), (30.0, 0.1, 20.0), mat=2)               # table
+    # wine bottle: dark glass body, paper label, shoulder, neck and lip
+    bx, bz = 1.9, -0.9
+    dark = dict(albedo=0.35, shine=0.9)
+    s.add('cyl', (bx, 0, bz), (0.72, 2.9), **dark)
+    s.add('cyl', (bx, 0.9, bz), (0.735, 1.2))
+    s.add('ellipsoid', (bx, 2.9, bz), (0.72, 0.6, 0.72, 0.0, 0.6, None), **dark)
+    s.add('cyl', (bx, 3.35, bz), (0.24, 1.25), **dark)
+    s.add('cyl', (bx, 4.55, bz), (0.29, 0.14), **dark)
+    # wine glass, half full: clear glass foot, stem and bowl (see-through), red wine inside
+    gx, gz = 0.0, 0.3
+    clear = dict(alpha=0.25, shine=1.0)
+    s.add('cyl', (gx, 0.01, gz), (0.62, 0.05), **clear)   # just above the table (no shared plane)
+    s.add('cyl', (gx, 0.05, gz), (0.07, 1.25), **clear)
+    s.add('ellipsoid', (gx, 2.25, gz), (0.82, 0.95, 0.82, -0.95, 0.7, None), **clear)
+    s.add('ellipsoid', (gx, 2.25, gz), (0.78, 0.91, 0.78, -0.91, -0.05, 'top'), albedo=0.32, shine=0.5)
+    # small dropper bottle: amber glass, cap and rubber bulb
+    dx, dz = -1.9, 0.0
+    s.add('cyl', (dx, 0, dz), (0.42, 0.95), albedo=0.45, shine=0.8)
+    s.add('ellipsoid', (dx, 0.95, dz), (0.42, 0.22, 0.42, 0.0, 0.22, None), albedo=0.45, shine=0.8)
+    s.add('cyl', (dx, 1.12, dz), (0.15, 0.15))
+    s.add('cyl', (dx, 1.25, dz), (0.2, 0.3), albedo=0.3)
+    s.add('ellipsoid', (dx, 1.87, dz), (0.17, 0.32, 0.17, -0.32, 0.32, None), albedo=0.5)
+
+    # eucalyptus sprigs lying on the table: a thin stem with round leaves in pairs
+    def sprig(x, z, angle, length, leaves):
+        turn = rot_y(angle)
+        s.add('cyl', (x, 0.04, z), (0.03, length), R=turn @ HORIZ)
+        for k in range(leaves):
+            along = turn @ np.array([-(0.3 + k * (length - 0.4) / max(1, leaves - 1)), 0, 0])
+            for side in (-1, 1):
+                off = turn @ np.array([0, 0, side * 0.2])
+                s.add('ellipsoid', (x, 0.07, z) + along + off, (0.24, 0.035, 0.17, -1, 1, None),
+                      R=turn @ rot_y(side * 0.5) @ rot_x(side * 0.15), accent='g')
+
+    sprig(1.7, 1.9, 0.35, 3.0, 5)
+    sprig(-0.6, 2.4, -0.4, 2.2, 4)
+    return s
+
+
+SCENES = {'industry': industry, 'battery': battery, 'wine': wine}
 
 
 # ---------- rendering ----------
+
+def prop(s, mid, name, default):
+    """A per-primitive value for every sample (default where nothing was hit)."""
+    out = np.full(len(mid), float(default))
+    for i, q in enumerate(s.prims):
+        v = getattr(q, name)
+        if v != default:
+            out = np.where(mid == i, v, out)
+    return out
+
+
+def surface(s, o, d):
+    """What the rays hit first, shaded (sun with shadows, sky fill, albedo, highlight)."""
+    t, n, mid = s.trace(o, d)
+    hit = t < INF
+    p = o + d * t[:, None]
+    n = np.where((n * d).sum(1, keepdims=True) > 0, -n, n)
+    lam = np.clip(n @ s.sun, 0, 1)
+    so = p + n * 2e-3
+    ts, _, _ = s.trace(so, np.broadcast_to(s.sun, so.shape).copy(), opaque_only=True)
+    lit = ts >= INF
+    sky = 0.5 + 0.5 * n[:, 1]                     # hemisphere fill light
+    L = 0.12 + 0.18 * sky + 0.7 * lam * lit
+    albedo, shine = prop(s, mid, 'albedo', 1.0), prop(s, mid, 'shine', 0.0)
+    L = np.where(albedo != 1, L * albedo, L)
+    refl = 2 * (n @ s.sun)[:, None] * n - s.sun   # the sun direction mirrored about the normal
+    spec = shine * np.clip((refl * -d).sum(1), 0, 1) ** 40 * lit
+    L = np.where(shine > 0, np.minimum(1, L + spec), L)
+    if s.pattern:
+        glass, front, leafy = s.pattern(s, p)
+        marked = hit & np.isin(mid, s.ids(1)) & front
+    else:
+        glass, marked, leafy = np.ones(len(p)), np.zeros(len(p), bool), np.zeros(len(p), bool)
+    ground = hit & np.isin(mid, s.ids(2))
+    # The ground shows only near the subject and fades out (no hard edges).
+    cx, cz, rx, rz = s.fade
+    fade = np.clip(1 - ((p[:, 0] - cx) / rx) ** 2 - ((p[:, 2] - cz) / rz) ** 2, 0, 1) ** 0.7
+    return dict(p=p, hit=hit, mid=mid, L=L, lit=lit, spec=spec, glass=glass, marked=marked, leafy=leafy,
+                ground=ground, fade=fade, alpha=prop(s, mid, 'alpha', 1.0))
+
+
+def surface_ink(f, mode):
+    """Ink of one surface: light mode draws darkness, dark mode draws light."""
+    L, glass, marked = f['L'], f['glass'], f['marked']
+    if mode == 'day':
+        ink = 0.06 + 0.8 * (1 - L) ** 1.3
+        ink = np.where(marked, np.where(glass > 0.5, 0.0, 0.95), ink)
+        ink = np.where(f['ground'], np.where(f['lit'], 0.1, 0.45) * f['fade'], ink)
+    else:
+        ink = 0.08 + 0.92 * L ** 0.9
+        ink = np.where(marked, np.where(glass > 0.5, 0.85, 0.12), ink)
+        ink = np.where(f['ground'], np.where(f['lit'], 0.3, 0.06) * f['fade'], ink)
+    return ink
+
 
 def render(s):
     W, H = s.W, s.H
@@ -217,41 +344,30 @@ def render(s):
     X, Y = np.meshgrid(xs * aspect * s.fov, ys * s.fov)
     d = norm(fwd + X.reshape(-1, 1) * right + Y.reshape(-1, 1) * up)
     o = np.broadcast_to(s.eye, d.shape).copy()
-    t, n, mid = s.trace(o, d)
-    hit = t < INF
-    p = o + d * t[:, None]
-    n = np.where((n * d).sum(1, keepdims=True) > 0, -n, n)
-    lam = np.clip(n @ s.sun, 0, 1)
-    so = p + n * 2e-3
-    ts, _, _ = s.trace(so, np.broadcast_to(s.sun, so.shape).copy())
-    lit = ts >= INF
-    sky = 0.5 + 0.5 * n[:, 1]                     # hemisphere fill light
-    L = 0.12 + 0.18 * sky + 0.7 * lam * lit
-    if s.pattern:
-        glass, front = s.pattern(s, p)
-        marked = hit & np.isin(mid, s.ids(1)) & front
-    else:
-        glass, marked = np.ones(len(p)), np.zeros(len(p), bool)
-    ground = hit & np.isin(mid, s.ids(2))
-    # The ground shows only near the subject and fades out (no hard edges).
-    cx, cz, rx, rz = s.fade
-    fade = np.clip(1 - ((p[:, 0] - cx) / rx) ** 2 - ((p[:, 2] - cz) / rz) ** 2, 0, 1) ** 0.7
+    first = f = surface(s, o, d)
+    accent = np.zeros(len(d), int)                # 0 none, 1 leaf, 2 sun, 3 white glint (Dewpoint accents)
+    for i, q in enumerate(s.prims):
+        if q.accent:
+            accent = np.where(f['hit'] & (f['mid'] == i), ' gy'.index(q.accent), accent)
+    accent = np.where(f['marked'] & f['leafy'], 1, accent)
+    # See-through surfaces (glass): add each surface's ink by its opacity, then look further along the ray.
+    ink = {'day': np.zeros(len(d)), 'dusk': np.zeros(len(d))}
+    weight = np.ones(len(d))
+    for _ in range(5):
+        for mode in ink:
+            ink[mode] = np.where(f['hit'], ink[mode] + weight * f['alpha'] * surface_ink(f, mode), ink[mode])
+        accent = np.where(f['hit'] & (weight > 0.3) & (f['spec'] > 0.25), 3, accent)
+        weight = np.where(f['hit'], weight * (1 - f['alpha']), 0)
+        if not (weight > 1e-3).any():
+            break
+        f = surface(s, f['p'] + d * 1e-2, d)
     shape = (H, SS, W, SS)
-    return dict(L=L, fade=fade, ground=ground, lit=lit, hit=hit, mid=mid, glass=glass,
-                marked=marked, cell=lambda a: a.reshape(shape).mean((1, 3)), shape=shape)
+    return dict(ink=ink, hit=first['hit'], mid=first['mid'], ground=first['ground'], accent=accent,
+                cell=lambda a: a.reshape(shape).mean((1, 3)), shape=shape)
 
 
 def to_ascii(r, mode):
-    L, hit, glass, marked = r['L'], r['hit'], r['glass'], r['marked']
-    if mode == 'day':
-        ink = 0.06 + 0.8 * (1 - L) ** 1.3
-        ink = np.where(marked, np.where(glass > 0.5, 0.0, 0.95), ink)
-        ink = np.where(r['ground'], np.where(r['lit'], 0.1, 0.45) * r['fade'], ink)
-    else:
-        ink = 0.08 + 0.92 * L ** 0.9
-        ink = np.where(marked, np.where(glass > 0.5, 0.85, 0.12), ink)
-        ink = np.where(r['ground'], np.where(r['lit'], 0.3, 0.06) * r['fade'], ink)
-    ink = np.where(hit, ink, 0.0)
+    hit, ink = r['hit'], r['ink'][mode]
     cov = r['cell'](hit.astype(float))
     val = r['cell'](ink) / np.maximum(cov, 1e-9)
     # Outlines: cells where the object under the samples changes get a little more ink.
@@ -264,15 +380,29 @@ def to_ascii(r, mode):
     return [''.join(RAMP[i] for i in row).rstrip() for row in idx]
 
 
-def boxed(day, dusk):
-    """Same box for both: crop the shared empty border, pad to equal width."""
+def to_accents(r, day, dusk):
+    """Accent map in the same grid: 'g' leaf, 'y' sun or 'w' white glint, where a third of a drawn cell has it."""
+    parts = np.stack([r['cell']((r['accent'] == k).astype(float)) for k in (1, 2, 3)], -1)
+    lines = []
+    for y in range(len(day)):
+        row = ''
+        for x in range(parts.shape[1]):
+            drawn = day[y][x:x + 1].strip() or dusk[y][x:x + 1].strip()
+            k = int(parts[y, x].argmax())
+            row += 'gyw'[k] if drawn and parts[y, x, k] >= 0.3 else ' '
+        lines.append(row.rstrip())
+    return lines
+
+
+def boxed(day, dusk, *extra):
+    """Same box for both (and for any accent map): crop the shared empty border, pad to equal width."""
     rows = [i for i in range(len(day)) if day[i].strip() or dusk[i].strip()]
     a, b = rows[0], rows[-1] + 1
     day, dusk = day[a:b], dusk[a:b]
     left = min(len(l) - len(l.lstrip()) for l in day + dusk if l.strip())
     width = max(len(l) for l in day + dusk) - left
     fix = lambda ls: '\n'.join(l[left:].ljust(width) for l in ls)
-    return fix(day), fix(dusk)
+    return (fix(day), fix(dusk)) + tuple(fix(e[a:b]) for e in extra)
 
 
 if __name__ == '__main__':
@@ -282,7 +412,8 @@ if __name__ == '__main__':
     ap.add_argument('--show', action='store_true', help='print both versions')
     args = ap.parse_args()
     r = render(SCENES[args.scene]())
-    day, dusk = boxed(to_ascii(r, 'day'), to_ascii(r, 'dusk'))
+    day_lines, dusk_lines = to_ascii(r, 'day'), to_ascii(r, 'dusk')
+    day, dusk, accents = boxed(day_lines, dusk_lines, to_accents(r, day_lines, dusk_lines))
     assert day.count('\n') == dusk.count('\n')
     assert {len(l) for l in day.split('\n')} == {len(l) for l in dusk.split('\n')}
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src', 'assets', 'ascii')
@@ -290,5 +421,10 @@ if __name__ == '__main__':
         path = (os.path.join(args.out, f'{args.scene}_{theme}.txt') if args.out
                 else os.path.join(root, theme, f'{args.scene}.txt'))
         open(path, 'w', encoding='utf8', newline='\n').write(txt)
+    if accents.strip():   # Dewpoint accent map (same grid), used by <AsciiArt accents=...>
+        path = (os.path.join(args.out, f'{args.scene}_accents.txt') if args.out
+                else os.path.join(root, 'accents', f'{args.scene}.txt'))
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        open(path, 'w', encoding='utf8', newline='\n').write(accents)
     if args.show:
         print(day, '=' * 40, dusk, sep='\n')

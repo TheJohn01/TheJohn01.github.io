@@ -40,7 +40,7 @@ const { Content } = await render(publication);
       {
         highlight && (
           <div class="art-hover page-art well art-frame">
-            <AsciiArt name={highlight.art} label={highlight.artLabel} />
+            <AsciiArt name={highlight.art} label={highlight.artLabel} tones accents={highlight.art} />
           </div>
         )
       }

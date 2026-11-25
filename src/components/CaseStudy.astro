@@ -37,7 +37,7 @@ const page = hasBody(body) ? `/projetos/${id}/` : undefined;
       }
     </div>
     <div class="art-hover case-art well art-frame art-fill">
-      <AsciiArt name={data.art} label={data.artLabel} />
+      <AsciiArt name={data.art} label={data.artLabel} tones accents={data.art} />
     </div>
   </div>
 

@@ -45,7 +45,7 @@ const { Content } = await render(project);
         }
       </div>
       <div class="art-hover page-art well art-frame">
-        <AsciiArt name={data.art} label={data.artLabel} />
+        <AsciiArt name={data.art} label={data.artLabel} tones accents={data.art} />
       </div>
     </header>
     {
