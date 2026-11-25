@@ -585,11 +585,14 @@ pre {
   gap: 32px;
   align-items: center;
 }
-.industry-copy {
+/* O projeto em destaque usa a mesma divisão: texto largo, arte limitada a 440 px. */
+.industry-copy,
+.case-side {
   flex: 1 1 340px;
   min-width: 0;
 }
-.industry-art {
+.industry-art,
+.case-art {
   flex: 1 1 360px;
   max-width: 440px;
   min-width: 0;
@@ -664,15 +667,6 @@ pre {
   gap: 32px;
   align-items: center;
   margin-top: 24px;
-}
-.case-art {
-  flex: 1 1 460px;
-  min-width: 0;
-  padding: 24px 16px;
-}
-.case-side {
-  flex: 1 1 300px;
-  min-width: 0;
 }
 .case-results {
   margin-top: 32px;
@@ -1256,6 +1250,10 @@ pre {
 }
 .expert-body > :first-child {
   margin-top: 16px;
+}
+/* O detalhe já está numa caixa estreita: o texto usa a largura toda da caixa. */
+.prose .expert-body > * {
+  max-width: none;
 }
 
 /* Páginas de projeto e de publicação */
