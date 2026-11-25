@@ -29,7 +29,7 @@ function byName(files: Record<string, string>): Record<string, string> {
 export const ART_DAY = /*#__PURE__*/ byName(day);
 export const ART_DUSK = /*#__PURE__*/ byName(dusk);
 
-// Tons Dewpoint (estudo): cada carácter pertence a uma faixa de densidade, desenhada numa camada
+// Tons Dewpoint: cada carácter pertence a uma faixa de densidade, desenhada numa camada
 // própria com a sua cor. 0 = leve (. ' -), 1 = média (: ~ ; = +), 2 = densa (o resto: * c v x o O).
 // Um mapa de acentos (src/assets/ascii/accents) pode pôr caracteres noutras camadas:
 // 3 = folha (g), 4 = sol (y), 5 = brilho branco (w).
@@ -62,8 +62,9 @@ export function toneAt(ch: string, mark: string): number {
  * Usa "<variante>.dusk" no tema escuro, se existir.
  */
 export function accentsFor(variant: string | undefined, theme: Theme, text: string): string {
-  if (!variant) return '';
-  const map = ((theme === 'dusk' ? ACCENTS[`${variant}.dusk`] : undefined) ?? ACCENTS[variant] ?? '').split('\n');
+  const file = variant ? ((theme === 'dusk' ? ACCENTS[`${variant}.dusk`] : undefined) ?? ACCENTS[variant]) : undefined;
+  if (file === undefined) return '';
+  const map = file.split('\n');
   return text
     .split('\n')
     .map((line, row) => (map[row] ?? '').padEnd(line.length).slice(0, line.length))

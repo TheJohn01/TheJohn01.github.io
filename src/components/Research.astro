@@ -30,7 +30,7 @@ const highlight = pub?.highlight;
         </div>
       </div>
       <div class="art-hover wine-art">
-        <AsciiArt name={highlight.art} label={highlight.artLabel} lightOnly />
+        <AsciiArt name={highlight.art} label={highlight.artLabel} tones accents={highlight.art} lightOnly />
       </div>
     </section>
   )

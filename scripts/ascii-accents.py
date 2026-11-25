@@ -1,4 +1,4 @@
-"""Accent maps for hand-drawn ASCII art (Dewpoint study): which characters take a non-blue colour.
+"""Accent maps for hand-drawn ASCII art (Dewpoint accents): which characters take a non-blue colour.
 
 A map has the art's grid: ' ' keeps the density tone, 'g' leaf, 'y' sun, 'w' white glint.
 Regions are rectangles (rows and columns inclusive); only drawn characters are marked, and a rule

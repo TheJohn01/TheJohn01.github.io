@@ -48,7 +48,7 @@ HORIZ = rot_z(np.pi / 2)     # cylinder axis (local y) -> world -x
 
 class Prim:
     """A canonical primitive in a local frame: world = R @ local + c. mat: 0 plain, 1 patterned, 2 ground.
-    accent: '' or a colour accent for the Dewpoint study ('g' leaf, 'y' sun), written to the accent map.
+    accent: '' or a Dewpoint colour accent ('g' leaf, 'y' sun), written to the accent map.
     alpha < 1 makes it see-through (glass); albedo darkens it (dark glass, wine); shine adds a highlight."""
 
     def __init__(self, kind, c, size, R=I3, mat=0, accent='', alpha=1.0, albedo=1.0, shine=0.0):
@@ -227,7 +227,7 @@ def battery():
     for x in (-3.9, -1.3, 1.3, 3.9):
         s.add('cyl', (x, 0.2, 0), (1.0, 3.6))
         s.add('cyl', (x, 3.0, 0), (1.04, 0.22), accent='g')
-        s.add('cyl', (x, 3.8, 0), (0.36, 0.2), accent='y')
+        s.add('cyl', (x, 3.8, 0), (0.36, 0.2))
     return s
 
 
@@ -345,7 +345,7 @@ def render(s):
     d = norm(fwd + X.reshape(-1, 1) * right + Y.reshape(-1, 1) * up)
     o = np.broadcast_to(s.eye, d.shape).copy()
     first = f = surface(s, o, d)
-    accent = np.zeros(len(d), int)                # 0 none, 1 leaf, 2 sun, 3 white glint (Dewpoint study)
+    accent = np.zeros(len(d), int)                # 0 none, 1 leaf, 2 sun, 3 white glint (Dewpoint accents)
     for i, q in enumerate(s.prims):
         if q.accent:
             accent = np.where(f['hit'] & (f['mid'] == i), ' gy'.index(q.accent), accent)
@@ -421,7 +421,7 @@ if __name__ == '__main__':
         path = (os.path.join(args.out, f'{args.scene}_{theme}.txt') if args.out
                 else os.path.join(root, theme, f'{args.scene}.txt'))
         open(path, 'w', encoding='utf8', newline='\n').write(txt)
-    if accents.strip():   # accent map for the Dewpoint study (same grid), used by <AsciiArt accents=...>
+    if accents.strip():   # Dewpoint accent map (same grid), used by <AsciiArt accents=...>
         path = (os.path.join(args.out, f'{args.scene}_accents.txt') if args.out
                 else os.path.join(root, 'accents', f'{args.scene}.txt'))
         os.makedirs(os.path.dirname(path), exist_ok=True)
