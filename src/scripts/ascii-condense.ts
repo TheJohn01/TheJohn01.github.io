@@ -1,7 +1,7 @@
 // Animação de "condensação" da arte ASCII: os caracteres aparecem de cima para baixo,
 // passando por uma rampa de caracteres leves, como gotas a formarem-se.
 // Corre quando a peça entra no ecrã, ao passar o rato por cima e ao trocar de tema.
-import { ART_DUSK, type Theme } from '../lib/ascii';
+import { ART_DUSK, accentsFor, joinTones, toneAt, type Theme } from '../lib/ascii';
 
 const RAMP = " .'-:~;=+*cvxo";
 const DURATION_MS = 1400;
@@ -18,9 +18,18 @@ export interface AsciiController {
 export function initAscii(getTheme: () => Theme): AsciiController {
   // Guardado por elemento (não pelo nome da arte): duas peças com a mesma arte animam cada uma.
   // A versão clara vem do próprio HTML, para não ir também no JavaScript.
+  // Numa peça em camadas de tom, cada camada guarda o texto completo (a junção das camadas) e a sua faixa.
   const day = new Map<HTMLElement, string>();
+  const toneOfEl = new Map<HTMLElement, number>();
   for (const el of document.querySelectorAll<HTMLElement>('pre[data-ascii]')) {
-    day.set(el, el.textContent ?? '');
+    const tone = el.dataset['tone'];
+    if (tone === undefined) {
+      day.set(el, el.textContent ?? '');
+      continue;
+    }
+    const layers = [...(el.parentElement?.querySelectorAll<HTMLElement>('pre[data-tone]') ?? [])];
+    day.set(el, joinTones(layers.map((layer) => layer.textContent ?? '')));
+    toneOfEl.set(el, Number(tone));
   }
 
   let reduced = false;
@@ -35,6 +44,7 @@ export function initAscii(getTheme: () => Theme): AsciiController {
   const visible = new Set<HTMLElement>();
   const seen = new WeakSet<HTMLElement>();
   const thresholdCache = new Map<string, Float32Array>();
+  const marksCache = new Map<string, string>();
   let raf = 0;
 
   /** Texto da arte para o tema atual. Sem versão escura, usa a clara. */
@@ -64,13 +74,31 @@ export function initAscii(getTheme: () => Theme): AsciiController {
 
   function frame(el: HTMLElement, p: number | undefined): string {
     const text = source(el);
-    if (p === undefined || p >= 1) return text;
+    const tone = toneOfEl.get(el);
+    const variant = el.dataset['accents'];
+    const key = `${variant ?? ''}|${getTheme()}|${el.dataset['ascii'] ?? ''}`;
+    let marks = variant ? marksCache.get(key) : '';
+    if (marks === undefined) {
+      marks = accentsFor(variant, getTheme(), text);
+      marksCache.set(key, marks);
+    }
+    const done = p === undefined || p >= 1;
+    if (done && tone === undefined) return text;
     const limits = thresholds(text);
-    const shift = Math.floor(p * 60);
+    const shift = Math.floor((p ?? 1) * 60);
     let out = '';
     for (let i = 0; i < text.length; i++) {
       const ch = text.charAt(i);
       if (ch === '\n' || ch === ' ') {
+        out += ch;
+        continue;
+      }
+      // Camada de tom: só os caracteres da sua faixa (pelo carácter final, para a cor não saltar).
+      if (tone !== undefined && toneAt(ch, marks.charAt(i)) !== tone) {
+        out += ' ';
+        continue;
+      }
+      if (done) {
         out += ch;
         continue;
       }
@@ -115,10 +143,10 @@ export function initAscii(getTheme: () => Theme): AsciiController {
   repaint();
 
   for (const wrapper of document.querySelectorAll<HTMLElement>('.art-hover')) {
-    const el = wrapper.querySelector<HTMLElement>('pre[data-ascii]');
-    if (!el) continue;
+    // Todas as camadas da peça (sem tons, só uma) começam juntas.
+    const layers = [...wrapper.querySelectorAll<HTMLElement>('pre[data-ascii]')];
     wrapper.addEventListener('mouseenter', () => {
-      if (!startedAt.has(el)) start(el);
+      for (const el of layers) if (!startedAt.has(el)) start(el);
     });
   }
 

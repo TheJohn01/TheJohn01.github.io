@@ -11,9 +11,11 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  /** Páginas de trabalho (ex.: estudos) que os motores de busca não devem indexar. */
+  noindex?: boolean;
 }
 
-const { title = site.title, description = site.description } = Astro.props;
+const { title = site.title, description = site.description, noindex = false } = Astro.props;
 const pageUrl = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(site.ogImage.path, site.url).href;
 ---
@@ -25,6 +27,7 @@ const ogImage = new URL(site.ogImage.path, site.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

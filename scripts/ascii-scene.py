@@ -47,10 +47,12 @@ HORIZ = rot_z(np.pi / 2)     # cylinder axis (local y) -> world -x
 
 
 class Prim:
-    """A canonical primitive in a local frame: world = R @ local + c. mat: 0 plain, 1 patterned, 2 ground."""
+    """A canonical primitive in a local frame: world = R @ local + c. mat: 0 plain, 1 patterned, 2 ground.
+    accent: '' or a colour accent for the Dewpoint study ('g' leaf, 'y' sun), written to the accent map."""
 
-    def __init__(self, kind, c, size, R=I3, mat=0):
+    def __init__(self, kind, c, size, R=I3, mat=0, accent=''):
         self.kind, self.c, self.size, self.R, self.mat = kind, np.array(c, float), size, R, mat
+        self.accent = accent
 
     def hit(self, o, d):
         """Returns t (INF where missed) and the world normal."""
@@ -182,7 +184,7 @@ def industry():
         lengths = np.array([0.86, 0.64, 0.76])
         line = inrow & (u > 0.24) & (u < lengths[np.clip(row, 0, 2).astype(int)])
         edge = (u < 0.03) | (u > 0.97) | (v < 0.05) | (v > 0.95)
-        return np.where(box | line | edge, 0.0, 1.0), front
+        return np.where(box | line | edge, 0.0, 1.0), front, box
 
     s.pattern = checklist
     return s
@@ -196,8 +198,8 @@ def battery():
     # four large cylindrical cells: body, a raised band near the top, the positive terminal
     for x in (-3.9, -1.3, 1.3, 3.9):
         s.add('cyl', (x, 0.2, 0), (1.0, 3.6))
-        s.add('cyl', (x, 3.0, 0), (1.04, 0.22))
-        s.add('cyl', (x, 3.8, 0), (0.36, 0.2))
+        s.add('cyl', (x, 3.0, 0), (1.04, 0.22), accent='g')
+        s.add('cyl', (x, 3.8, 0), (0.36, 0.2), accent='y')
     return s
 
 
@@ -227,9 +229,14 @@ def render(s):
     lit = ts >= INF
     sky = 0.5 + 0.5 * n[:, 1]                     # hemisphere fill light
     L = 0.12 + 0.18 * sky + 0.7 * lam * lit
+    accent = np.zeros(len(p), int)                # 0 none, 1 leaf, 2 sun (Dewpoint study)
+    for i, q in enumerate(s.prims):
+        if q.accent:
+            accent = np.where(hit & (mid == i), ' gy'.index(q.accent), accent)
     if s.pattern:
-        glass, front = s.pattern(s, p)
+        glass, front, leafy = s.pattern(s, p)
         marked = hit & np.isin(mid, s.ids(1)) & front
+        accent = np.where(marked & leafy, 1, accent)
     else:
         glass, marked = np.ones(len(p)), np.zeros(len(p), bool)
     ground = hit & np.isin(mid, s.ids(2))
@@ -238,7 +245,7 @@ def render(s):
     fade = np.clip(1 - ((p[:, 0] - cx) / rx) ** 2 - ((p[:, 2] - cz) / rz) ** 2, 0, 1) ** 0.7
     shape = (H, SS, W, SS)
     return dict(L=L, fade=fade, ground=ground, lit=lit, hit=hit, mid=mid, glass=glass,
-                marked=marked, cell=lambda a: a.reshape(shape).mean((1, 3)), shape=shape)
+                marked=marked, accent=accent, cell=lambda a: a.reshape(shape).mean((1, 3)), shape=shape)
 
 
 def to_ascii(r, mode):
@@ -264,15 +271,30 @@ def to_ascii(r, mode):
     return [''.join(RAMP[i] for i in row).rstrip() for row in idx]
 
 
-def boxed(day, dusk):
-    """Same box for both: crop the shared empty border, pad to equal width."""
+def to_accents(r, day, dusk):
+    """Accent map in the same grid: 'g' (leaf) or 'y' (sun) where a third of a drawn cell has that accent."""
+    leaf = r['cell']((r['accent'] == 1).astype(float))
+    sun = r['cell']((r['accent'] == 2).astype(float))
+    lines = []
+    for y in range(len(day)):
+        row = ''
+        for x in range(leaf.shape[1]):
+            drawn = day[y][x:x + 1].strip() or dusk[y][x:x + 1].strip()
+            g, u = leaf[y, x], sun[y, x]
+            row += ('g' if g >= u else 'y') if drawn and max(g, u) >= 0.3 else ' '
+        lines.append(row.rstrip())
+    return lines
+
+
+def boxed(day, dusk, *extra):
+    """Same box for both (and for any accent map): crop the shared empty border, pad to equal width."""
     rows = [i for i in range(len(day)) if day[i].strip() or dusk[i].strip()]
     a, b = rows[0], rows[-1] + 1
     day, dusk = day[a:b], dusk[a:b]
     left = min(len(l) - len(l.lstrip()) for l in day + dusk if l.strip())
     width = max(len(l) for l in day + dusk) - left
     fix = lambda ls: '\n'.join(l[left:].ljust(width) for l in ls)
-    return fix(day), fix(dusk)
+    return (fix(day), fix(dusk)) + tuple(fix(e[a:b]) for e in extra)
 
 
 if __name__ == '__main__':
@@ -282,7 +304,8 @@ if __name__ == '__main__':
     ap.add_argument('--show', action='store_true', help='print both versions')
     args = ap.parse_args()
     r = render(SCENES[args.scene]())
-    day, dusk = boxed(to_ascii(r, 'day'), to_ascii(r, 'dusk'))
+    day_lines, dusk_lines = to_ascii(r, 'day'), to_ascii(r, 'dusk')
+    day, dusk, accents = boxed(day_lines, dusk_lines, to_accents(r, day_lines, dusk_lines))
     assert day.count('\n') == dusk.count('\n')
     assert {len(l) for l in day.split('\n')} == {len(l) for l in dusk.split('\n')}
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src', 'assets', 'ascii')
@@ -290,5 +313,10 @@ if __name__ == '__main__':
         path = (os.path.join(args.out, f'{args.scene}_{theme}.txt') if args.out
                 else os.path.join(root, theme, f'{args.scene}.txt'))
         open(path, 'w', encoding='utf8', newline='\n').write(txt)
+    if accents.strip():   # accent map for the Dewpoint study (same grid), used by <AsciiArt accents=...>
+        path = (os.path.join(args.out, f'{args.scene}_accents.txt') if args.out
+                else os.path.join(root, 'accents', f'{args.scene}.txt'))
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        open(path, 'w', encoding='utf8', newline='\n').write(accents)
     if args.show:
         print(day, '=' * 40, dusk, sep='\n')
