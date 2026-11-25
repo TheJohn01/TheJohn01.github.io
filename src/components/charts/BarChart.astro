@@ -33,6 +33,7 @@ interface Props {
 
 const { title, bars, unit = '', series, max, reference, caption } = Astro.props;
 const top = max ?? Math.max(...bars.flatMap((b) => [b.value + (b.error ?? 0), b.second ?? 0]));
+if (!(top > 0)) throw new Error(`"${title}": o máximo do eixo tem de ser maior do que 0.`);
 const pct = (v: number) => `${Math.max(0, Math.min(100, (v / top) * 82)).toFixed(2)}%`;
 const anyHighlight = bars.some((b) => b.highlight);
 const show = (v: number, d?: string) => `${d ?? fmt(v)}${unit ? ` ${unit}` : ''}`;
