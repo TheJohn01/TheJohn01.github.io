@@ -18,12 +18,14 @@ Transformar CO₂ capturado de gases de combustão em metanol, um combustível e
 
 <Flow
   steps={[
-    { title: 'Gases de combustão', text: '842 kmol/h, com 12,5 % de CO₂.' },
-    { title: '1. Captura de CO₂', text: 'Com aminas.' },
-    { title: '3. Síntese de metanol', text: 'Junta o H₂ da instalação 2 (13,7 t/dia, por eletrólise ou reforma de biometano); reage a cerca de 50 bar.' },
+    { title: 'Gases de combustão', text: '842 kmol/h, com 12,5 % de CO₂, a cerca de 40 °C e 1,1 bar.' },
+    { title: '1. Captura de CO₂', text: 'Com aminas: retém 90 % do CO₂ e entrega-o a 55 bar e 40 °C, com pelo menos 99,5 % de pureza.' },
+    { title: '3. Síntese de metanol', text: 'Recebe o H₂ da instalação 2 (13,7 t/dia). Reator com catalisador de cobre a 220–250 °C e 50–70 bar; o gás que não reage volta ao reator.' },
+    { title: 'Metanol', text: 'Cerca de 69 t/dia, com pureza acima de 99,8 %, depois de destilado.' },
   ]}
-  links={['CO₂ diluído', 'CO₂ · 100 t/dia']}
-  caption="O caminho do CO₂ pelas instalações. A instalação 2, de produção de hidrogénio, alimenta a síntese em paralelo."
+  links={['CO₂ diluído', 'CO₂ · 100 t/dia', 'metanol bruto']}
+  loop="O vapor gerado no arrefecimento do reator de metanol pode aquecer parte do reboiler da captura: é a principal ligação de calor entre as instalações."
+  caption="O caminho do CO₂ pelas instalações. A instalação 2 produz o hidrogénio em paralelo, por eletrólise (cerca de 32 MW de eletricidade) ou por reforma de biometano, e entrega-o à síntese a 55 bar e 40 °C."
 />
 
 A base de projeto é capturar 100 t de CO₂ por dia, com 90 % de captura, e produzir cerca de 69 t de metanol por dia.
@@ -64,12 +66,13 @@ Os gases de combustão passam numa coluna (o absorvedor) onde uma solução de a
 
 <Flow
   steps={[
-    { title: 'Absorvedor, cerca de 40 °C', text: 'A amina fria absorve o CO₂ dos gases de combustão.' },
-    { title: 'Stripper, 115–120 °C', text: 'O calor do reboiler liberta o CO₂ quase puro.' },
-    { title: 'Compressão', text: 'O CO₂ é comprimido até 55 bar para a síntese.' },
+    { title: 'Absorvedor, cerca de 40 °C', text: 'A amina fria absorve o CO₂ dos gases de combustão; o gás limpo sai pelo topo, depois de uma lavagem com água que retém a amina.' },
+    { title: 'Permutador rico/pobre', text: 'O solvente carregado aquece com o calor do solvente regenerado que volta.' },
+    { title: 'Stripper, 115–120 °C', text: 'A 1,5–2,0 bar, o calor do reboiler liberta o CO₂ quase puro e regenera a amina.' },
+    { title: 'Compressão', text: 'Vários andares com arrefecimento intermédio e remoção de água, até 55 bar e 40 °C.' },
   ]}
-  links={['solvente rico em CO₂', 'CO₂']}
-  loop="O solvente regenerado volta, arrefecido, ao absorvedor."
+  links={['solvente rico em CO₂', 'solvente rico, pré-aquecido', 'CO₂ e vapor de água']}
+  loop="O solvente regenerado volta pelo permutador e por um arrefecedor ao absorvedor; repõe-se a água e a amina que se perdem."
   caption="O ciclo de captura com aminas. O reboiler do stripper precisa de cerca de 4,2 MW a 3,6 GJ por tonelada de CO₂."
 />
 
@@ -117,12 +120,13 @@ Uma simulação rigorosa das colunas pode demorar minutos por caso. Para que qua
 
 <Flow
   steps={[
-    { title: 'Aspen Plus V15', text: 'Simulação rigorosa de cada caso.' },
-    { title: 'Campanha de dados', text: '150 casos de treino e 25 de validação.' },
-    { title: 'Modelo', text: 'Aprende a relação entre entradas e resultados.' },
-    { title: 'Aplicação web', text: 'Previsão imediata, com incerteza.' },
+    { title: 'Aspen Plus V15', text: 'Ciclo de captura completo, com a captura fixa em 90 %.' },
+    { title: 'Campanha de dados', text: '150 casos de treino e 25 de validação, sorteados à parte; corre sozinha e só guarda os casos que convergem com balanços certos.' },
+    { title: 'Modelo', text: 'Aprende a relação entre entradas e resultados; só é aceite com erro até 3 % no calor do reboiler.' },
+    { title: 'Aplicação web', text: 'Previsão imediata com intervalo de incerteza, só dentro da gama simulada.' },
   ]}
-  caption="Do simulador à aplicação. O Aspen só é preciso para gerar os dados; a aplicação corre sem ele."
+  loop="Algumas corridas novas no Aspen confirmam as previsões da aplicação, incluindo a condição de menor gasto de calor de cada solvente."
+  caption="Do simulador à aplicação. O Aspen só é preciso para gerar os dados; a aplicação corre sem ele. Há um modelo por solvente e, mais tarde, um por rota de hidrogénio e um para o metanol."
 />
 
 As entradas são o teor de CO₂ que fica no solvente regenerado, a pressão do stripper, a concentração de amina e o CO₂ no gás de combustão. As saídas incluem o calor gasto por tonelada de CO₂, o caudal de solvente e a potência de compressão do CO₂.
@@ -147,12 +151,22 @@ As entradas são o teor de CO₂ que fica no solvente regenerado, a pressão do 
 
 <Flow
   steps={[
-    { title: 'Código e aplicação', text: 'Testados com um Aspen simulado (33 testes).', status: 'feito' },
-    { title: 'Reações e cinética', text: 'Quatro solventes, com fonte de cada parâmetro.', status: 'feito' },
-    { title: 'Simulação do MEA', text: 'Primeiro passo: validar as propriedades.', status: 'em curso' },
-    { title: 'Dados reais e modelo', text: 'Campanha no Aspen e treino.', status: 'por fazer' },
+    { title: '0. Bases e interfaces', text: 'Caudais e especificação das correntes entre instalações; cinco decisões em aberto.', status: 'em curso' },
+    { title: '1. Captura de CO₂', text: 'Cinética dos quatro solventes reunida; MEA no primeiro passo, as propriedades.', status: 'em curso' },
+    { title: '2. Produção de H₂', text: 'Eletrólise e reforma de biometano.', status: 'por fazer' },
+    { title: '3. Síntese de metanol', text: 'Reator, reciclo de gás e destilação.', status: 'por fazer' },
   ]}
-  caption="Estado em novembro de 2026."
+  caption="As três instalações. A 2 e a 3 só dependem da fase 0, por isso podem avançar em paralelo com a captura."
+/>
+
+<Flow
+  steps={[
+    { title: '4. Integração', text: 'Ligar as instalações, fechar os balanços, aproveitar o calor.', status: 'por fazer' },
+    { title: '5. Geração de dados', text: 'Código pronto, testado com um Aspen simulado (33 testes).', status: 'por fazer' },
+    { title: '6. Modelos', text: 'Código pronto; o modelo atual é de demonstração.', status: 'por fazer' },
+    { title: '7. Aplicação web', text: 'Protótipo pronto; publica-se no fim.', status: 'por fazer' },
+  ]}
+  caption="Com as três instalações prontas, as fases seguem por ordem, cada uma depois de a anterior cumprir o seu critério de passagem. Estado a 26 de novembro de 2026; ao todo, 18 a 25 semanas."
 />
 
 O modelo que está hoje na aplicação é de demonstração, treinado com dados sintéticos. Por isso esta página ainda não mostra resultados: chegam quando as simulações estiverem concluídas.
