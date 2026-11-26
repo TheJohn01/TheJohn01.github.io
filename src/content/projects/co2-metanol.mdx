@@ -26,7 +26,7 @@ Transformar CO₂ capturado de gases de combustão em metanol, um combustível e
   caption="O caminho do CO₂ pelas instalações. A instalação 2, de produção de hidrogénio, alimenta a síntese em paralelo."
 />
 
-A base de projeto é capturar 100 t de CO₂ por dia, com 90 % de captura.
+A base de projeto é capturar 100 t de CO₂ por dia, com 90 % de captura, e produzir cerca de 69 t de metanol por dia.
 
 <Expert>
 
@@ -39,6 +39,7 @@ A base de projeto é capturar 100 t de CO₂ por dia, com 90 % de captura.
 | CO₂ no gás de combustão | 105,2 kmol/h | 94,7 ÷ 0,90 |
 | Gás de combustão (12,5 % de CO₂) | 842 kmol/h | 105,2 ÷ 0,125 |
 | H₂ necessário (H₂/CO₂ = 3) | 284,0 kmol/h = 13,7 t/dia | 3 × 94,7 |
+| Metanol (95 % de conversão global do CO₂) | 69 t/dia, pureza > 99,8 % (m/m) | 2 272 kmol/dia × 0,95 × 32,04 |
 | Pressão do circuito de síntese | 50 bar no separador de alta pressão | — |
 
 **Especificação das correntes entre instalações (proposta, em rascunho)**
@@ -51,7 +52,9 @@ A base de projeto é capturar 100 t de CO₂ por dia, com 90 % de captura.
 | O₂ | ≤ 10 ppm mol (como a especificação Northern Lights) | ≤ 10 ppm mol |
 | Outros | N₂ + Ar ≤ 0,1 %; enxofre ≤ 0,1 ppm; amina ≤ 10 ppm | CH₄ ≤ 0,5 % na rota de reforma |
 
-A 55 bar e 40 °C o CO₂ está acima da temperatura crítica (31 °C), por isso não condensa. O O₂ é o maior risco para o catalisador de Cu/ZnO, daí o mesmo limite nas duas correntes. Com 57 kWh/kg ao nível da instalação, o eletrolisador PEM precisa de cerca de 33 MW. Decisões em aberto: secar ou não o CO₂ (0,1 % ou 30 ppm de água), a pressão de síntese (50 a 70 bar) e o destino do CO₂ da rota de reforma.
+A 55 bar e 40 °C o CO₂ está acima da temperatura crítica (31 °C), por isso não condensa. O O₂ é o maior risco para o catalisador de Cu/ZnO, daí o mesmo limite nas duas correntes. Com 56 kWh/kg ao nível da instalação (valor de projeto, entre os 54,5 do REFHYNE II e o máximo de 58,4 de Sines), o eletrolisador PEM precisa de cerca de 32 MW, entre 30 e 33 MW na gama de 53 a 58 kWh/kg. Decisões em aberto: secar ou não o CO₂ (0,1 % ou 30 ppm de água), a pressão de síntese (50 a 70 bar), o destino do CO₂ da rota de reforma e a origem do biometano (rede com certificados ou produção própria).
+
+A instalação real mais parecida é a de Kassø (Dinamarca, desde 2025), que faz 42 000 t/ano de metanol com CO₂ biogénico e H₂ de eletrólise. Este projeto, com cerca de 25 000 t/ano, tem cerca de 60 % dessa escala.
 
 </Expert>
 
@@ -70,23 +73,27 @@ Os gases de combustão passam numa coluna (o absorvedor) onde uma solução de a
   caption="O ciclo de captura com aminas. O reboiler do stripper precisa de cerca de 4,2 MW a 3,6 GJ por tonelada de CO₂."
 />
 
-Estou a comparar três solventes:
+Estou a comparar quatro solventes, construídos por esta ordem, cada um a partir do anterior:
 
 - **MEA**, a referência da indústria, rápida mas exigente em calor;
 - **AMP**, uma amina que transporta mais CO₂ por molécula;
+- **CESAR1** (AMP com piperazina), a referência mais testada hoje a seguir ao MEA, com dados públicos de uma instalação piloto industrial (TCM, na Noruega) para validar o modelo;
 - **MDEA ativada com piperazina**, que gasta menos calor mas é a mais difícil de simular.
 
 Antes de simular, reuni as reações e a cinética de cada solvente, com a fonte de cada parâmetro. Confirmei vários contra as correlações originais e assinalei os que não consegui confirmar numa fonte aberta.
 
 <Expert>
 
-| | MEA | AMP | MDEA + PZ |
-|---|---|---|---|
-| Produto principal | Carbamato | Bicarbonato | Bicarbonato (MDEA) e carbamatos de PZ |
-| Capacidade estequiométrica | ~0,5 mol/mol | ~1 mol/mol | ~1 mol/mol de MDEA |
-| Velocidade | Rápida | Média | MDEA lenta; PZ muito rápida |
-| Calor de absorção | Elevado | Menor | Menor |
-| Risco de convergência | Baixo | Médio | Alto |
+| | MEA | AMP | CESAR1 (AMP + PZ) | MDEA + PZ |
+|---|---|---|---|---|
+| Produto principal | Carbamato | Bicarbonato | Bicarbonato (AMP) e carbamatos de PZ | Bicarbonato (MDEA) e carbamatos de PZ |
+| Capacidade estequiométrica | ~0,5 mol/mol | ~1 mol/mol | Elevada | ~1 mol/mol de MDEA |
+| Velocidade | Rápida | Média | Rápida (a PZ ativa o AMP) | MDEA lenta; PZ muito rápida |
+| Calor de absorção | Elevado | Menor | Menor | Menor |
+| Consumo do reboiler (referência) | 3,5–4,0 GJ/t | — | 3,41–3,54 GJ/t (TCM, 97–99 % de captura) | — |
+| Risco de convergência | Baixo | Médio | Alto | Alto |
+
+O CESAR1 (cerca de 3 M de AMP e 1,5 M de PZ, ou 27 % e 13 % m/m) não traz reações novas: junta os esquemas do AMP e da piperazina. O que falta são os parâmetros de interação AMP–PZ, por isso o equilíbrio da mistura é validado antes de construir as colunas.
 
 **Modelo termodinâmico:** ENRTL-RK com componentes verdadeiros, CO₂, N₂ e O₂ como componentes de Henry. A Chemistry tem todas as reações iónicas em equilíbrio, para as propriedades; o conjunto REAC-DIST do RadFrac rate-based tem as reações rápidas em equilíbrio e os passos limitantes como pares cinéticos, direta e inversa, com filme líquido discretizado com reação.
 
@@ -140,8 +147,8 @@ As entradas são o teor de CO₂ que fica no solvente regenerado, a pressão do 
 
 <Flow
   steps={[
-    { title: 'Código e aplicação', text: 'Testados com um Aspen simulado (31 testes).', status: 'feito' },
-    { title: 'Reações e cinética', text: 'Três solventes, com fonte de cada parâmetro.', status: 'feito' },
+    { title: 'Código e aplicação', text: 'Testados com um Aspen simulado (33 testes).', status: 'feito' },
+    { title: 'Reações e cinética', text: 'Quatro solventes, com fonte de cada parâmetro.', status: 'feito' },
     { title: 'Simulação do MEA', text: 'Primeiro passo: validar as propriedades.', status: 'em curso' },
     { title: 'Dados reais e modelo', text: 'Campanha no Aspen e treino.', status: 'por fazer' },
   ]}
@@ -152,7 +159,7 @@ O modelo que está hoje na aplicação é de demonstração, treinado com dados 
 
 <Expert>
 
-**Os dados contra os quais vou validar o modelo termodinâmico.** Antes de construir as colunas, o ENRTL-RK tem de reproduzir a pressão parcial de CO₂ sobre MEA a 30 % medida por Wagner et al. (2013). Critério de aceitação: desvio relativo médio absoluto (AARD) até 30 %, sem viés sistemático numa isotérmica inteira. Como referência, o modelo UNIQUAC estendido de Aronu et al. (2011) tem 24,3 %.
+**Os dados contra os quais vou validar o modelo termodinâmico.** Antes de construir as colunas, o ENRTL-RK tem de reproduzir a pressão parcial de CO₂ sobre MEA a 30 % medida por Wagner et al. (2013). Critério de aceitação: desvio relativo médio absoluto (AARD) até 30 %, sem viés sistemático numa isotérmica inteira. Como referência, o modelo UNIQUAC estendido de Aronu et al. (2011) tem 24,3 %. Depois, o ciclo completo com MEA a 30 % tem de cair nos valores típicos (3,5–4,0 GJ/t de CO₂, lean loading 0,20–0,25, rich loading 0,45–0,50 mol/mol, stripper a 1,5–2,0 bar) e é comparado com o modelo aberto de Cownden e Lucquiaud (2026).
 
 <LineChart
   title="Solubilidade de CO₂ em MEA a 30 % (dados de validação)"
