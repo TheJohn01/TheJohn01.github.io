@@ -1339,6 +1339,14 @@ pre {
 .prose li + li {
   margin-top: 4px;
 }
+/* O diagrama de passos é uma lista (ol), mas é uma figura: sem o limite de linha, o recuo e o espaço das listas de texto. */
+.prose .flow {
+  max-width: none;
+  padding-left: 0;
+}
+.prose .flow > li + li {
+  margin-top: 0;
+}
 .prose img {
   max-width: 100%;
   height: auto;
