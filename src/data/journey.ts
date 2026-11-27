@@ -5,6 +5,10 @@ export interface ExperienceItem {
   period: string;
   role: string;
   organization: string;
+  /** Localidade, com ligação para o Google Maps. */
+  place: string;
+  /** Site oficial da empresa ou universidade, se tiver. */
+  website?: string;
   text: string;
 }
 
@@ -12,6 +16,10 @@ export interface EducationItem {
   period: string;
   title: string;
   organization: string;
+  /** Localidade, com ligação para o Google Maps. */
+  place: string;
+  /** Site oficial da empresa ou universidade, se tiver. */
+  website?: string;
   text: string;
 }
 
@@ -35,25 +43,33 @@ export const experience: readonly ExperienceItem[] = [
   {
     period: 'Julho — agosto de 2026',
     role: 'Estágio de verão',
-    organization: 'Bondalti Chemicals, Estarreja',
+    organization: 'Bondalti Chemicals',
+    place: 'Estarreja',
+    website: 'https://www.bondalti.com',
     text: 'Na área de Produção de Anilina e Derivados, desenvolvi em Power Apps, Power Automate e SharePoint uma plataforma que gera testes para avaliar os conhecimentos dos operadores da instalação de mononitrobenzeno (MNB).',
   },
   {
     period: 'Agosto de 2026',
     role: 'Assistente de laboratório (sazonal)',
-    organization: 'Casa de Nabais, Seara, Ponte de Lima',
+    organization: 'Casa de Nabais',
+    place: 'Seara, Ponte de Lima',
+    website: 'https://www.casadenabais.com/',
     text: 'Preparação e padronização de soluções e reagentes de análise durante a campanha de vindima. Controlo de qualidade de mostos e vinhos (pH, acidez total, SO₂, grau alcoólico) e acompanhamento das fermentações.',
   },
   {
     period: 'Julho de 2024',
     role: 'Estágio de verão',
-    organization: 'Simoldes Plásticos, Oliveira de Azeméis',
+    organization: 'Simoldes Plásticos',
+    place: 'Oliveira de Azeméis',
+    website: 'https://www.simoldes.com',
     text: 'Análises laboratoriais de formaldeído na indústria de polímeros. Fiz a revisão integral do protocolo de análise e reescrevi-o, com modificações e acrescentos, para o tornar mais claro.',
   },
   {
     period: 'Agosto — setembro de 2023',
     role: 'Estágio de verão',
-    organization: 'INL — International Iberian Nanotechnology Laboratory, Braga',
+    organization: 'INL — International Iberian Nanotechnology Laboratory',
+    place: 'Braga',
+    website: 'https://inl.int',
     text: 'Investigação em tratamento de efluentes. Estudei a injeção de ozono na remoção de micropoluentes e, numa segunda fase, fiz ensaios de adsorção com azul de metileno.',
   },
 ];
@@ -63,12 +79,16 @@ export const education: readonly EducationItem[] = [
     period: 'Set. 2025 — presente',
     title: 'Mestrado em Engenharia Química',
     organization: 'FEUP, Universidade do Porto',
+    place: 'Porto',
+    website: 'https://www.fe.up.pt',
     text: 'Em curso. Disponível para trabalhar a partir de meados de 2027.',
   },
   {
     period: 'Set. 2021 — jul. 2026',
     title: 'Licenciatura em Engenharia Química',
     organization: 'FEUP, Universidade do Porto',
+    place: 'Porto',
+    website: 'https://www.fe.up.pt',
     text: 'Último ano a tempo parcial, em paralelo com o 1.º ano do mestrado.',
   },
 ];

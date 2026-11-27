@@ -8,6 +8,11 @@ import { hasBody } from '../lib/text';
 
 const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
 
+/** Pesquisa do Google Maps pelo nome e pela localidade (ligação pública, sem chave). */
+function mapUrl(item: { organization: string; place: string }): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${item.organization}, ${item.place}`)}`;
+}
+
 /** Barra de nível no estilo [####.] seguida do texto curto. */
 function levelBar(level: number, short: string): string {
   return `[${'#'.repeat(level)}${'.'.repeat(5 - level)}] ${short}`;
@@ -32,7 +37,10 @@ function levelBar(level: number, short: string): string {
               <div class="tl-body">
                 <Label text={item.period} />
                 <h3 class="h3">{item.role}</h3>
-                <div class="muted">{item.organization}</div>
+                <div class="muted">
+                  {item.website ? <a href={item.website}>{item.organization}</a> : item.organization},{' '}
+                  <a href={mapUrl(item)} aria-label={`${item.place}, no Google Maps`}>{item.place}</a>
+                </div>
                 <p>{item.text}</p>
               </div>
             </div>
@@ -48,7 +56,10 @@ function levelBar(level: number, short: string): string {
           <div class="edu-item">
             <Label text={item.period} />
             <h4>{item.title}</h4>
-            <div class="muted">{item.organization}</div>
+            <div class="muted">
+              {item.website ? <a href={item.website}>{item.organization}</a> : item.organization},{' '}
+              <a href={mapUrl(item)} aria-label={`${item.place}, no Google Maps`}>{item.place}</a>
+            </div>
             <p>{item.text}</p>
           </div>
         ))
